@@ -1,35 +1,43 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+import { AxiosError } from 'axios';
+import { AppError, ErrorBoundary } from './components';
+import { ThemeProvider } from '@mui/material/styles';
+import './App.scss';
+import baseTheme from './theme';
+import AppRoutes from './Routes';
+
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      // The auth token is intermittently sent as undefined in the request
+      // headers due to a race condition in token refresh logic. The following
+      // code will retry the request twice if it fails because of the auth token
+      // being undefined.
+      retry: (failureCount, error) => {
+        const axiosError = error as AxiosError;
+        const authHeader =
+          axiosError.config?.headers?.Authorization?.toString();
+        const isAuthTokenUndefined = authHeader?.includes('undefined');
+
+        return !!isAuthTokenUndefined && failureCount < 2;
+      },
+      refetchOnWindowFocus: false,
+    },
+  },
+});
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <ThemeProvider theme={baseTheme}>
+      <ErrorBoundary fallbackComponent={AppError}>
+        <QueryClientProvider client={queryClient}>
+          <AppRoutes />
+          <ReactQueryDevtools initialIsOpen={false} />
+        </QueryClientProvider>
+      </ErrorBoundary>
+    </ThemeProvider>
+  );
 }
 
-export default App
+export default App;
