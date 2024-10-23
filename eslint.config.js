@@ -22,6 +22,7 @@ export default tseslint.config(
       'simple-import-sort': simpleImportSort,
     },
     rules: {
+      ...react.configs.recommended.rules,
       ...reactHooks.configs.recommended.rules,
       'react-refresh/only-export-components': [
         'warn',

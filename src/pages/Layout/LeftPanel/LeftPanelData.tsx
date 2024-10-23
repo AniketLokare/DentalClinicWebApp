@@ -5,7 +5,7 @@ import {
   MEDICINES,
   PATIENTS,
   PROCEDURES,
-} from '../../../constants/paths';
+} from 'src/constants/paths';
 
 export const globalOptions = [
   {

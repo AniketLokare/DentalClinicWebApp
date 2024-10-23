@@ -1,7 +1,8 @@
-import { BLUE_MATISSE, PRIMARY_BLUE, SAIL_BLUE } from '../../constants/colors';
+import React from 'react';
+import { BLUE_MATISSE, PRIMARY_BLUE, SAIL_BLUE } from 'src/constants/colors';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
-import Icon from '../Icon';
+import Icon from 'src/components/Icon';
 
 const styles = {
   position: {
@@ -12,7 +13,7 @@ const styles = {
   },
 };
 
-export const AppError = () => (
+export const AppError: React.FC = () => (
   <Box
     sx={{
       ...styles.position,
