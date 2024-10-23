@@ -6,10 +6,14 @@ import { listPatientsBreadcrumbLinks } from './constants';
 import { useNavigate } from 'react-router-dom';
 import { NEW_PATIENT_PATH } from 'src/constants/paths';
 import TableContainer from 'src/components/Table/TableContainer';
+import { useGetPatientList } from 'src/hooks/usePatients';
 
 const Patients: React.FC = (): JSX.Element => {
   const navigate = useNavigate();
   const [filters, setFilters] = useState<FiltersState>();
+
+  const { data, isFetching, isError } = useGetPatientList();
+  const noData = !data?.length;
 
   return (
     <>
@@ -37,14 +41,13 @@ const Patients: React.FC = (): JSX.Element => {
         >
           {({ showFilters }) => (
             <Box>
-              {/* TODO: Change this as per the API call logic */}
               <PageLoader
-                isLoading={showFilters}
-                isEmpty={true}
-                emptyMessage={filters?.searchQuery}
+                isLoading={isFetching}
+                isEmpty={(noData && !isError) || (noData && showFilters)}
+                emptyMessage={filters?.searchQuery} // TODO: Change this as per filter logic
                 Components={{ Loading: 'table' }}
               >
-                <Table columns={[]} data={[]} />
+                <Table columns={[]} data={data || []} />
               </PageLoader>
             </Box>
           )}
