@@ -1,3 +1,4 @@
+import React from 'react';
 import { NavItem } from 'src/components';
 import Box from '@mui/material/Box';
 import List from '@mui/material/List';
@@ -7,7 +8,7 @@ import { globalOptions } from './LeftPanelData';
 import './LeftPanel.scss';
 import { ASH_GRAY } from 'src/constants/colors';
 
-const LeftPanel = () => {
+const LeftPanel: React.FC = () => {
   return (
     <Box className="leftPanel">
       <List sx={{ marginTop: '30px' }}>
