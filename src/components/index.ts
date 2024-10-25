@@ -11,6 +11,8 @@ export * from './Breadcrumbs';
 export * from './Button';
 export * from './PageTitle';
 export * from './Table';
+export * from './Table/Actions';
+export * from './Table/TableContainer';
 export * from './Pagination';
 export * from './Filters';
 export * from './SearchInput';

@@ -13,3 +13,12 @@ declare type UseQueryOption<Response, Override = Response> = {
   useQueryConfig?: QueryConfig<Response, Override>;
   apiConfig?: AxiosRequestConfig;
 };
+
+declare type PaginatedResponse<T> = {
+  data: T[];
+  first: number;
+  last: number;
+  items: number;
+  next: number;
+  prev: number;
+};

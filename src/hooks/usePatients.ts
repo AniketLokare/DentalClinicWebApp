@@ -7,24 +7,25 @@ import axiosClient from 'src/util/axios';
  * API
  */
 export const getPatientList = (config?: AxiosRequestConfig) =>
-  axiosClient.get<Patient[]>(PATIENTS_ROUTE, config);
+  axiosClient
+    .get<PaginatedResponse<Patient>>(PATIENTS_ROUTE, config)
+    .then((res) => res.data);
 
 /**
  * HOOKS
  */
-export const useGetPatientList = <Override = Patient[]>(
-  opts?: UseQueryOption<Patient[], Override>,
+export const useGetPatientList = <Override = PaginatedResponse<Patient>>(
+  opts?: UseQueryOption<PaginatedResponse<Patient>, Override>,
 ) => {
-  const {
-    key,
-    useQueryConfig,
-    apiConfig = { params: { limit: '500' } },
-  } = opts || {};
-  const queryKey = (key || ['patients']) as QueryKey;
+  const { key, useQueryConfig, apiConfig } = opts || {};
+  const queryKey = (key || ['patients', apiConfig.params]) as QueryKey;
 
-  return useQuery<Patient[]>({
+  const { data, ...rest } = useQuery<PaginatedResponse<Patient>>({
     queryKey,
     queryFn: ({ signal }) => getPatientList({ ...apiConfig, signal }),
+    enabled: !!apiConfig,
     ...useQueryConfig,
   });
+
+  return { response: data, ...rest };
 };

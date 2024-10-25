@@ -5,7 +5,6 @@ import MuiPagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
-import _range from 'lodash/range';
 
 type PaginationProps = {
   onPageChange: (page: number) => void;
@@ -15,7 +14,7 @@ type PaginationProps = {
   page: number;
 };
 
-const numberOfRecordsOptions = _range(10, 31, 1);
+const numberOfRecordsOptions = [10, 20, 50];
 
 export const Pagination: React.FC<PaginationProps> = ({
   onPageChange,

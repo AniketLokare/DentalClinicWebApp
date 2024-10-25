@@ -1,5 +1,4 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import { MdDragIndicator } from 'react-icons/md';
 import Box from '@mui/material/Box';
 import Checkbox from '@mui/material/Checkbox';
 import Radio from '@mui/material/Radio';
@@ -43,12 +42,10 @@ type TableProps<TData, TValue> = {
   enableSorting?: boolean;
   enableRowSelection?: boolean;
   enableAllRowSelection?: boolean;
-  enableDraggable?: boolean;
   onRowSelect?: (
     selectedRow: TData[],
     selectionState: RowSelectionState,
   ) => void;
-  onDragEnd?: (data: TData[]) => void;
   // Provide this function if you want to update the default unique row id
   // This is mainly used for maintaining the same selection state when the data changes
   getRowId?: (
@@ -92,7 +89,6 @@ export function Table<TData, TValue = unknown>({
   enableSorting = true,
   enableRowSelection,
   enableAllRowSelection = true,
-  enableDraggable = false,
   onRowSelect,
   uniqueId = 'id' as keyof TData,
   selectedRows,
@@ -219,23 +215,6 @@ export function Table<TData, TValue = unknown>({
           <TableHead>
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow key={headerGroup.id}>
-                {enableDraggable && (
-                  <TableCell
-                    sx={{
-                      width: '40px',
-                      height: '45px !important',
-                      color: BLACK_CORAL,
-                      background: FADED_WHITE,
-                      paddingTop: '18px',
-                      paddingBottom: '12px',
-                      fontWeight: 500,
-                      lineHeight: '18px',
-                      fontSize: '14px',
-                      borderBottom: `0.5px solid ${ROMAN_SILVER}`,
-                      ...tableHeaderSxProps,
-                    }}
-                  />
-                )}
                 {headerGroup.headers.map((header, headerIdx) => (
                   <TableCell
                     key={header.id}
@@ -277,16 +256,6 @@ export function Table<TData, TValue = unknown>({
           <TableBody>
             {table.getRowModel().rows.map((row, idx, rowArr) => (
               <TableRow key={row.id}>
-                <TableCell
-                  key="draggableCell"
-                  sx={{
-                    boxSizing: 'border-box',
-                    ...getCellStyle(idx, rowArr.length),
-                    ...tableCellSxProps,
-                  }}
-                >
-                  <MdDragIndicator size={23} color={LIGHT_GRAY} />
-                </TableCell>
                 {row.getVisibleCells().map((cell) => (
                   <TableCell
                     key={cell.id}
