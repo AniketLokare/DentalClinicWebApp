@@ -1,5 +1,6 @@
 export * from './Errors/AppError';
 export * from './Errors/TableError';
+export * from './Errors/FormError';
 export * from './ErrorBoundary';
 export * from './EllipsesDropdown';
 export * from './NavItem';
@@ -16,6 +17,7 @@ export * from './Table/TableContainer';
 export * from './Pagination';
 export * from './Filters';
 export * from './SearchInput';
-export * from './Select';
 export * from './NoData';
 export * from './PageLoader';
+export * from './ToggleSwitch';
+export * from './FormInput';

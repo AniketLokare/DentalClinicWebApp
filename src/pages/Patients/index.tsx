@@ -8,19 +8,23 @@ import {
   Table,
   TableContainer,
   Actions,
+  Snackbar,
 } from 'src/components';
 import { listPatientsBreadcrumbLinks, patientsTableColumns } from './constants';
 import { useNavigate } from 'react-router-dom';
-import { NEW_PATIENT_PATH } from 'src/constants/paths';
+import { getEditPatientRoute, NEW_PATIENT_PATH } from 'src/constants/paths';
 import { useGetPatientList } from 'src/hooks/usePatients';
 import { usePagination } from 'src/hooks/usePagination';
 import { formatDate } from 'src/util/common';
 import { useDebounce } from '@uidotdev/usehooks';
+import useSnackbarAlert from 'src/hooks/useSnackbarAlert';
 
 const Patients: React.FC = (): JSX.Element => {
   const navigate = useNavigate();
   const [filters, setFilters] = useState<FiltersState>();
   const debouncedSearchQuery = useDebounce(filters?.searchQuery, 500);
+
+  const { snackbarAlertState, onDismiss } = useSnackbarAlert();
 
   const { pageNumber, changePageNumber } = usePagination();
   const { response, isFetching, isError } = useGetPatientList({
@@ -46,13 +50,13 @@ const Patients: React.FC = (): JSX.Element => {
       },
       {
         id: 'actions',
-        cell: () => {
-          // const patientValues = row.original;
+        cell: ({ row }) => {
+          const patientValues = row.original;
 
           return (
             <Actions
               onEditClick={() => {
-                console.log('Edit Clicked');
+                navigate(getEditPatientRoute(patientValues.id));
               }}
               onDeleteClick={() => {
                 console.log('Delete Clicked');
@@ -71,12 +75,12 @@ const Patients: React.FC = (): JSX.Element => {
   return (
     <>
       {/* <LoadingBackdrop loading={!!deleteInProgress} /> */}
-      {/* <Snackbar
+      <Snackbar
         open={!!snackbarAlertState.message}
         severity={snackbarAlertState.severity}
         message={snackbarAlertState.message}
         onClose={onDismiss}
-      /> */}
+      />
       <Stack spacing={2}>
         <SubPanel
           pageTitle="PATIENTS"

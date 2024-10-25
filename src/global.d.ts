@@ -22,3 +22,24 @@ declare type PaginatedResponse<T> = {
   next: number;
   prev: number;
 };
+
+declare interface SelectBoxType {
+  menuItemLabel: React.ReactNode;
+  menuItemValue: string | number;
+  menuItemId: string | number;
+  disabled?: boolean;
+}
+
+type MutationConfig<
+  Response,
+  Payload = unknown,
+  Error = ErrorMessage[] | ErrorMessage,
+> = Omit<
+  UseMutationOptions<Response, AxiosError<Error>, Payload>,
+  'mutationFn'
+>;
+
+type SingleUseQueryOption<Response, Override = Response> = Omit<
+  UseQueryOption<Response, Override>,
+  'key'
+> & { key?: QueryKey; id: string };

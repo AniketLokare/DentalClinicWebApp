@@ -8,6 +8,7 @@ if (!fs.existsSync(dir)) {
 
 const createPatients = () => {
   return Array.from({ length: 100 }, () => ({
+    id: faker.number.int({ min: 1, max: 9999 }),
     patientId: faker.number.int({ min: 1, max: 9999 }),
     firstName: faker.person.firstName(),
     middleName: faker.person.middleName(),
