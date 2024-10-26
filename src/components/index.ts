@@ -23,3 +23,7 @@ export * from './ToggleSwitch';
 export * from './FormInput';
 export * from './ConfirmationModal/Modal';
 export * from './ConfirmationModal';
+export * from './InfoField';
+export * from './Link';
+export * from './LoadingBackdrop';
+export * from './LabelWithIcon';

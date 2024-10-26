@@ -21,6 +21,17 @@ export const getAddEditBreadCrumbLinks = (isEdit = false) => [
   },
 ];
 
+export const viewPatientBreadCrumbLinks = [
+  {
+    label: 'Patients',
+    href: PATIENTS,
+  },
+  {
+    label: 'Patient Details',
+    href: '#',
+  },
+];
+
 export const patientsTableColumns: ColumnDef<Patient, string>[] = [
   {
     header: 'First Name',

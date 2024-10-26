@@ -9,30 +9,26 @@ import {
   TableContainer,
   Actions,
   Snackbar,
+  LoadingBackdrop,
 } from 'src/components';
 import { listPatientsBreadcrumbLinks, patientsTableColumns } from './constants';
 import { useNavigate } from 'react-router-dom';
-import { getEditPatientRoute, NEW_PATIENT_PATH } from 'src/constants/paths';
+import {
+  getEditPatientRoute,
+  getViewPatientPath,
+  NEW_PATIENT_PATH,
+} from 'src/constants/paths';
 import { useDeletePatient, useGetPatientList } from 'src/hooks/usePatients';
 import { usePagination } from 'src/hooks/usePagination';
 import { formatDate } from 'src/util/common';
 import { useDebounce } from '@uidotdev/usehooks';
 import useSnackbarAlert from 'src/hooks/useSnackbarAlert';
 import ConfirmationModal from 'src/components/ConfirmationModal';
-import LoadingBackdrop from 'src/components/LoadingBackdrop';
-
-export interface DeleteConfirmationModalValues {
-  id: string;
-  name: string;
-}
+import useDeleteConfirmationModal from 'src/hooks/useDelete';
 
 const Patients: React.FC = (): JSX.Element => {
   const navigate = useNavigate();
   const [filters, setFilters] = useState<FiltersState>();
-  const [deleteConfirmationModalValues, setDeleteConfirmationModalValues] =
-    useState<DeleteConfirmationModalValues>({ id: '', name: '' });
-  const [showDeleteConfirmationModal, setShowDeleteConfirmationModal] =
-    useState<boolean>(false);
   const debouncedSearchQuery = useDebounce(filters?.searchQuery, 500);
 
   const { snackbarAlertState, onDismiss, setSnackbarAlertState } =
@@ -68,11 +64,13 @@ const Patients: React.FC = (): JSX.Element => {
         });
       },
     });
-
-  const onDeleteConfirm = () => {
-    deletePatient(deleteConfirmationModalValues.id);
-    setShowDeleteConfirmationModal(false);
-  };
+  const {
+    deleteConfirmationModalValues,
+    onDeleteConfirm,
+    showDeleteConfirmationModal,
+    onShowDeleteConfirmationModal,
+    onClose,
+  } = useDeleteConfirmationModal({ onDelete: deletePatient });
 
   const noData = !response?.data?.length;
 
@@ -97,14 +95,13 @@ const Patients: React.FC = (): JSX.Element => {
                 navigate(getEditPatientRoute(patientValues.id));
               }}
               onDeleteClick={() => {
-                setDeleteConfirmationModalValues({
-                  id: patientValues.id,
-                  name: patientValues.firstName,
-                });
-                setShowDeleteConfirmationModal(true);
+                onShowDeleteConfirmationModal(
+                  patientValues.id,
+                  patientValues.firstName,
+                );
               }}
               onViewDetails={() => {
-                console.log('View Details Clicked');
+                navigate(getViewPatientPath(patientValues.id));
               }}
             />
           );
@@ -159,7 +156,7 @@ const Patients: React.FC = (): JSX.Element => {
         </TableContainer>
       </Stack>
       <ConfirmationModal
-        onClose={() => setShowDeleteConfirmationModal(false)}
+        onClose={onClose}
         onSubmit={onDeleteConfirm}
         open={showDeleteConfirmationModal}
       />

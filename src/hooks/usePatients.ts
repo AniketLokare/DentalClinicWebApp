@@ -34,7 +34,7 @@ export const getPatientDetail = (id: string, config?: AxiosRequestConfig) =>
     .get<Patient>(getPatientWithIdRoute(id), config)
     .then((res) => res.data);
 
-export const patchImageRegistry = (id: string, payload: CreatePatientPayload) =>
+export const patchPatient = (id: string, payload: CreatePatientPayload) =>
   axiosClient.patch<Patient, CreatePatientPayload>(
     getPatientWithIdRoute(id),
     payload,
@@ -89,7 +89,7 @@ export const usePatchPatient = (
 ) => {
   return useMutation({
     mutationFn: (payload: CreatePatientPayload) => {
-      return patchImageRegistry(id, payload);
+      return patchPatient(id, payload);
     },
     ...opts,
   });

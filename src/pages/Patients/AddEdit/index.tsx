@@ -8,6 +8,7 @@ import {
   PageLoader,
   Snackbar,
   SubPanel,
+  LoadingBackdrop,
 } from 'src/components';
 import Box from '@mui/material/Box';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -25,7 +26,6 @@ import {
 } from 'src/hooks/usePatients';
 import { PATIENTS } from 'src/constants/paths';
 import useSnackbarAlert from 'src/hooks/useSnackbarAlert';
-import LoadingBackdrop from 'src/components/LoadingBackdrop';
 
 const AddEditPatient: React.FC = (): JSX.Element => {
   const navigate = useNavigate();
@@ -126,7 +126,7 @@ const AddEditPatient: React.FC = (): JSX.Element => {
       <FormProvider {...methods}>
         <Box component="form" onSubmit={handleSubmit(onSubmit)}>
           <SubPanel
-            pageTitle={isEdit ? 'Edit Image Registry' : 'New Image Registry'}
+            pageTitle={isEdit ? 'Edit Patient' : 'New Patient'}
             breadcrumbLinks={getAddEditBreadCrumbLinks(isEdit)}
             secondaryButtonText={isEdit ? 'Save Changes' : undefined}
             secondaryButtonIcon={<FiSave />}

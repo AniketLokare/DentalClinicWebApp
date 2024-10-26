@@ -26,7 +26,7 @@ export const Pagination: React.FC<PaginationProps> = ({
   const numberOfPages = Math.ceil(totalRecords / pageSize);
 
   return (
-    <Stack direction="row" gap={3} alignItems="center">
+    <Stack direction="row" gap={3} alignItems="center" justifyContent="center">
       <MuiPagination
         page={page}
         count={numberOfPages}
@@ -35,7 +35,7 @@ export const Pagination: React.FC<PaginationProps> = ({
         onChange={(_event, value) => onPageChange(value)}
         sx={{
           height: '50px',
-          mt: '10px',
+          mt: '20px',
           '& .MuiPaginationItem-root': { height: '40px', width: '40px' },
           '& .Mui-selected': {
             backgroundColor: LIGHT_PRIMARY_BLUE,
