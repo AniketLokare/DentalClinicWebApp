@@ -55,13 +55,13 @@ const Select: React.FC<SelectProps> = ({
 
   return (
     <FormControl sx={{ width: '100%' }} error={!!error}>
-      <InputLabel id={`cape-select-error-label-${id}`}>{label}</InputLabel>
+      <InputLabel id={`regrow-select-error-label-${id}`}>{label}</InputLabel>
 
       <MuiSelect
         sx={{ ...sx }}
         {...field}
-        labelId={`cape-select-error-label-${id}`}
-        id={`cape-select-box-${id}`}
+        labelId={`regrow-select-error-label-${id}`}
+        id={`regrow-select-box-${id}`}
         label={label}
         error={!!error}
         multiple={multiple}
