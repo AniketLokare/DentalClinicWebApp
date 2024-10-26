@@ -21,3 +21,5 @@ export * from './NoData';
 export * from './PageLoader';
 export * from './ToggleSwitch';
 export * from './FormInput';
+export * from './ConfirmationModal/Modal';
+export * from './ConfirmationModal';

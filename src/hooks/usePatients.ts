@@ -40,6 +40,9 @@ export const patchImageRegistry = (id: string, payload: CreatePatientPayload) =>
     payload,
   );
 
+export const deletePatient = (id: string) =>
+  axiosClient.delete<null>(getPatientWithIdRoute(id));
+
 /**
  * HOOKS
  */
@@ -88,6 +91,13 @@ export const usePatchPatient = (
     mutationFn: (payload: CreatePatientPayload) => {
       return patchImageRegistry(id, payload);
     },
+    ...opts,
+  });
+};
+
+export const useDeletePatient = (opts?: MutationConfig<null, string>) => {
+  return useMutation({
+    mutationFn: (id: string) => deletePatient(id),
     ...opts,
   });
 };

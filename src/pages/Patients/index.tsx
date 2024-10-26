@@ -13,21 +13,33 @@ import {
 import { listPatientsBreadcrumbLinks, patientsTableColumns } from './constants';
 import { useNavigate } from 'react-router-dom';
 import { getEditPatientRoute, NEW_PATIENT_PATH } from 'src/constants/paths';
-import { useGetPatientList } from 'src/hooks/usePatients';
+import { useDeletePatient, useGetPatientList } from 'src/hooks/usePatients';
 import { usePagination } from 'src/hooks/usePagination';
 import { formatDate } from 'src/util/common';
 import { useDebounce } from '@uidotdev/usehooks';
 import useSnackbarAlert from 'src/hooks/useSnackbarAlert';
+import ConfirmationModal from 'src/components/ConfirmationModal';
+import LoadingBackdrop from 'src/components/LoadingBackdrop';
+
+export interface DeleteConfirmationModalValues {
+  id: string;
+  name: string;
+}
 
 const Patients: React.FC = (): JSX.Element => {
   const navigate = useNavigate();
   const [filters, setFilters] = useState<FiltersState>();
+  const [deleteConfirmationModalValues, setDeleteConfirmationModalValues] =
+    useState<DeleteConfirmationModalValues>({ id: '', name: '' });
+  const [showDeleteConfirmationModal, setShowDeleteConfirmationModal] =
+    useState<boolean>(false);
   const debouncedSearchQuery = useDebounce(filters?.searchQuery, 500);
 
-  const { snackbarAlertState, onDismiss } = useSnackbarAlert();
+  const { snackbarAlertState, onDismiss, setSnackbarAlertState } =
+    useSnackbarAlert();
 
   const { pageNumber, changePageNumber } = usePagination();
-  const { response, isFetching, isError } = useGetPatientList({
+  const { response, isFetching, isError, refetch } = useGetPatientList({
     apiConfig: {
       params: {
         _page: pageNumber,
@@ -36,6 +48,32 @@ const Patients: React.FC = (): JSX.Element => {
       },
     },
   });
+
+  const { mutate: deletePatient, isPending: isDeleteInProgress } =
+    useDeletePatient({
+      onSuccess: () => {
+        setSnackbarAlertState({
+          severity: 'success',
+          title: 'Patient Deleted.',
+          message: `Patient "${deleteConfirmationModalValues?.name}" is deleted successfully.`,
+        });
+
+        refetch();
+      },
+      onError: (err: Error) => {
+        setSnackbarAlertState({
+          severity: 'error',
+          title: 'ERROR.',
+          message: err.message,
+        });
+      },
+    });
+
+  const onDeleteConfirm = () => {
+    deletePatient(deleteConfirmationModalValues.id);
+    setShowDeleteConfirmationModal(false);
+  };
+
   const noData = !response?.data?.length;
 
   const patientsTableColumnsWithActions = useMemo(
@@ -59,7 +97,11 @@ const Patients: React.FC = (): JSX.Element => {
                 navigate(getEditPatientRoute(patientValues.id));
               }}
               onDeleteClick={() => {
-                console.log('Delete Clicked');
+                setDeleteConfirmationModalValues({
+                  id: patientValues.id,
+                  name: patientValues.firstName,
+                });
+                setShowDeleteConfirmationModal(true);
               }}
               onViewDetails={() => {
                 console.log('View Details Clicked');
@@ -74,7 +116,7 @@ const Patients: React.FC = (): JSX.Element => {
 
   return (
     <>
-      {/* <LoadingBackdrop loading={!!deleteInProgress} /> */}
+      <LoadingBackdrop loading={!!isDeleteInProgress} />
       <Snackbar
         open={!!snackbarAlertState.message}
         severity={snackbarAlertState.severity}
@@ -116,19 +158,11 @@ const Patients: React.FC = (): JSX.Element => {
           )}
         </TableContainer>
       </Stack>
-      {/* <DeleteCredentialErrorModal
-        credential={currentCredentialName}
-        applications={appsForCredential}
-        onClose={() => {
-          setAppsForCredential([]);
-        }}
-      />
       <ConfirmationModal
-        credential={currentCredentialName}
-        onClose={() => setShowConfirmationModal(false)}
-        onSubmit={() => deleteCredential(currentCredentialName)}
-        open={showConfirmationModal}
-      /> */}
+        onClose={() => setShowDeleteConfirmationModal(false)}
+        onSubmit={onDeleteConfirm}
+        open={showDeleteConfirmationModal}
+      />
     </>
   );
 };
