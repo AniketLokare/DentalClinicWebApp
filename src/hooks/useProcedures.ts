@@ -1,4 +1,4 @@
-import { QueryKey, useMutation, useQuery } from '@tanstack/react-query';
+import { QueryKey, useQuery } from '@tanstack/react-query';
 import { AxiosRequestConfig } from 'axios';
 import { PROCEDURES_ROUTE } from 'src/api/procedures/routes';
 import axiosClient from 'src/util/axios';
