@@ -25,8 +25,29 @@ const createPatients = () => {
   }));
 };
 
+const createProcedures = () => {
+  return Array.from({ length: 100 }, () => ({
+    id: faker.number.int({ min: 1, max: 9999 }),
+    procedureId: faker.number.int({ min: 1, max: 9999 }),
+    procedureCashierName: faker.person.fullName(),
+    cashPayment: faker.number.int({ min: 1, max: 9999 }),
+    clinicName: faker.company.name(),
+    discount: faker.number.int({ min: 10, max: 30 }),
+    finalAmount: faker.number.int({ min: 1, max: 9999 }),
+    procedureDate: faker.date.recent(),
+    onlinePayment: faker.number.int({ min: 1, max: 9999 }),
+    procedureDetails: faker.lorem.sentence(),
+    procedureType: faker.lorem.sentence(),
+    procedureTime: faker.date.timestamp,
+    patientReports: faker.lorem.sentence(),
+    totalAmount: faker.number.int({ min: 1, max: 9999 }),
+    patientName: faker.person.fullName(),
+  }));
+};
+
+const procedures = createProcedures();
 const patients = createPatients();
-const jsonData = JSON.stringify({ patients }, null, 2);
+const jsonData = JSON.stringify({ patients, procedures }, null, 2);
 
 if (fs.existsSync(`${dir}/db.json`)) {
   console.log('db.json already exists!');

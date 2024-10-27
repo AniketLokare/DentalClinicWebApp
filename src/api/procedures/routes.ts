@@ -1,0 +1,1 @@
+export const PROCEDURES_ROUTE = '/procedures';
