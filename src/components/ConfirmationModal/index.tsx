@@ -10,7 +10,7 @@ type ConfirmationModalProps = {
   onSubmit: () => void;
 };
 
-const ConfirmationModal: React.FC<ConfirmationModalProps> = ({
+export const ConfirmationModal: React.FC<ConfirmationModalProps> = ({
   open,
   onClose,
   onSubmit,

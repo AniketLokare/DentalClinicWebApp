@@ -8,6 +8,17 @@ export const listProceduresBreadcrumbLinks = [
   },
 ];
 
+export const viewProceduresBreadCrumbLinks = [
+  {
+    label: 'Procedures',
+    href: PROCEDURES,
+  },
+  {
+    label: 'Procedure Details',
+    href: '#',
+  },
+];
+
 export const ProceduresTableColumns: ColumnDef<Procedure, string>[] = [
   {
     header: 'Patient Name',

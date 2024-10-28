@@ -1,11 +1,16 @@
 import { QueryKey, useQuery } from '@tanstack/react-query';
 import { AxiosRequestConfig } from 'axios';
-import { PROCEDURES_ROUTE } from 'src/api/procedures/routes';
+import { PROCEDURES_ROUTE, getProceduresWithIdRoute } from 'src/api/procedures/routes';
 import axiosClient from 'src/util/axios';
 
 export const getProceduresList = (config?: AxiosRequestConfig) =>
   axiosClient
     .get<PaginatedResponse<Procedure>>(PROCEDURES_ROUTE, config)
+    .then((res) => res.data);
+
+export const getProcedureDetail = (id: string, config?: AxiosRequestConfig) =>
+  axiosClient
+    .get<Procedure>(getProceduresWithIdRoute(id), config)
     .then((res) => res.data);
 
 /**
@@ -25,4 +30,16 @@ export const useGetProceduresList = <Override = PaginatedResponse<Procedure>>(
   });
 
   return { response: data, ...rest };
+};
+
+export const useGetProcedureDetail = <Override = Procedure>(
+  opts: SingleUseQueryOption<Procedure, Override>,
+) => {
+  const { apiConfig, id } = opts;
+  const queryKey = ['registry', id] as QueryKey;
+  return useQuery({
+    queryKey,
+    queryFn: ({ signal }) => getProcedureDetail(id, { ...apiConfig, signal }),
+    enabled: !!id,
+  });
 };
