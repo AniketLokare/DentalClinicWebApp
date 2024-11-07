@@ -8,7 +8,9 @@ export const getEditPatientRoute = (id: string) => `${PATIENTS}/${id}/edit`;
 export const getViewPatientPath = (id: string) => `${PATIENTS}/${id}`;
 
 export const PROCEDURES = '/procedures';
+export const EDIT_PROCEDURE_PATH = '/procedures/:id/edit';
 export const VIEW_PROCEDURE_PATH = '/procedures/:id';
+export const getEditProcedureRoute = (id: string) => `${PROCEDURES}/${id}/edit`;
 export const getViewProcedurePath = (id: string) => `${PROCEDURES}/${id}`;
 
 export const MEDICINES = '/medicines';

@@ -17,7 +17,7 @@ import { useDebounce } from '@uidotdev/usehooks';
 import { useNavigate } from 'react-router-dom';
 import { formatDate } from 'src/util/common';
 import useSnackbarAlert from 'src/hooks/useSnackbarAlert';
-import { getViewProcedurePath } from 'src/constants/paths';
+import { getEditProcedureRoute, getViewProcedurePath } from 'src/constants/paths';
 
 const Procedures: React.FC = (): JSX.Element => {
   const navigate = useNavigate();
@@ -56,12 +56,7 @@ const Procedures: React.FC = (): JSX.Element => {
           return (
             <Actions
               onEditClick={() => {
-                setSnackbarAlertState({
-                  severity: 'success',
-                  title: 'Button Click',
-                  message: 'Edit button clicked for procedure',
-                });
-
+                navigate(getEditProcedureRoute(procedureValues.id));
               }}
               onDeleteClick={() => {
                 setSnackbarAlertState({

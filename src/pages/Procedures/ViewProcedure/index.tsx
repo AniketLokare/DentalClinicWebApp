@@ -17,6 +17,7 @@ import { viewProceduresBreadCrumbLinks } from '../constants';
 import ProcedureBasicInfo from './ProcedureBasicInfo';
 import { ERROR_RED } from 'src/constants/colors';
 import useSnackbarAlert from 'src/hooks/useSnackbarAlert';
+import { getEditProcedureRoute } from 'src/constants/paths';
 
 const ViewProcedure: React.FC = (): JSX.Element => {
   const { id = '' } = useParams();
@@ -26,13 +27,9 @@ const ViewProcedure: React.FC = (): JSX.Element => {
   });
   const { snackbarAlertState, onDismiss, setSnackbarAlertState } =
     useSnackbarAlert();
-
+    
   const onEditProcedure = () => {
-    setSnackbarAlertState({
-      severity: 'success',
-      title: 'Button Click',
-      message: 'Edit button clicked for procedure',
-    });
+    navigate(getEditProcedureRoute(id));
   };
 
   return (
