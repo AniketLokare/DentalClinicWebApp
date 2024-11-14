@@ -24,6 +24,9 @@ export const getProcedureDetail = (id: string, config?: AxiosRequestConfig) =>
     .get<Procedure>(getProceduresWithIdRoute(id), config)
     .then((res) => res.data);
 
+export const deleteProcedure = (id: string) =>
+  axiosClient.delete<null>(getProceduresWithIdRoute(id));
+
 /**
  * HOOKS
  */
@@ -73,5 +76,12 @@ export const useGetProcedureDetail = <Override = Procedure>(
     queryKey,
     queryFn: ({ signal }) => getProcedureDetail(id, { ...apiConfig, signal }),
     enabled: !!id,
+  });
+};
+
+export const useDeleteProcedure = (opts?: MutationConfig<null, string>) => {
+  return useMutation({
+    mutationFn: (id: string) => deleteProcedure(id),
+    ...opts,
   });
 };
