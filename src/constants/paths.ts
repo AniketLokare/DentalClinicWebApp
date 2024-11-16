@@ -1,5 +1,7 @@
 export const DASHBOARD_PATH = '/';
 
+export const LOGIN = '/login';
+
 export const PATIENTS = '/patients';
 export const NEW_PATIENT_PATH = '/patients/new';
 export const EDIT_PATIENT_PATH = '/patients/:id/edit';
@@ -15,4 +17,4 @@ export const getViewProcedurePath = (id: string) => `${PROCEDURES}/${id}`;
 
 export const MEDICINES = '/medicines';
 export const INVENTORY = '/inventory';
-export const LOGIN = '/login';
+
