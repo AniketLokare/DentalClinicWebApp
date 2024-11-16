@@ -16,7 +16,7 @@ export const loginUser = async (payload: CreateLoginPayload, config?: AxiosReque
     }
     return response.data;
   } catch (error) {
-      throw new Error('Login failed');
+      throw new Error('Login failed'+ error);
   }
 };
 

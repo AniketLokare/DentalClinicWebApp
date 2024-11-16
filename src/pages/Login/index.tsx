@@ -27,7 +27,6 @@ const Login: React.FC = (): JSX.Element => {
   });
 
   const {
-    formState: { isDirty },
     handleSubmit,
   } = methods;
 
