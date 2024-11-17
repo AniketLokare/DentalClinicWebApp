@@ -18,8 +18,11 @@ import { useDebounce } from '@uidotdev/usehooks';
 import useSnackbarAlert from 'src/hooks/useSnackbarAlert';
 import { useDeleteUser, useGetUsersList } from 'src/hooks/useUser';
 import useDeleteConfirmationModal from 'src/hooks/useDelete';
+import { getEditUserRoute, NEW_USER_PATH } from 'src/constants/paths';
+import { useNavigate } from 'react-router-dom';
 
 const Users: React.FC = (): React.ReactElement => {
+  const navigate = useNavigate();
   const [filters, setFilters] = useState<FiltersState>();
   const debouncedSearchQuery = useDebounce(filters?.searchQuery, 500);
 
@@ -76,6 +79,9 @@ const Users: React.FC = (): React.ReactElement => {
 
           return (
             <Actions
+              onEditClick={() => {
+                navigate(getEditUserRoute(userValues.id));
+              }}
               onDeleteClick={() => {
                 onShowDeleteConfirmationModal(
                   userValues.id,
@@ -103,6 +109,10 @@ const Users: React.FC = (): React.ReactElement => {
         <SubPanel
           pageTitle="USERS"
           breadcrumbLinks={listUsersBreadcrumbLinks}
+          rightSideButtonText="New User"
+          rightSideButtonClickEvent={() => {
+            navigate(NEW_USER_PATH);
+          }}
         />
         <TableContainer
           onFiltersChange={(filters) => {
