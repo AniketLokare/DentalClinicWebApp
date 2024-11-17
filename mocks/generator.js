@@ -47,6 +47,7 @@ const createProcedures = () => {
 
 const createUsers = () => {
   return Array.from({ length: 10 }, () => ({
+    id: faker.number.int({ min: 1, max: 9999 }),
     userId: faker.number.int({ min: 1, max: 9999 }),
     username: faker.internet.username(),
     password: faker.internet.password(),

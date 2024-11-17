@@ -1,6 +1,6 @@
-import { QueryKey, useQuery } from '@tanstack/react-query';
+import { QueryKey, useMutation, useQuery } from '@tanstack/react-query';
 import { AxiosRequestConfig } from 'axios';
-import { USERS_ROUTE } from 'src/api/users/routes';
+import { getUserWithIdRoute, USERS_ROUTE } from 'src/api/users/routes';
 import axiosClient from 'src/util/axios';
 
 /**
@@ -10,6 +10,9 @@ export const getUsersList = (config?: AxiosRequestConfig) =>
   axiosClient
     .get<PaginatedResponse<User[]>>(USERS_ROUTE, config)
     .then((res) => res.data);
+
+export const deleteUser = (id: string) =>
+  axiosClient.delete<null>(getUserWithIdRoute(id));
 
 /**
  * HOOKS
@@ -28,4 +31,11 @@ export const useGetUsersList = <Override = PaginatedResponse<User>>(
   });
 
   return { response: data, ...rest };
+};
+
+export const useDeleteUser = (opts?: MutationConfig<null, string>) => {
+  return useMutation({
+    mutationFn: (id: string) => deleteUser(id),
+    ...opts,
+  });
 };

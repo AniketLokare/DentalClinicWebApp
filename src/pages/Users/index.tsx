@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import {
@@ -8,22 +8,26 @@ import {
   Table,
   TableContainer,
   Snackbar,
+  LoadingBackdrop,
+  ConfirmationModal,
+  Actions,
 } from 'src/components';
 import { listUsersBreadcrumbLinks, usersTableColumns } from './constants';
 import { usePagination } from 'src/hooks/usePagination';
 import { useDebounce } from '@uidotdev/usehooks';
 import useSnackbarAlert from 'src/hooks/useSnackbarAlert';
-import { useGetUsersList } from 'src/hooks/useUser';
+import { useDeleteUser, useGetUsersList } from 'src/hooks/useUser';
+import useDeleteConfirmationModal from 'src/hooks/useDelete';
 
 const Users: React.FC = (): React.ReactElement => {
   const [filters, setFilters] = useState<FiltersState>();
   const debouncedSearchQuery = useDebounce(filters?.searchQuery, 500);
 
-  const { snackbarAlertState, onDismiss } =
+  const { snackbarAlertState, onDismiss, setSnackbarAlertState } =
     useSnackbarAlert();
 
   const { pageNumber, changePageNumber } = usePagination();
-  const { response, isFetching, isError } = useGetUsersList({
+  const { response, isFetching, isError, refetch } = useGetUsersList({
     apiConfig: {
       params: {
         _page: pageNumber,
@@ -32,10 +36,63 @@ const Users: React.FC = (): React.ReactElement => {
     },
   });
 
+  const { mutate: deleteUser, isPending: isDeleteInProgress } =
+    useDeleteUser({
+      onSuccess: () => {
+        setSnackbarAlertState({
+          severity: 'success',
+          title: 'user Deleted.',
+          message: `User "${deleteConfirmationModalValues?.name}" is deleted successfully.`,
+        });
+
+        refetch();
+      },
+      onError: (err: Error) => {
+        setSnackbarAlertState({
+          severity: 'error',
+          title: 'ERROR.',
+          message: err.message,
+        });
+      },
+    });
+
+  const {
+    deleteConfirmationModalValues,
+    onDeleteConfirm,
+    showDeleteConfirmationModal,
+    onShowDeleteConfirmationModal,
+    onClose,
+  } = useDeleteConfirmationModal({ onDelete: deleteUser });  
+
   const noData = !response?.data?.length;
+
+  const usersTableColumnsWithActions = useMemo(
+    () => [
+      ...usersTableColumns,
+      {
+        id: 'actions',
+        cell: ({ row }) => {
+          const userValues = row.original;
+
+          return (
+            <Actions
+              onDeleteClick={() => {
+                onShowDeleteConfirmationModal(
+                  userValues.id,
+                  userValues.username,
+                );
+              }}
+            />
+          );
+        },
+      },
+    ],
+    [],
+  );
 
   return (
     <>
+    <LoadingBackdrop loading={!!isDeleteInProgress} />
       <Snackbar
         open={!!snackbarAlertState.message}
         severity={snackbarAlertState.severity}
@@ -62,7 +119,7 @@ const Users: React.FC = (): React.ReactElement => {
                 Components={{ Loading: 'table' }}
               >
                 <Table
-                  columns={usersTableColumns}
+                  columns={usersTableColumnsWithActions}
                   data={response?.data || []}
                   totalRecords={response?.items}
                   onPageChange={changePageNumber}
@@ -73,6 +130,11 @@ const Users: React.FC = (): React.ReactElement => {
           )}
         </TableContainer>
       </Stack>
+      <ConfirmationModal
+        onClose={onClose}
+        onSubmit={onDeleteConfirm}
+        open={showDeleteConfirmationModal}
+      />
     </>
   );
 };
