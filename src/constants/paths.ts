@@ -15,6 +15,8 @@ export const VIEW_PROCEDURE_PATH = '/procedures/:id';
 export const getEditProcedureRoute = (id: string) => `${PROCEDURES}/${id}/edit`;
 export const getViewProcedurePath = (id: string) => `${PROCEDURES}/${id}`;
 
+export const USERS = '/users';
+
 export const MEDICINES = '/medicines';
 export const INVENTORY = '/inventory';
 

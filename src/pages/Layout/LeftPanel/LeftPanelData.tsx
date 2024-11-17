@@ -6,6 +6,7 @@ import {
   MEDICINES,
   PATIENTS,
   PROCEDURES,
+  USERS,
 } from 'src/constants/paths';
 
 export const globalOptions = [
@@ -33,5 +34,10 @@ export const globalOptions = [
     title: 'Inventory',
     icon: <FiHome size="24px" />,
     route: INVENTORY,
+  },
+  {
+    title: 'Users',
+    icon: <FiHome size="24px" />,
+    route: USERS,
   },
 ];
