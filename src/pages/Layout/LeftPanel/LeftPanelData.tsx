@@ -1,3 +1,4 @@
+import React from 'react';
 import { AiOutlineMedicineBox } from 'react-icons/ai';
 import { FiClipboard, FiUsers } from 'react-icons/fi';
 import { MdOutlineInventory } from 'react-icons/md';
