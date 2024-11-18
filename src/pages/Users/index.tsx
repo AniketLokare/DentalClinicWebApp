@@ -20,6 +20,7 @@ import { useDeleteUser, useGetUsersList } from 'src/hooks/useUser';
 import useDeleteConfirmationModal from 'src/hooks/useDelete';
 import { getEditUserRoute, NEW_USER_PATH } from 'src/constants/paths';
 import { useNavigate } from 'react-router-dom';
+import { FiUser } from 'react-icons/fi';
 
 const Users: React.FC = (): React.ReactElement => {
   const navigate = useNavigate();
@@ -71,6 +72,14 @@ const Users: React.FC = (): React.ReactElement => {
 
   const usersTableColumnsWithActions = useMemo(
     () => [
+      {
+        id: 'avatar',
+        cell: () => {
+          return (
+            <FiUser size="20px" />
+          );
+        },
+      },
       ...usersTableColumns,
       {
         id: 'actions',

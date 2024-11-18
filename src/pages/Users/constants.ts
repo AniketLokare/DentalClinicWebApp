@@ -1,6 +1,6 @@
-import { ColumnDef } from "@tanstack/react-table";
-import { USERS } from "src/constants/paths";
-import {  object as yupObject, number, ObjectSchema, string } from "yup";
+import { ColumnDef } from '@tanstack/react-table';
+import { USERS } from 'src/constants/paths';
+import { object as yupObject, number, ObjectSchema, string } from 'yup';
 
 export const listUsersBreadcrumbLinks = [
   {
@@ -20,6 +20,18 @@ export const getAddEditBreadCrumbLinks = (isEdit = false) => [
   },
 ];
 
+export const userRoleProps = [
+  { 
+    menuItemLabel: 'Admin', 
+    menuItemValue: 'admin', 
+    menuItemId: 'admin' 
+  },
+  { 
+    menuItemLabel: 'User', 
+    menuItemValue: 'user', 
+    menuItemId: 'user' 
+  },
+];
 
 export const usersTableColumns: ColumnDef<User, string>[] = [
   {

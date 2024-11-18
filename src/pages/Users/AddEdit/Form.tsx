@@ -2,6 +2,7 @@ import React from 'react';
 import Stack from '@mui/material/Stack';
 import { FormInput } from 'src/components';
 import { useFormContext } from 'react-hook-form';
+import { userRoleProps } from '../constants';
 
 const UserForm: React.FC = (): JSX.Element => {
   const {
@@ -38,6 +39,8 @@ const UserForm: React.FC = (): JSX.Element => {
       <FormInput
         name="role"
         label="Role"
+        type="select"
+        menuItems={userRoleProps}
         control={control}
         placeholder="Enter user's role"
         error={errors.role?.message}
