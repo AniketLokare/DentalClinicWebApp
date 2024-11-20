@@ -71,7 +71,11 @@ const patients = createPatients();
 const users = createUsers();
 const medicines = createMedicines();
 
-const jsonData = JSON.stringify({ patients, procedures, users, medicines }, null, 2);
+const jsonData = JSON.stringify(
+  { patients, procedures, users, medicines },
+  null,
+  2,
+);
 
 if (fs.existsSync(`${dir}/db.json`)) {
   console.log('db.json already exists!');

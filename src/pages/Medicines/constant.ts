@@ -1,5 +1,5 @@
-import { ColumnDef } from "@tanstack/react-table";
-import { MEDICINES } from "src/constants/paths";
+import { ColumnDef } from '@tanstack/react-table';
+import { MEDICINES } from 'src/constants/paths';
 
 export const listMedicinesBreadcrumbLinks = [
   {
@@ -8,8 +8,7 @@ export const listMedicinesBreadcrumbLinks = [
   },
 ];
 
-
-export const medicinesTableColumns: ColumnDef<User, string>[] = [
+export const medicinesTableColumns: ColumnDef<Medicine, string>[] = [
   {
     header: 'Medicine Name',
     accessorKey: 'medicineName',
@@ -23,7 +22,7 @@ export const medicinesTableColumns: ColumnDef<User, string>[] = [
     accessorKey: 'medicineType',
   },
   {
-    header: 'medicine Price',
+    header: 'Medicine Price',
     accessorKey: 'medicinePrice',
   },
 ];

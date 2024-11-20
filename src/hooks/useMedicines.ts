@@ -1,7 +1,8 @@
-import { QueryKey, useQuery } from "@tanstack/react-query";
-import { AxiosRequestConfig } from "axios";
-import { MEDICINES } from "src/constants/paths";
-import axiosClient from "src/util/axios";
+import { QueryKey, useMutation, useQuery } from '@tanstack/react-query';
+import { AxiosRequestConfig } from 'axios';
+import { getMedicineWithIdRoute } from 'src/api/medicine/routes';
+import { MEDICINES } from 'src/constants/paths';
+import axiosClient from 'src/util/axios';
 
 /**
  * API
@@ -10,6 +11,9 @@ export const getMedicinesList = (config?: AxiosRequestConfig) =>
   axiosClient
     .get<PaginatedResponse<Medicine>>(MEDICINES, config)
     .then((res) => res.data);
+
+export const deleteMedicine = (id: string) =>
+  axiosClient.delete<null>(getMedicineWithIdRoute(id));
 
 /**
  * HOOKS
@@ -28,4 +32,11 @@ export const useGetMedicinesList = <Override = PaginatedResponse<Medicine>>(
   });
 
   return { response: data, ...rest };
+};
+
+export const useDeleteMedicine = (opts?: MutationConfig<null, string>) => {
+  return useMutation({
+    mutationFn: (id: string) => deleteMedicine(id),
+    ...opts,
+  });
 };

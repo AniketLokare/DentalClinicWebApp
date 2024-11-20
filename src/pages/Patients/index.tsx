@@ -41,7 +41,6 @@ const Patients: React.FC = (): JSX.Element => {
     apiConfig: {
       params: {
         _page: pageNumber,
-        // TODO: Change this to full text search
         firstName: debouncedSearchQuery,
       },
     },
@@ -84,10 +83,10 @@ const Patients: React.FC = (): JSX.Element => {
           const patientValues = row.original;
           // Determine the appropriate icon or avatar based on gender
           const icon =
-            patientValues.patientGender === 'male' ? 'businessman' : 'businesswoman';
-          return (
-            <Icon icon={icon} size="30px" />
-          );
+            patientValues.patientGender === 'male'
+              ? 'businessman'
+              : 'businesswoman';
+          return <Icon icon={icon} size="30px" />;
         },
       },
       ...patientsTableColumns,
@@ -105,7 +104,7 @@ const Patients: React.FC = (): JSX.Element => {
 
           return (
             <Actions
-              onAddClick={ ( ) => {
+              onAddClick={() => {
                 navigate(getEditProcedureRoute(patientValues.id));
               }}
               onEditClick={() => {
