@@ -20,6 +20,11 @@ export const getMedicineDetail = (id: string, config?: AxiosRequestConfig) =>
     .get<Medicine>(getMedicineWithIdRoute(id), config)
     .then((res) => res.data);
 
+export const patchMedicine = (id: string, payload: CreateMedicinePayload) =>
+  axiosClient.patch<Medicine, CreateMedicinePayload>(
+    getMedicineWithIdRoute(id),
+    payload,
+  );
 /**
  * HOOKS
  */
@@ -47,6 +52,18 @@ export const useGetMedicineDetail = <Override = Medicine>(
     queryKey,
     queryFn: ({ signal }) => getMedicineDetail(id, { ...apiConfig, signal }),
     enabled: !!id,
+  });
+};
+
+export const usePatchMedicine = (
+  id: string,
+  opts?: MutationConfig<Medicine, CreateMedicinePayload>,
+) => {
+  return useMutation({
+    mutationFn: (payload: CreateMedicinePayload) => {
+      return patchMedicine(id, payload);
+    },
+    ...opts,
   });
 };
 
