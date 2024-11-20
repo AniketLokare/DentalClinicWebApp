@@ -21,7 +21,7 @@ import {
   medicinesTableColumns,
 } from './constant';
 import useDeleteConfirmationModal from 'src/hooks/useDelete';
-import { getEditMedicineRoute, getViewPatientPath } from 'src/constants/paths';
+import { getEditMedicineRoute, getViewMedicinePath } from 'src/constants/paths';
 import { useNavigate } from 'react-router-dom';
 
 const Medicines: React.FC = (): React.ReactElement => {
@@ -78,7 +78,6 @@ const Medicines: React.FC = (): React.ReactElement => {
         id: 'actions',
         cell: ({ row }) => {
           const medicineValues = row.original;
-          console.log(medicineValues);
           return (
             <Actions
               onEditClick={() => {
@@ -91,7 +90,7 @@ const Medicines: React.FC = (): React.ReactElement => {
                 );
               }}
               onViewDetails={() => {
-                navigate(getViewPatientPath(medicineValues.id));
+                navigate(getViewMedicinePath(medicineValues.id));
               }}
             />
           );

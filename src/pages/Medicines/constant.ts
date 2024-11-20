@@ -8,6 +8,28 @@ export const listMedicinesBreadcrumbLinks = [
   },
 ];
 
+export const getAddEditBreadCrumbLinks = [
+  {
+    label: 'Medicines',
+    href: MEDICINES,
+  },
+  {
+    label: 'Edit Medicine',
+    href: '#',
+  },
+];
+
+export const viewMedicineBreadCrumbLinks = [
+  {
+    label: 'Medicines',
+    href: MEDICINES,
+  },
+  {
+    label: 'Medicine Details',
+    href: '#',
+  },
+];
+
 export const medicinesTableColumns: ColumnDef<Medicine, string>[] = [
   {
     header: 'Medicine Name',

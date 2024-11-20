@@ -15,6 +15,11 @@ export const getMedicinesList = (config?: AxiosRequestConfig) =>
 export const deleteMedicine = (id: string) =>
   axiosClient.delete<null>(getMedicineWithIdRoute(id));
 
+export const getMedicineDetail = (id: string, config?: AxiosRequestConfig) =>
+  axiosClient
+    .get<Medicine>(getMedicineWithIdRoute(id), config)
+    .then((res) => res.data);
+
 /**
  * HOOKS
  */
@@ -30,8 +35,19 @@ export const useGetMedicinesList = <Override = PaginatedResponse<Medicine>>(
     enabled: !!apiConfig,
     ...useQueryConfig,
   });
-
   return { response: data, ...rest };
+};
+
+export const useGetMedicineDetail = <Override = Medicine>(
+  opts: SingleUseQueryOption<Medicine, Override>,
+) => {
+  const { apiConfig, id } = opts;
+  const queryKey = ['medicine', id] as QueryKey;
+  return useQuery({
+    queryKey,
+    queryFn: ({ signal }) => getMedicineDetail(id, { ...apiConfig, signal }),
+    enabled: !!id,
+  });
 };
 
 export const useDeleteMedicine = (opts?: MutationConfig<null, string>) => {
