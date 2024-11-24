@@ -21,5 +21,13 @@ export const EDIT_USER_PATH = '/users/:id/edit';
 export const getEditUserRoute = (id: string) => `${USERS}/${id}/edit`;
 
 export const MEDICINES = '/medicines';
+export const getEditMedicineRoute = (id: string) => `${MEDICINES}/${id}/edit`;
+export const getViewMedicinePath = (id: string) => `${MEDICINES}/${id}`;
+export const NEW_MEDICINE_PATH = '/Medicines/new';
+export const EDIT_MEDICINE_PATH = '/Medicines/:id/edit';
+export const VIEW_MEDICINE_PATH = '/Medicines/:id';
+export const MEDICINES_ROUTE = '/medicines';
+
+
 export const INVENTORY = '/inventory';
 
