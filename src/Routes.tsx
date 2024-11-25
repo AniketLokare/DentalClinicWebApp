@@ -6,7 +6,10 @@ import {
   EDIT_PATIENT_PATH,
   INVENTORY,
   LOGIN,
+  NEW_MEDICINE_PATH,
   MEDICINES,
+  EDIT_MEDICINE_PATH,
+  VIEW_MEDICINE_PATH,
   NEW_PATIENT_PATH,
   PATIENTS,
   PROCEDURES,
@@ -51,6 +54,10 @@ const AppRoutes: React.FC = () => (
       <Route path={EDIT_USER_PATH} element={<AddEditUser />} />
 
       <Route path={MEDICINES} element={<Medicines />} />
+      <Route path={NEW_MEDICINE_PATH} element={<AddEditMedicine />} />
+      <Route path={EDIT_MEDICINE_PATH} element={<AddEditMedicine />} />
+      <Route path={VIEW_MEDICINE_PATH} element={<ViewMedicine />} />
+
       <Route path={INVENTORY} element={<Inventory />} />
     </Route>
   </Routes>
