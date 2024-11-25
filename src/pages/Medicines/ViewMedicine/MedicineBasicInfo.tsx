@@ -1,18 +1,17 @@
 import React from 'react';
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
-
 import { InfoField } from 'src/components';
 
 interface Medicine {
   name?: string;
-  pack?: string;
+  pack?: number;
   type?: string;
-  price?: string;
+  price?: number;
 }
 
 interface MedicineBasicInfoProps {
-  medicineDetails?: Medicine; 
+  medicineDetails?: Medicine;
 }
 
 const MedicineBasicInfo: React.FC<MedicineBasicInfoProps> = ({
@@ -35,7 +34,7 @@ const MedicineBasicInfo: React.FC<MedicineBasicInfoProps> = ({
           />
           <InfoField
             label="Medicine pack"
-            value={medicineDetails?.pack || "Not available"}
+            value={medicineDetails?.pack?.toString() || "Not available"} // Convert number to string
             flexBasis="50%"
           />
           <InfoField
@@ -45,7 +44,7 @@ const MedicineBasicInfo: React.FC<MedicineBasicInfoProps> = ({
           />
           <InfoField
             label="Medicine price"
-            value={medicineDetails?.price || "Not available"}
+            value={medicineDetails?.price?.toString() || "Not available"} // Convert number to string
             flexBasis="50%"
           />
         </Box>

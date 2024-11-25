@@ -10,24 +10,24 @@ export const getMedicinesList = (config?: AxiosRequestConfig) =>
   axiosClient
     .get<PaginatedResponse<Medicine>>(MEDICINES, config)
     .then((res) => res.data);
-    export const createMedicine = (
-      payload: CreateMedicinePayload,
-      config?: AxiosRequestConfig,
-    ) => axiosClient.post<Patient>(MEDICINES_ROUTE, payload, config);
-    
-    export const getMedicineDetail = (id: string, config?: AxiosRequestConfig) =>
-      axiosClient
-        .get<Patient>(getViewMedicinePath(id), config)
-        .then((res) => res.data);
-    
-    export const patchMedicine = (id: string, payload: CreatePatientPayload) =>
-      axiosClient.patch<Patient, CreatePatientPayload>(
-        getViewMedicinePath(id),
-        payload,
-      );
-    
-    export const deleteMedicine = (id: string) =>
-      axiosClient.delete<null>(getViewMedicinePath(id));
+export const createMedicine = (
+  payload: CreateMedicinePayload,
+  config?: AxiosRequestConfig,
+) => axiosClient.post<Medicine>(MEDICINES_ROUTE, payload, config);
+
+export const getMedicineDetail = (id: string, config?: AxiosRequestConfig) =>
+  axiosClient
+    .get<Medicine>(getViewMedicinePath(id), config)
+    .then((res) => res.data);
+
+export const patchMedicine = (id: string, payload: CreateMedicinePayload) =>
+  axiosClient.patch<Medicine, CreateMedicinePayload>(
+    getViewMedicinePath(id),
+    payload,
+  );
+
+export const deleteMedicine = (id: string) =>
+  axiosClient.delete<null>(getViewMedicinePath(id));
 
 /**
  * HOOKS
@@ -46,7 +46,7 @@ export const useGetMedicinesList = <Override = PaginatedResponse<Medicine>>(
   });
 
   return { response: data, ...rest };
-}; 
+};
 export const useCreateMedicine = (
   opts?: MutationConfig<Medicine, CreateMedicinePayload>,
 ) => {
@@ -56,9 +56,7 @@ export const useCreateMedicine = (
   });
 };
 
-export const useGetMedicineDetail = <Override = Medicine>(
-  opts: SingleUseQueryOption<Medicine, Override>,
-) => {
+export const useGetMedicineDetail = <Override = Medicine>(opts: SingleUseQueryOption<Medicine, Override>) => {
   const { apiConfig, id } = opts;
   const queryKey = ['registry', id] as QueryKey;
   return useQuery({
@@ -73,7 +71,7 @@ export const usePatchMedicine = (
   opts?: MutationConfig<Medicine, CreateMedicinePayload>,
 ) => {
   return useMutation({
-    mutationFn: (payload: CreatePatientPayload) => {
+    mutationFn: (payload: CreateMedicinePayload) => {
       return patchMedicine(id, payload);
     },
     ...opts,

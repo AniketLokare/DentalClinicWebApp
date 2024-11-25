@@ -1,5 +1,5 @@
 import React, { useMemo, useState } from 'react';
-import {Actions} from 'src/components';
+import { Actions } from 'src/components';
 import { useNavigate } from 'react-router-dom';
 import { getEditProcedureRoute, getEditMedicineRoute, NEW_MEDICINE_PATH } from 'src/constants/paths';
 import useDeleteConfirmationModal from 'src/hooks/useDelete';
@@ -25,10 +25,11 @@ const Medicines: React.FC = (): React.ReactElement => {
   const debouncedSearchQuery = useDebounce(filters?.searchQuery, 500);
 
   const { snackbarAlertState, onDismiss } = useSnackbarAlert();
-  const { onShowDeleteConfirmationModal } = useDeleteConfirmationModal({ 
+  const { onShowDeleteConfirmationModal } = useDeleteConfirmationModal({
     onDelete: (id: string) => {
-    console.log(`Delete item with ID: ${id}`);
-  },});
+      console.log(`Delete item with ID: ${id}`);
+    },
+  });
 
   const { pageNumber, changePageNumber } = usePagination();
   const { response, isFetching, isError } = useGetMedicinesList({
@@ -47,12 +48,11 @@ const Medicines: React.FC = (): React.ReactElement => {
       ...medicinesTableColumns,
       {
         id: 'actions',
-        cell: ({ row }: {row:{original:Medicine}}) => {
+        cell: ({ row }: { row: { original: Medicine } }) => {
           const medicineValues = row.original;
 
           return (
             <Actions
-              onAddClick={() => navigate(getEditProcedureRoute(medicineValues.id))}
               onEditClick={() => navigate(getEditMedicineRoute(medicineValues.id))}
               onDeleteClick={() =>
                 onShowDeleteConfirmationModal(
@@ -61,7 +61,7 @@ const Medicines: React.FC = (): React.ReactElement => {
                 )
               }
               onViewDetails={() => {
-               
+
                 navigate(getViewMedicinePath(medicineValues.id));
               }}
             />
@@ -85,9 +85,9 @@ const Medicines: React.FC = (): React.ReactElement => {
           pageTitle="MEDICINES"
           breadcrumbLinks={listMedicinesBreadcrumbLinks}
           rightSideButtonText="New Medicine"
-  rightSideButtonClickEvent={() => {
-    navigate(NEW_MEDICINE_PATH);
-  }}
+          rightSideButtonClickEvent={() => {
+            navigate(NEW_MEDICINE_PATH);
+          }}
         />
         <TableContainer
           onFiltersChange={(filters) => {

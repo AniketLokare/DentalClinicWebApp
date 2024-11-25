@@ -22,14 +22,14 @@ import {
 } from '../constants'
 
 import {
-  
-useCreateMedicine,
 
-useGetMedicineDetail,
-usePatchMedicine,
+  useCreateMedicine,
+
+  useGetMedicineDetail,
+  usePatchMedicine,
 
 
-  
+
 } from 'src/hooks/useMedicines';
 import { MEDICINES } from 'src/constants/paths';
 import useSnackbarAlert from 'src/hooks/useSnackbarAlert';

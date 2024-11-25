@@ -98,7 +98,7 @@ const ViewMedicine: React.FC = (): JSX.Element => {
               <Typography
                 sx={{ fontWeight: '600', fontSize: '26px', lineHeight: '31px' }}
               >
-                {data?.firstName} {data?.lastName}
+                {data?.medicineName}
               </Typography>
             </Box>
             <Box
@@ -120,7 +120,7 @@ const ViewMedicine: React.FC = (): JSX.Element => {
                 onClick={() =>
                   onShowDeleteConfirmationModal(
                     data?.id || '',
-                    data?.firstName || '',
+                    data?.medicineName || '',
                   )
                 }
                 startIcon={<Icon icon="trash" size="15" />}
@@ -130,7 +130,7 @@ const ViewMedicine: React.FC = (): JSX.Element => {
               </Button>
             </Box>
           </Box>
-          <MedicineBasicInfo medicineDetails={MedicineBasicInfo} />
+          <MedicineBasicInfo medicineDetails={data} />
           <Box>
             <Button
               variant="outlined"

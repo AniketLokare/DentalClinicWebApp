@@ -11,7 +11,7 @@ export const listMedicinesBreadcrumbLinks = [
 ];
 
 
-export const medicinesTableColumns: ColumnDef<User, string>[] = [
+export const medicinesTableColumns: ColumnDef<Medicine, unknown>[] = [
   {
     header: 'Medicine Name',
     accessorKey: 'medicineName',
@@ -25,30 +25,53 @@ export const medicinesTableColumns: ColumnDef<User, string>[] = [
     accessorKey: 'medicineType',
   },
   {
-    header: 'medicine Price',
+    header: 'Medicine Price',
     accessorKey: 'medicinePrice',
   },
 ];
 
 
 export const medicineDefaultFormValues = {
-  name: '',
-  pack: '',
-  type:'',
-  price: 0,
+  medicineName: '',
+  medicinePack: 0,
+  medicineType: '',
+  medicinePrice: 0,
 };
 
 export const medicineFormValidationSchema = yup.object().shape({
-  name: yup.string().required('Medicine name is required'),
-  pack: yup.string().required('Pack is required'),
-  type: yup.string().required('type information is required'),
-  price: yup.number().required('Price is required').positive('Must be a positive number'),
+  medicineName: yup
+    .string()
+    .required('Medicine name is required'),
+
+  medicinePack: yup
+    .number()
+    .transform((value, originalValue) =>
+      originalValue ? Number(originalValue) : value
+    )
+    .typeError('Pack must be a valid number')
+    .required('Pack is required')
+    .positive('Pack must be a positive number')
+    .min(1, 'Pack must be at least 1'),
+
+  medicineType: yup
+    .string()
+    .required('Type information is required'),
+
+  medicinePrice: yup
+    .number()
+    .transform((value, originalValue) =>
+      originalValue ? Number(originalValue) : value
+    )
+    .typeError('Price must be a valid number')
+    .required('Price is required')
+    .positive('Price must be a positive number')
+    .min(0.01, 'Price must be greater than zero'),
 });
 
 export const getAddEditMedicineBreadCrumbLinks = (isEdit: boolean) => [
-  { label: 'Home', path: '/home',href:'/' },
-  { label: 'Medicines', path: '/medicines' },
-  { label: isEdit ? 'Edit Medicine' : 'Add Medicine', path: '#' },
+  { label: 'Home', path: '/home', href: '/' },
+  { label: 'Medicines', path: '/medicines', href: '#' },
+  { label: isEdit ? 'Edit Medicine' : 'Add Medicine', path: '#', href: '#' },
 ];
 
 export const viewMedicineBreadCrumbLinks = [
@@ -62,8 +85,8 @@ export const viewMedicineBreadCrumbLinks = [
   },
 ];
 export interface CreateMedicinePayload {
-  name: string;
-  pack: string;
-  type: string;
-  price: number;
+  medicineName: string;
+  medicinePack: number;
+  medicineType: string;
+  medicinePrice: number;
 }

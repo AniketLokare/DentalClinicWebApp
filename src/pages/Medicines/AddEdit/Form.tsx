@@ -8,7 +8,7 @@ const MedicineForm: React.FC = (): JSX.Element => {
   const {
     control,
     formState: { errors },
-    
+
   } = useFormContext<CreateMedicinePayload>();
 
 
@@ -40,8 +40,8 @@ const MedicineForm: React.FC = (): JSX.Element => {
         trim
       />
       <FormInput
-        type="number"
-        name="medicinePrice"
+        type="medicinePrice"
+        name="price"
         label="Medicine Price"
         control={control}
         placeholder="Enter Medicine price"
