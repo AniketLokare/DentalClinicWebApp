@@ -1,8 +1,16 @@
 import { ColumnDef } from "@tanstack/react-table";
 import { MEDICINES } from "src/constants/paths";
-
 import * as yup from 'yup';
 
+// Interface for Medicine
+export interface Medicine {
+  medicineName: string;
+  medicinePack: number;
+  medicineType: string;
+  medicinePrice: number;
+}
+
+// Breadcrumbs for listing medicines
 export const listMedicinesBreadcrumbLinks = [
   {
     label: 'Medicines',
@@ -10,8 +18,8 @@ export const listMedicinesBreadcrumbLinks = [
   },
 ];
 
-
-export const medicinesTableColumns: ColumnDef<Medicine, unknown>[] = [
+// Columns definition for the medicine table
+export const medicinesTableColumns: ColumnDef<Medicine, string | number>[] = [
   {
     header: 'Medicine Name',
     accessorKey: 'medicineName',
@@ -30,14 +38,15 @@ export const medicinesTableColumns: ColumnDef<Medicine, unknown>[] = [
   },
 ];
 
-
-export const medicineDefaultFormValues = {
+// Default form values for creating/updating medicine
+export const medicineDefaultFormValues: CreateMedicinePayload = {
   medicineName: '',
   medicinePack: 0,
   medicineType: '',
   medicinePrice: 0,
 };
 
+// Validation schema for the medicine form
 export const medicineFormValidationSchema = yup.object().shape({
   medicineName: yup
     .string()
@@ -68,12 +77,14 @@ export const medicineFormValidationSchema = yup.object().shape({
     .min(0.01, 'Price must be greater than zero'),
 });
 
+// Breadcrumbs for adding/editing a medicine
 export const getAddEditMedicineBreadCrumbLinks = (isEdit: boolean) => [
   { label: 'Home', path: '/home', href: '/' },
   { label: 'Medicines', path: '/medicines', href: '#' },
   { label: isEdit ? 'Edit Medicine' : 'Add Medicine', path: '#', href: '#' },
 ];
 
+// Breadcrumbs for viewing medicine details
 export const viewMedicineBreadCrumbLinks = [
   {
     label: 'Medicines',
@@ -84,6 +95,8 @@ export const viewMedicineBreadCrumbLinks = [
     href: '#',
   },
 ];
+
+// Payload interface for creating medicine
 export interface CreateMedicinePayload {
   medicineName: string;
   medicinePack: number;

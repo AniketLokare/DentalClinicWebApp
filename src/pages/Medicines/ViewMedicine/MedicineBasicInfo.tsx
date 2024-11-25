@@ -1,17 +1,12 @@
+// src/components/MedicineBasicInfo.tsx
 import React from 'react';
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import { InfoField } from 'src/components';
-
-interface Medicine {
-  name?: string;
-  pack?: number;
-  type?: string;
-  price?: number;
-}
+import { Medicine } from 'src/types';  // Import the shared Medicine type
 
 interface MedicineBasicInfoProps {
-  medicineDetails?: Medicine;
+  medicineDetails?: Medicine;  // Use the Medicine type
 }
 
 const MedicineBasicInfo: React.FC<MedicineBasicInfoProps> = ({
@@ -27,24 +22,28 @@ const MedicineBasicInfo: React.FC<MedicineBasicInfoProps> = ({
           flexWrap="wrap"
           rowGap="20px"
         >
+          {/* Medicine Name */}
           <InfoField
-            label="Medicine name"
-            value={medicineDetails?.name || "Not available"}
+            label="Medicine Name"
+            value={medicineDetails?.name || 'Not available'}
             flexBasis="50%"
           />
+          {/* Medicine Pack */}
           <InfoField
-            label="Medicine pack"
-            value={medicineDetails?.pack?.toString() || "Not available"} // Convert number to string
+            label="Medicine Pack"
+            value={medicineDetails?.pack?.toString() || 'Not available'} // Convert number to string
             flexBasis="50%"
           />
+          {/* Medicine Type */}
           <InfoField
-            label="Medicine type"
-            value={medicineDetails?.type || "Not available"}
+            label="Medicine Type"
+            value={medicineDetails?.type || 'Not available'}
             flexBasis="50%"
           />
+          {/* Medicine Price */}
           <InfoField
-            label="Medicine price"
-            value={medicineDetails?.price?.toString() || "Not available"} // Convert number to string
+            label="Medicine Price"
+            value={medicineDetails?.price !== undefined ? `$${medicineDetails.price}` : 'Not available'}
             flexBasis="50%"
           />
         </Box>
