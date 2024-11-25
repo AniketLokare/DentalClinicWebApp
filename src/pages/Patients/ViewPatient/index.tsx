@@ -24,7 +24,7 @@ import useSnackbarAlert from 'src/hooks/useSnackbarAlert';
 
 const ViewPatient: React.FC = (): JSX.Element => {
   const { id = '' } = useParams();
-  console.log(id);
+
   const navigate = useNavigate();
   const { isFetching, data } = useGetPatientDetail({
     id,
