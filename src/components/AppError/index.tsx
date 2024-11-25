@@ -1,3 +1,4 @@
+import React from 'react';
 import { BLUE_MATISSE, PRIMARY_BLUE, SAIL_BLUE } from '../../constants/colors';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
