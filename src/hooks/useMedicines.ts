@@ -26,6 +26,9 @@ export const getMedicineDetail = (id: string, config?: AxiosRequestConfig) =>
   axiosClient
     .get<Medicine>(getMedicineWithIdRoute(id), config)
     .then((res) => res.data);
+
+export const deleteMedicine = (id: string) =>
+  axiosClient.delete<null>(getMedicineWithIdRoute(id));
 /**
  * HOOKS
  */
@@ -75,5 +78,12 @@ export const useGetMedicineDetail = <Override = Medicine>(
     queryKey,
     queryFn: ({ signal }) => getMedicineDetail(id, { ...apiConfig, signal }),
     enabled: !!id,
+  });
+};
+
+export const useDeleteMedicine = (opts?: MutationConfig<null, string>) => {
+  return useMutation({
+    mutationFn: (id: string) => deleteMedicine(id),
+    ...opts,
   });
 };
