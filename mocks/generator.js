@@ -58,11 +58,12 @@ const createUsers = () => {
 
 const createMedicines = () => {
   return Array.from({ length: 100 }, () => ({
+    id: faker.number.int({ min: 1, max: 9999 }),
     medicineId: faker.number.int({ min: 1, max: 9999 }),
     medicineName: faker.person.fullName(),
     medicinePack: faker.number.int({ min: 1, max: 9999 }),
     medicineType: faker.lorem.sentence(),
-    medicinePrice: faker.number.int({ min: 1, max: 9999 }),
+    medicineQuantity: faker.number.int({ min: 1, max: 9999 }),
   }));
 };
 

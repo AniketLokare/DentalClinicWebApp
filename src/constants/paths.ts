@@ -21,5 +21,9 @@ export const EDIT_USER_PATH = '/users/:id/edit';
 export const getEditUserRoute = (id: string) => `${USERS}/${id}/edit`;
 
 export const MEDICINES = '/medicines';
+export const NEW_MEDICINE_PATH = '/medicines/new';
+export const EDIT_MEDICINE_PATH = '/medicines/:id/edit';
+export const getEditMedicineRoute = (id: string) => `${MEDICINES}/${id}/edit`;
+
 export const INVENTORY = '/inventory';
 

@@ -13,9 +13,12 @@ import { usePagination } from 'src/hooks/usePagination';
 import { useDebounce } from '@uidotdev/usehooks';
 import useSnackbarAlert from 'src/hooks/useSnackbarAlert';
 import { useGetMedicinesList } from 'src/hooks/useMedicines';
-import { listMedicinesBreadcrumbLinks, medicinesTableColumns } from './constant';
+import { listMedicinesBreadcrumbLinks, medicinesTableColumns } from './constants';
+import { NEW_MEDICINE_PATH } from 'src/constants/paths';
+import { useNavigate } from 'react-router-dom';
 
 const Medicines: React.FC = (): React.ReactElement => {
+  const navigate = useNavigate();
   const [filters, setFilters] = useState<FiltersState>();
   const debouncedSearchQuery = useDebounce(filters?.searchQuery, 500);
 
@@ -46,6 +49,10 @@ const Medicines: React.FC = (): React.ReactElement => {
         <SubPanel
           pageTitle="MEDICINES"
           breadcrumbLinks={listMedicinesBreadcrumbLinks}
+          rightSideButtonText="Add Medicine"
+          rightSideButtonClickEvent={() => {
+            navigate(NEW_MEDICINE_PATH);
+          }}
         />
         <TableContainer
           onFiltersChange={(filters) => {

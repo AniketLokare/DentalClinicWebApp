@@ -16,6 +16,8 @@ import {
   USERS,
   NEW_USER_PATH,
   EDIT_USER_PATH,
+  NEW_MEDICINE_PATH,
+  EDIT_MEDICINE_PATH,
 } from './constants/paths';
 import Login from './pages/Login';
 import ProtectedRoute from './pages/Login/ProtectedRoute';
@@ -29,6 +31,7 @@ import ViewProcedure from './pages/Procedures/ViewProcedure';
 import AddEditProcedure from './pages/Procedures/AddEdit';
 import Users from './pages/Users';
 import AddEditUser from './pages/Users/AddEdit';
+import AddEditMedicine from './pages/Medicines/AddEdit';
 
 const AppRoutes: React.FC = () => (
   <Routes>
@@ -51,6 +54,9 @@ const AppRoutes: React.FC = () => (
       <Route path={EDIT_USER_PATH} element={<AddEditUser />} />
 
       <Route path={MEDICINES} element={<Medicines />} />
+      <Route path={NEW_MEDICINE_PATH} element={<AddEditMedicine />} />
+      <Route path={EDIT_MEDICINE_PATH} element={<AddEditMedicine />} />
+
       <Route path={INVENTORY} element={<Inventory />} />
     </Route>
   </Routes>
