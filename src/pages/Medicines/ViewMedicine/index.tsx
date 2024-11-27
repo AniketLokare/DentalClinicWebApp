@@ -14,37 +14,39 @@ import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 import ConfirmationModal from 'src/components/ConfirmationModal';
 import { useNavigate, useParams } from 'react-router-dom';
-import { useDeletePatient, useGetPatientDetail } from 'src/hooks/usePatients';
-import { viewPatientBreadCrumbLinks } from '../constants';
-import { getEditPatientRoute, PATIENTS } from 'src/constants/paths';
-import PatientBasicInfo from './PatientBasicInfo';
+import MedicineBasicInfo from './MedicineBasicInfo';
 import { ERROR_RED } from 'src/constants/colors';
 import useDeleteConfirmationModal from 'src/hooks/useDelete';
 import useSnackbarAlert from 'src/hooks/useSnackbarAlert';
+import { getEditMedicineRoute, MEDICINES } from 'src/constants/paths';
+import {
+  useDeleteMedicine,
+  useGetMedicineDetail,
+} from 'src/hooks/useMedicines';
+import { viewMedicineBreadCrumbLinks } from '../constant';
 
-const ViewPatient: React.FC = (): JSX.Element => {
+const ViewMedicine: React.FC = (): JSX.Element => {
   const { id = '' } = useParams();
-  console.log(id);
   const navigate = useNavigate();
-  const { isFetching, data } = useGetPatientDetail({
+  const { isFetching, data } = useGetMedicineDetail({
     id,
   });
   const { snackbarAlertState, onDismiss, setSnackbarAlertState } =
     useSnackbarAlert();
 
-  const onEditPatient = () => {
-    navigate(getEditPatientRoute(id));
+  const onEditMedicine = () => {
+    navigate(getEditMedicineRoute(id));
   };
 
-  const { mutate: deletePatient, isPending: isDeleteInProgress } =
-    useDeletePatient({
+  const { mutate: deleteMedicine, isPending: isDeleteInProgress } =
+    useDeleteMedicine({
       onSuccess: () => {
-        navigate(PATIENTS, {
+        navigate(MEDICINES, {
           state: {
             alert: {
               severity: 'success',
-              title: 'Patient Deleted.',
-              message: `Patient "${deleteConfirmationModalValues?.name}" is deleted successfully.`,
+              title: 'Medicine Deleted.',
+              message: `Medicine "${deleteConfirmationModalValues?.name}" is deleted successfully.`,
             },
           },
         });
@@ -63,7 +65,7 @@ const ViewPatient: React.FC = (): JSX.Element => {
     showDeleteConfirmationModal,
     onShowDeleteConfirmationModal,
     onClose,
-  } = useDeleteConfirmationModal({ onDelete: deletePatient });
+  } = useDeleteConfirmationModal({ onDelete: deleteMedicine });
 
   return (
     <ErrorBoundary fallbackComponent={FormError}>
@@ -76,8 +78,8 @@ const ViewPatient: React.FC = (): JSX.Element => {
       <LoadingBackdrop loading={isDeleteInProgress} />
 
       <SubPanel
-        pageTitle="PATIENT DETAILS"
-        breadcrumbLinks={viewPatientBreadCrumbLinks}
+        pageTitle="MEDICINE DETAILS"
+        breadcrumbLinks={viewMedicineBreadCrumbLinks}
       />
       <PageLoader isLoading={isFetching} Components={{ Loading: 'form' }}>
         <Stack spacing={3} sx={{ marginTop: '60px' }}>
@@ -99,7 +101,7 @@ const ViewPatient: React.FC = (): JSX.Element => {
               <Typography
                 sx={{ fontWeight: '600', fontSize: '26px', lineHeight: '31px' }}
               >
-                {data?.firstName} {data?.lastName}
+                {data?.medicineName}
               </Typography>
             </Box>
             <Box
@@ -110,7 +112,7 @@ const ViewPatient: React.FC = (): JSX.Element => {
             >
               <Button
                 variant="outlined"
-                onClick={onEditPatient}
+                onClick={onEditMedicine}
                 startIcon={<Icon icon="edit" size="15" />}
                 sx={{ marginRight: '20px' }}
               >
@@ -121,7 +123,7 @@ const ViewPatient: React.FC = (): JSX.Element => {
                 onClick={() =>
                   onShowDeleteConfirmationModal(
                     data?.id || '',
-                    data?.firstName || '',
+                    data?.medicineName || '',
                   )
                 }
                 startIcon={<Icon icon="trash" size="15" />}
@@ -131,7 +133,7 @@ const ViewPatient: React.FC = (): JSX.Element => {
               </Button>
             </Box>
           </Box>
-          <PatientBasicInfo patientDetails={data} />
+          <MedicineBasicInfo medicineDetails={data} />
           <Box>
             <Button
               variant="outlined"
@@ -153,4 +155,4 @@ const ViewPatient: React.FC = (): JSX.Element => {
   );
 };
 
-export default ViewPatient;
+export default ViewMedicine;
