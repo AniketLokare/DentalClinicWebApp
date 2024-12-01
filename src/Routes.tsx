@@ -18,6 +18,7 @@ import {
   EDIT_USER_PATH,
   NEW_MEDICINE_PATH,
   EDIT_MEDICINE_PATH,
+  SUPPLIERS,
 } from './constants/paths';
 import Login from './pages/Login';
 import ProtectedRoute from './pages/Login/ProtectedRoute';
@@ -32,6 +33,7 @@ import AddEditProcedure from './pages/Procedures/AddEdit';
 import Users from './pages/Users';
 import AddEditUser from './pages/Users/AddEdit';
 import AddEditMedicine from './pages/Medicines/AddEdit';
+import Suppliers from './pages/Inventory/Suppliers';
 
 const AppRoutes: React.FC = () => (
   <Routes>
@@ -58,6 +60,8 @@ const AppRoutes: React.FC = () => (
       <Route path={EDIT_MEDICINE_PATH} element={<AddEditMedicine />} />
 
       <Route path={INVENTORY} element={<Inventory />} />
+
+      <Route path={SUPPLIERS} element={<Suppliers />} />
     </Route>
   </Routes>
 );

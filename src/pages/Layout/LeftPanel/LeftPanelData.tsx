@@ -9,6 +9,7 @@ import {
   MEDICINES,
   PATIENTS,
   PROCEDURES,
+  SUPPLIERS,
   USERS,
 } from 'src/constants/paths';
 
@@ -37,6 +38,11 @@ export const globalOptions = [
     title: 'Inventory',
     icon: <MdOutlineInventory size="24px" />,
     route: INVENTORY,
+  },
+  {
+    title: 'Suppliers',
+    icon: <MdOutlineInventory size="24px" />,
+    route: SUPPLIERS,
   },
   {
     title: 'Users',

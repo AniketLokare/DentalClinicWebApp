@@ -67,12 +67,23 @@ const createMedicines = () => {
   }));
 };
 
+const createSuppliers = () => {
+  return Array.from({ length: 10 }, () => ({
+    id: faker.number.int({ min: 1, max: 9999 }),
+    supplierId: faker.number.int({ min: 1, max: 9999 }),
+    supplierName: faker.company.name(),
+    supplierAddress: faker.address.streetAddress(),
+    supplierMobile: faker.phone.number(),  
+  }));
+};
+
 const procedures = createProcedures();
 const patients = createPatients();
 const users = createUsers();
 const medicines = createMedicines();
+const suppliers = createSuppliers();
 
-const jsonData = JSON.stringify({ patients, procedures, users, medicines }, null, 2);
+const jsonData = JSON.stringify({ patients, procedures, users, medicines, suppliers }, null, 2);
 
 if (fs.existsSync(`${dir}/db.json`)) {
   console.log('db.json already exists!');
