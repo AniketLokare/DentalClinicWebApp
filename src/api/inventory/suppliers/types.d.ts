@@ -3,7 +3,7 @@ interface Supplier {
   supplierId: number;
   supplierName: string;
   supplierAddress: string;
-  supplierPhone: string;
+  supplierMobile: string;
 }
 
 type CreateSupplierPayload = Omit<Supplier, 'supplierId' | 'id'>;

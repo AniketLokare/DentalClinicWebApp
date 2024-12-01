@@ -30,11 +30,11 @@ const SupplierForm: React.FC = (): JSX.Element => {
         trim
       />
       <FormInput
-        name="supplierPhone"
+        name="supplierMobile"
         label="Supplier Mobile"
         control={control}  
         placeholder="Enter supplier contact number"
-        error={errors.supplierPhone?.message}
+        error={errors.supplierMobile?.message}
         trim
       />
     </Stack>

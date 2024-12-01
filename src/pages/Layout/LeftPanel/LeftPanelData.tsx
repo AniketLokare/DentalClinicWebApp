@@ -1,6 +1,6 @@
 import React from 'react';
 import { AiOutlineMedicineBox } from 'react-icons/ai';
-import { FiClipboard, FiUsers } from 'react-icons/fi';
+import { FiClipboard, FiTruck, FiUsers } from 'react-icons/fi';
 import { MdOutlineInventory } from 'react-icons/md';
 import { RxDashboard } from 'react-icons/rx';
 import {
@@ -41,7 +41,7 @@ export const globalOptions = [
   },
   {
     title: 'Suppliers',
-    icon: <MdOutlineInventory size="24px" />,
+    icon: <FiTruck size="24px" />,
     route: SUPPLIERS,
   },
   {

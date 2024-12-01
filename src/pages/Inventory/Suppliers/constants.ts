@@ -43,11 +43,11 @@ export const suppliersTableColumns: ColumnDef<Supplier, string>[] = [
 export const supplierDefaultFormValues: CreateSupplierPayload = {
   supplierName: '',
   supplierAddress: '',
-  supplierPhone: '',
+  supplierMobile: '',
 };
 
 export const supplierFormValidationSchema: ObjectSchema<CreateSupplierPayload> = yupObject({
   supplierName: requiredField,
   supplierAddress: requiredField,
-  supplierPhone: requiredField,
+  supplierMobile: requiredField,
 });

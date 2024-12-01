@@ -9,6 +9,8 @@ import {
   TableContainer,
   Snackbar,
   Actions,
+  LoadingBackdrop,
+  ConfirmationModal,
 } from 'src/components';
 import { usePagination } from 'src/hooks/usePagination';
 import { useDebounce } from '@uidotdev/usehooks';
@@ -17,19 +19,20 @@ import {
   listSuppliersBreadcrumbLinks,
   suppliersTableColumns,
 } from './constants';
-import { useGetSuppliersList } from 'src/hooks/useSuppliers';
+import { useDeleteSupplier, useGetSuppliersList } from 'src/hooks/useSuppliers';
 import { useNavigate } from 'react-router-dom';
 import { getEditSupplierRoute, NEW_SUPPLIER_PATH } from 'src/constants/paths';
+import useDeleteConfirmationModal from 'src/hooks/useDelete';
 
 const Suppliers: React.FC = (): React.ReactElement => {
   const navigate = useNavigate();
   const [filters, setFilters] = useState<FiltersState>();
   const debouncedSearchQuery = useDebounce(filters?.searchQuery, 500);
 
-  const { snackbarAlertState, onDismiss } = useSnackbarAlert();
+  const { snackbarAlertState, onDismiss, setSnackbarAlertState } = useSnackbarAlert();
 
   const { pageNumber, changePageNumber } = usePagination();
-  const { response, isFetching, isError } = useGetSuppliersList({
+  const { response, isFetching, isError, refetch } = useGetSuppliersList({
     apiConfig: {
       params: {
         _page: pageNumber,
@@ -37,6 +40,33 @@ const Suppliers: React.FC = (): React.ReactElement => {
       },
     },
   });
+
+  const { mutate: deleteSupplier, isPending: isDeleteInProgress } =
+    useDeleteSupplier({
+      onSuccess: () => {
+        setSnackbarAlertState({
+          severity: 'success',
+          title: 'Supplier Deleted.',
+          message: `Supplier "${deleteConfirmationModalValues?.name}" is deleted successfully.`,
+        });
+
+        refetch();
+      },
+      onError: (err: Error) => {
+        setSnackbarAlertState({
+          severity: 'error',
+          title: 'ERROR.',
+          message: err.message,
+        });
+      },
+    });
+  const {
+    deleteConfirmationModalValues,
+    onDeleteConfirm,
+    showDeleteConfirmationModal,
+    onShowDeleteConfirmationModal,
+    onClose,
+  } = useDeleteConfirmationModal({ onDelete: deleteSupplier });
 
   const noData = !response?.data?.length;
 
@@ -53,6 +83,12 @@ const Suppliers: React.FC = (): React.ReactElement => {
               onEditClick={() => {
                 navigate(getEditSupplierRoute(supplierValues.id));
               }}
+              onDeleteClick={() => {
+                onShowDeleteConfirmationModal(
+                  supplierValues.id,
+                  supplierValues.supplierName,
+                );
+              }}
             />
           );
         },
@@ -63,6 +99,7 @@ const Suppliers: React.FC = (): React.ReactElement => {
 
   return (
     <>
+      <LoadingBackdrop loading={!!isDeleteInProgress} />
       <Snackbar
         open={!!snackbarAlertState.message}
         severity={snackbarAlertState.severity}
@@ -104,6 +141,11 @@ const Suppliers: React.FC = (): React.ReactElement => {
           )}
         </TableContainer>
       </Stack>
+      <ConfirmationModal
+        onClose={onClose}
+        onSubmit={onDeleteConfirm}
+        open={showDeleteConfirmationModal}
+      />
     </>
   );
 };

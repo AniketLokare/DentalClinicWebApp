@@ -29,6 +29,10 @@ export const patchSupplier = (id: string, payload: CreateSupplierPayload) =>
     getSupplierWithIdRoute(id),
     payload,
   );
+
+export const deleteSupplier = (id: string) =>
+  axiosClient.delete<null>(getSupplierWithIdRoute(id));
+  
 /**
  * HOOKS
  */
@@ -77,6 +81,13 @@ export const usePatchSupplier = (
     mutationFn: (payload: CreateSupplierPayload) => {
       return patchSupplier(id, payload);
     },
+    ...opts,
+  });
+};
+
+export const useDeleteSupplier = (opts?: MutationConfig<null, string>) => {
+  return useMutation({
+    mutationFn: (id: string) => deleteSupplier(id),
     ...opts,
   });
 };
