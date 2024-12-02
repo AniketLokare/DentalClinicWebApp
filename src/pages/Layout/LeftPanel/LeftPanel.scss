@@ -5,6 +5,26 @@
   flex-direction: column;
   min-width: 234px;
   height: 100%;
+  margin-top: 5px;
   justify-content: space-between;
-  border-right: 1px solid color_variables.$ash-gray;
+  transition: min-width 0.2s;
+  background-color: color_variables.$lighter-gray;
+
+&.collapsed {
+  min-width: 30px;
+
+  .MuiListItemText-root {
+    display: none;
+  }
+}
+
+.toggle-icon {
+  display: flex;
+  justify-content: right;
+  align-items: center;
+  padding: 10px;
+  cursor: pointer;
+  border: none;
+}
+
 }

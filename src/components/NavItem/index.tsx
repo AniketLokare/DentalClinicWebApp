@@ -5,6 +5,7 @@ import {
   BLACK,
   FADED_BLACK,
   GRAY34,
+  LIGHT_GRAY,
   PRIMARY_BLUE,
   WHITE_SMOKE,
 } from 'src/constants/colors';
@@ -64,7 +65,8 @@ export const NavItem: React.FC<NavItemProps> = ({
       <ListItem
         sx={{
           padding: 0,
-          borderLeft: isActive ? `3px solid ${PRIMARY_BLUE}` : 'none',
+          borderBottom: isActive ? `3px solid ${PRIMARY_BLUE}` : 'none',
+          backgroundColor: isActive ? LIGHT_GRAY : 'transparent',
         }}
       >
         <ListItemButton
@@ -75,7 +77,7 @@ export const NavItem: React.FC<NavItemProps> = ({
             sx={{
               minWidth: 0,
               marginRight: '14px',
-              color: isActive ? PRIMARY_BLUE : FADED_BLACK,
+              color: isActive ? PRIMARY_BLUE : FADED_BLACK,         
             }}
           >
             {icon}
@@ -94,7 +96,7 @@ export const NavItem: React.FC<NavItemProps> = ({
             <ListItemIcon
               sx={{
                 position: 'absolute',
-                right: 0,
+                right: 0,       
                 display: 'flex',
                 justifyContent: 'space-around',
               }}
