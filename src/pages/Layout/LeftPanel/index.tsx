@@ -16,18 +16,19 @@ const LeftPanel: React.FC = () => {
 
   return (
     <Box className={`leftPanel ${isCollapsed ? 'collapsed' : ''}`}>
-      <List sx={{ marginTop: '30px' }}>
-        {globalOptions.map((item) => (
-          <NavItem key={item.title} option={item} />
-        ))}
-      </List>
-      <button
+       <button
         className="toggle-icon"
         onClick={togglePanel}
         aria-label={isCollapsed ? 'Expand panel' : 'Collapse panel'}
       >
         {isCollapsed ? <FiChevronsRight size="24px" /> : <FiChevronsLeft size="24px" />}
       </button>
+      <List>
+        {globalOptions.map((item) => (
+          <NavItem key={item.title} option={item} />
+        ))}
+      </List>
+    
     </Box>
   );
 };
