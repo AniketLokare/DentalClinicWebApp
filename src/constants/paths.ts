@@ -2,6 +2,8 @@ export const DASHBOARD_PATH = '/';
 
 export const LOGIN = '/login';
 
+export const APPOINTMENTS = '/appointments';
+
 export const PATIENTS = '/patients';
 export const NEW_PATIENT_PATH = '/patients/new';
 export const EDIT_PATIENT_PATH = '/patients/:id/edit';
@@ -20,12 +22,17 @@ export const NEW_USER_PATH = '/users/new';
 export const EDIT_USER_PATH = '/users/:id/edit';
 export const getEditUserRoute = (id: string) => `${USERS}/${id}/edit`;
 
+export const INVENTORY = '/inventory';
+
 export const MEDICINES = '/medicines';
 export const NEW_MEDICINE_PATH = '/medicines/new';
 export const EDIT_MEDICINE_PATH = '/medicines/:id/edit';
 export const getEditMedicineRoute = (id: string) => `${MEDICINES}/${id}/edit`;
 
-export const INVENTORY = '/inventory';
+export const PURCHASE_ORDERS = '/purchase-orders';
+
+export const SALES_ORDERS = '/sales-orders';
+
 export const SUPPLIERS = '/suppliers';
 export const NEW_SUPPLIER_PATH = '/suppliers/new';
 export const EDIT_SUPPLIER_PATH = '/suppliers/:id/edit';

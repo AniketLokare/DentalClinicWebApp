@@ -15,20 +15,19 @@ const LeftPanel: React.FC = () => {
   };
 
   return (
-    <Box className={`leftPanel ${isCollapsed ? 'collapsed' : ''}`}>
-       <button
-        className="toggle-icon"
-        onClick={togglePanel}
-        aria-label={isCollapsed ? 'Expand panel' : 'Collapse panel'}
-      >
-        {isCollapsed ? <FiChevronsRight size="24px" /> : <FiChevronsLeft size="24px" />}
-      </button>
+    <Box className={`leftPanel ${isCollapsed ? 'collapsed' : ''}`}>    
       <List>
         {globalOptions.map((item) => (
           <NavItem key={item.title} option={item} />
         ))}
       </List>
-    
+      <button
+        className="toggle-icon"
+        onClick={togglePanel}
+        aria-label={isCollapsed ? 'Expand panel' : 'Collapse panel'}
+      >
+        {isCollapsed ? <FiChevronsRight size="24px" /> : <FiChevronsLeft size="24px" />}
+      </button>  
     </Box>
   );
 };

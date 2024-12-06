@@ -21,6 +21,9 @@ import {
   SUPPLIERS,
   NEW_SUPPLIER_PATH,
   EDIT_SUPPLIER_PATH,
+  PURCHASE_ORDERS,
+  SALES_ORDERS,
+  APPOINTMENTS,
 } from './constants/paths';
 import Login from './pages/Login';
 import ProtectedRoute from './pages/Login/ProtectedRoute';
@@ -37,6 +40,9 @@ import AddEditUser from './pages/Users/AddEdit';
 import AddEditMedicine from './pages/Medicines/AddEdit';
 import Suppliers from './pages/Inventory/Suppliers';
 import AddEditSupplier from './pages/Inventory/Suppliers/AddEdit';
+import PurchaseOrders from './pages/Inventory/PurchaseOrders';
+import SalesOrders from './pages/Inventory/SalesOrders';
+import Appointments from './pages/Appointments';
 
 const AppRoutes: React.FC = () => (
   <Routes>
@@ -44,6 +50,8 @@ const AppRoutes: React.FC = () => (
 
     <Route element={<ProtectedRoute />}>
       <Route path={DASHBOARD_PATH} element={<Dashboard />} />
+
+      <Route path={APPOINTMENTS} element={<Appointments />} />
 
       <Route path={PATIENTS} element={<Patients />} />
       <Route path={NEW_PATIENT_PATH} element={<AddEditPatient />} />
@@ -54,19 +62,22 @@ const AppRoutes: React.FC = () => (
       <Route path={EDIT_PROCEDURE_PATH} element={<AddEditProcedure />} />
       <Route path={VIEW_PROCEDURE_PATH} element={<ViewProcedure />} />
 
-      <Route path={USERS} element={<Users />} />
-      <Route path={NEW_USER_PATH} element={<AddEditUser />} />
-      <Route path={EDIT_USER_PATH} element={<AddEditUser />} />
+      <Route path={INVENTORY} element={<Inventory />} />
 
       <Route path={MEDICINES} element={<Medicines />} />
       <Route path={NEW_MEDICINE_PATH} element={<AddEditMedicine />} />
       <Route path={EDIT_MEDICINE_PATH} element={<AddEditMedicine />} />
 
-      <Route path={INVENTORY} element={<Inventory />} />
+      <Route path={PURCHASE_ORDERS} element={<PurchaseOrders />} />
+      <Route path={SALES_ORDERS} element={<SalesOrders />} />
 
       <Route path={SUPPLIERS} element={<Suppliers />} />
       <Route path={NEW_SUPPLIER_PATH} element={<AddEditSupplier />} />
       <Route path={EDIT_SUPPLIER_PATH} element={<AddEditSupplier />} />
+
+      <Route path={USERS} element={<Users />} />
+      <Route path={NEW_USER_PATH} element={<AddEditUser />} />
+      <Route path={EDIT_USER_PATH} element={<AddEditUser />} />
 
     </Route>
   </Routes>
