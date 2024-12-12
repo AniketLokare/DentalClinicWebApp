@@ -3,16 +3,14 @@ import Stack from '@mui/material/Stack';
 import { FormInput } from 'src/components';
 import { useFormContext } from 'react-hook-form';
 import { format } from 'date-fns/format';
-import { procedurePaymentProps } from '../constants';
 
 const ProcedureForm: React.FC = (): JSX.Element => {
   const {
     control,
     formState: { errors },
-    watch,
   } = useFormContext<CreateProcedurePayload>();
 
-  const procedurePayment = watch('procedurePayment');
+  //const procedurePayment = watch('procedurePayment');
 
   return (
     <Stack spacing={4.5}>
