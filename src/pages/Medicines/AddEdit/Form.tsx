@@ -36,11 +36,11 @@ const MedicineForm: React.FC = (): JSX.Element => {
         trim
       />
       <FormInput
-        name="medicineQuantity"
+        name="quantity"
         label="Medicine Quantity"
         control={control}
         placeholder="Enter medicine quantity"
-        error={errors.medicineQuantity?.message}
+        error={errors.quantity?.message}
         trim
       />
     </Stack>

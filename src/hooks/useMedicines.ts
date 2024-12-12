@@ -1,6 +1,6 @@
 import { QueryKey, useMutation, useQuery } from "@tanstack/react-query";
 import { AxiosRequestConfig } from "axios";
-import { getMedicineWithIdRoute, MEDICINES_ROUTE } from "src/api/medicine/routes";
+import { deleteMedicineWithIdRoute, editMedicineWithIdRoute, getMedicineWithIdRoute, MEDICINES_ROUTE, NEW_MEDICINE_ROUTE } from "src/api/medicine/routes";
 import axiosClient from "src/util/axios";
 
 /**
@@ -8,17 +8,22 @@ import axiosClient from "src/util/axios";
  */
 export const getMedicinesList = (config?: AxiosRequestConfig) =>
   axiosClient
-    .get<PaginatedResponse<Medicine>>(MEDICINES_ROUTE, config)
-    .then((res) => res.data);
+    .get<Medicine[]>(MEDICINES_ROUTE, config)
+    .then((res) => ({
+      content: res.data,
+      total: res.data.length,
+      page: 1,
+      pageSize: res.data.length,
+    }));
 
 export const createMedicine = (
   payload: CreateMedicinePayload,
   config?: AxiosRequestConfig,
-) => axiosClient.post<Medicine>(MEDICINES_ROUTE, payload, config);
+) => axiosClient.post<Medicine>(NEW_MEDICINE_ROUTE, payload, config);
 
 export const patchMedicine = (id: string, payload: CreateMedicinePayload) =>
   axiosClient.patch<Medicine, CreateMedicinePayload>(
-    getMedicineWithIdRoute(id),
+    editMedicineWithIdRoute(id),
     payload,
   );
 
@@ -28,7 +33,7 @@ export const getMedicineDetail = (id: string, config?: AxiosRequestConfig) =>
     .then((res) => res.data);
 
 export const deleteMedicine = (id: string) =>
-  axiosClient.delete<null>(getMedicineWithIdRoute(id));
+  axiosClient.delete<null>(deleteMedicineWithIdRoute(id));
 /**
  * HOOKS
  */

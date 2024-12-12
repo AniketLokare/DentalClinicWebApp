@@ -91,11 +91,11 @@ const Medicines: React.FC = (): React.ReactElement => {
           return (
             <Actions
               onEditClick={() => {
-                navigate(getEditMedicineRoute(medicineValues.id));
+                navigate(getEditMedicineRoute(medicineValues.medicineId));
               }}
               onDeleteClick={() => {
                 onShowDeleteConfirmationModal(
-                  medicineValues.id,
+                  medicineValues.medicineId,
                   medicineValues.medicineName,
                 );
               }}

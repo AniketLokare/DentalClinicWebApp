@@ -36,7 +36,7 @@ export const medicinesTableColumns: ColumnDef<Medicine, string>[] = [
   },
   {
     header: 'medicine Quantity',
-    accessorKey: 'medicineQuantity',
+    accessorKey: 'quantity',
   },
 ];
 
@@ -44,7 +44,7 @@ export const medicineDefaultFormValues: CreateMedicinePayload = {
   medicineName: '',
   medicineType: '',
   medicinePack: 0,
-  medicineQuantity: 0,
+  quantity: 0,
 };
 
 export const medicineFormValidationSchema: ObjectSchema<CreateMedicinePayload> =
@@ -52,6 +52,6 @@ export const medicineFormValidationSchema: ObjectSchema<CreateMedicinePayload> =
     medicineName: string().required('Medicine name is required'),
     medicineType: string().required('Medicine Type is required'),
     medicinePack: number().required('Medicine Pack is required'),
-    medicineQuantity: number().required('Medicine Quantity is required'),
+    quantity: number().required('Medicine Quantity is required'),
   });
 
