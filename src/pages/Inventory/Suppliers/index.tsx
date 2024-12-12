@@ -68,7 +68,7 @@ const Suppliers: React.FC = (): React.ReactElement => {
     onClose,
   } = useDeleteConfirmationModal({ onDelete: deleteSupplier });
 
-  const noData = !response?.data?.length;
+  const noData = !response?.content?.length;
 
   const suppliersTableColumnsWithActions = useMemo(
     () => [
@@ -131,7 +131,7 @@ const Suppliers: React.FC = (): React.ReactElement => {
               >
                 <Table
                   columns={suppliersTableColumnsWithActions}
-                  data={response?.data || []}
+                  data={response?.content || []}
                   totalRecords={response?.items}
                   onPageChange={changePageNumber}
                   pageNumber={pageNumber}

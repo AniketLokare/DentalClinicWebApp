@@ -1,5 +1,4 @@
 interface Patient {
-  id: string;
   patientId: number;
   firstName: string;
   middleName?: string;
@@ -15,4 +14,4 @@ interface Patient {
   timestamp: Date;
 }
 
-type CreatePatientPayload = Omit<Patient, 'patientId' | 'timestamp' | 'id'>;
+type CreatePatientPayload = Omit<Patient, 'patientId' | 'timestamp'>;

@@ -74,7 +74,7 @@ const Patients: React.FC = (): JSX.Element => {
     onClose,
   } = useDeleteConfirmationModal({ onDelete: deletePatient });
 
-  const noData = !response?.data?.length;
+  const noData = !response?.content?.length;
 
   const patientsTableColumnsWithActions = useMemo(
     () => [
@@ -106,19 +106,19 @@ const Patients: React.FC = (): JSX.Element => {
           return (
             <Actions
               onAddClick={ ( ) => {
-                navigate(getEditProcedureRoute(patientValues.id));
+                navigate(getEditProcedureRoute(patientValues.patientId.toString()));
               }}
               onEditClick={() => {
-                navigate(getEditPatientRoute(patientValues.id));
+                navigate(getEditPatientRoute(patientValues.patientId.toString()));
               }}
               onDeleteClick={() => {
                 onShowDeleteConfirmationModal(
-                  patientValues.id,
+                  patientValues.patientId.toString(),
                   patientValues.firstName,
                 );
               }}
               onViewDetails={() => {
-                navigate(getViewPatientPath(patientValues.id));
+                navigate(getViewPatientPath(patientValues.patientId.toString()));
               }}
             />
           );
@@ -162,7 +162,7 @@ const Patients: React.FC = (): JSX.Element => {
               >
                 <Table
                   columns={patientsTableColumnsWithActions}
-                  data={response?.data || []}
+                  data={response?.content || []}
                   totalRecords={response?.items}
                   onPageChange={changePageNumber}
                   pageNumber={pageNumber}

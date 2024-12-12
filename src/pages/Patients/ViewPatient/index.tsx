@@ -26,9 +26,13 @@ import { Avatar } from '@mui/material';
 const ViewPatient: React.FC = (): JSX.Element => {
   const { id = '' } = useParams();
   const navigate = useNavigate();
-  const { isFetching, data } = useGetPatientDetail({
-    id,
-  });
+  const patientDetails = useGetPatientDetail(
+    {
+     id,
+    }
+  );
+
+  const isFetching = patientDetails.isLoading;
   const { snackbarAlertState, onDismiss, setSnackbarAlertState } =
     useSnackbarAlert();
 
@@ -108,7 +112,7 @@ const ViewPatient: React.FC = (): JSX.Element => {
               <Typography
                 sx={{ fontWeight: '600', fontSize: '26px', marginLeft: '20px' }}
               >
-                {data?.firstName} {data?.lastName}
+                {patientDetails?.data?.firstName} {patientDetails.data?.lastName}
               </Typography>
             </Box>
             <Box
@@ -129,8 +133,8 @@ const ViewPatient: React.FC = (): JSX.Element => {
                 variant="contained"
                 onClick={() =>
                   onShowDeleteConfirmationModal(
-                    data?.id || '',
-                    data?.firstName || '',
+                    patientDetails?.data?.patientId.toString() || '',
+                    patientDetails.data?.firstName || '',
                   )
                 }
                 startIcon={<Icon icon="trash" size="15" />}
@@ -140,7 +144,7 @@ const ViewPatient: React.FC = (): JSX.Element => {
               </Button>
             </Box>
           </Box>
-          <PatientBasicInfo patientDetails={data} />
+          <PatientBasicInfo patientDetails={patientDetails.data}/>
           <Box>
             <Button
               variant="outlined"

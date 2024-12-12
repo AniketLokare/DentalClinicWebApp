@@ -68,7 +68,7 @@ const Users: React.FC = (): React.ReactElement => {
     onClose,
   } = useDeleteConfirmationModal({ onDelete: deleteUser });  
 
-  const noData = !response?.data?.length;
+  const noData = !response?.content?.length;
 
   const usersTableColumnsWithActions = useMemo(
     () => [
@@ -139,7 +139,7 @@ const Users: React.FC = (): React.ReactElement => {
               >
                 <Table
                   columns={usersTableColumnsWithActions}
-                  data={response?.data || []}
+                  data={response?.content || []}
                   totalRecords={response?.items}
                   onPageChange={changePageNumber}
                   pageNumber={pageNumber}

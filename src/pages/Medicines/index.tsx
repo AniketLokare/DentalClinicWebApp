@@ -72,7 +72,7 @@ const Medicines: React.FC = (): React.ReactElement => {
     onClose,
   } = useDeleteConfirmationModal({ onDelete: deleteMedicine });
 
-  const noData = !response?.data?.length;
+  const noData = !response?.content?.length;
 
   const medicinesTableColumnsWithActions = useMemo(
     () => [
@@ -141,7 +141,7 @@ const Medicines: React.FC = (): React.ReactElement => {
               >
                 <Table
                   columns={medicinesTableColumnsWithActions}
-                  data={response?.data || []}
+                  data={response?.content || []}
                   totalRecords={response?.items}
                   onPageChange={changePageNumber}
                   pageNumber={pageNumber}

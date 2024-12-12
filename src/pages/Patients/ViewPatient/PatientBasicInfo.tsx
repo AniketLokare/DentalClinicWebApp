@@ -14,16 +14,30 @@ import { formatDate } from 'src/util/common';
 import { WHITE_SMOKE } from 'src/constants/colors';
 import Divider from '@mui/material/Divider';
 import { FiUser } from 'react-icons/fi';
+import { ProceduresTableColumns } from '../../Procedures/constants';
 import { RiHistoryFill } from 'react-icons/ri';
 import { TbReportSearch } from 'react-icons/tb';
+import { useGetProceduresListByPatientId } from 'src/hooks/usePatients';
+import { useParams } from 'react-router-dom';
+import { usePagination } from 'src/hooks/usePagination';
 
 interface PatientBasicInfoProps {
   patientDetails?: Patient;
 }
 
 const PatientBasicInfo: React.FC<PatientBasicInfoProps> = ({
-  patientDetails,
+  patientDetails
 }): JSX.Element => {
+  const { id = '' } = useParams();
+  const { pageNumber, changePageNumber } = usePagination();
+  const { response, isFetching } = useGetProceduresListByPatientId(id, {
+    apiConfig: {
+      params: {
+        _page: pageNumber,
+      },
+    },
+  });
+
   return (
     <Stack spacing={6}>
       <Stack spacing={2}>
@@ -203,13 +217,17 @@ const PatientBasicInfo: React.FC<PatientBasicInfoProps> = ({
         <Box sx={{ marginTop: '13px' }}>
           <ErrorBoundary fallbackComponent={TableError}>
             <PageLoader
-              isLoading={false}
+              isLoading={isFetching}
               Components={{ Loading: 'table' }}
-              isEmpty={true}
               emptyMessage="No Patient Procedures"
             >
-              {/** TODO: Implement patient procedures table */}
-              <Table data={[]} columns={[]} enableRowSelection={false} />
+              <Table
+                columns={ProceduresTableColumns}
+                data={response?.content || []}
+                totalRecords={response?.items}
+                onPageChange={changePageNumber}
+                pageNumber={pageNumber}
+              />
             </PageLoader>
           </ErrorBoundary>
         </Box>

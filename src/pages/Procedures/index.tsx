@@ -67,7 +67,7 @@ const Procedures: React.FC = (): JSX.Element => {
     onClose,
   } = useDeleteConfirmationModal({ onDelete: deleteProcedure });
 
-  const noData = !response?.data?.length;
+  const noData = !response?.content?.length;
 
   const proceduresTableColumnsWithActions = useMemo(
     () => [
@@ -135,7 +135,7 @@ const Procedures: React.FC = (): JSX.Element => {
               >
                 <Table
                   columns={proceduresTableColumnsWithActions}
-                  data={response?.data || []}
+                  data={response?.content || []}
                   totalRecords={response?.items}
                   onPageChange={changePageNumber}
                   pageNumber={pageNumber}
