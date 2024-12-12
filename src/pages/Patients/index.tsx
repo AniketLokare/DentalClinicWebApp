@@ -16,7 +16,7 @@ import { listPatientsBreadcrumbLinks, patientsTableColumns } from './constants';
 import { useNavigate } from 'react-router-dom';
 import {
   getEditPatientRoute,
-  getEditProcedureRoute,
+  getNewProcedureRoute,
   getViewPatientPath,
   NEW_PATIENT_PATH,
 } from 'src/constants/paths';
@@ -106,7 +106,7 @@ const Patients: React.FC = (): JSX.Element => {
           return (
             <Actions
               onAddClick={ ( ) => {
-                navigate(getEditProcedureRoute(patientValues.patientId.toString()));
+                navigate(getNewProcedureRoute(patientValues.patientId.toString()));
               }}
               onEditClick={() => {
                 navigate(getEditPatientRoute(patientValues.patientId.toString()));

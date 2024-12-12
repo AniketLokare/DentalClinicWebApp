@@ -35,8 +35,8 @@ export const viewProceduresBreadCrumbLinks = [
 
 export const ProceduresTableColumns: ColumnDef<Procedure, string>[] = [
   {
-    header: 'Patient Name',
-    accessorKey: 'patientName',
+    header: 'Procedure Id',
+    accessorKey: 'procedureId',
   },
   {
     header: 'Procedure Name',
@@ -68,33 +68,30 @@ export const procedurePaymentProps = {
 };
 
 export const procedureDefaultFormValues: CreateProcedurePayload = {
-  patientName: '',
-  procedureDate: new Date(),
-  procedureType: '',
-  procedureDetails: '',
-  PaymentType: 'cash',
-  procedureCashierName: '',
+  cashPayment: 0,
   clinicName: '',
-  finalAmount: 0,
   discount: 0,
- // procedureTime: 
+  finalAmount: 0,
+  procedureDate: new Date(),
+  onlinePayment: 0,
+  procedureDetail: '',
+  procedureType: '',
   totalAmount: 0,
-  
+  cashierName: ''
 };
 
 export const procedureFormValidationSchema: ObjectSchema<CreateProcedurePayload> =
   yupObject({
-    patientName: requiredField,
     procedureDate: date().required('Required'),
+    //cashPayment: number().optional().positive('Invalid amount').integer(),
+    //onlinePayment: number().optional().positive('Invalid amount').integer(),
     procedureType: requiredField,
     procedureDetails: string().optional(),
-    procedureCashierName: string().optional(),
+    cashierName: string().optional(),
     clinicName: string().optional(),
-    PaymentType: requiredField,
     finalAmount: number()
       .typeError('Required')
       .required('Required')
-      .positive('Invalid amount')
       .integer(),
     discount: number()
       .optional()

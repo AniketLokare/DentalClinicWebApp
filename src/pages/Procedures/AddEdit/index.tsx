@@ -26,6 +26,7 @@ import {
 } from 'src/hooks/useProcedures';
 import { PROCEDURES } from 'src/constants/paths';
 import useSnackbarAlert from 'src/hooks/useSnackbarAlert';
+import { PROCEDURES_ROUTE } from 'src/api/procedures/routes';
 
 const AddEditProcedure: React.FC = (): JSX.Element => {
   const navigate = useNavigate();
@@ -41,15 +42,15 @@ const AddEditProcedure: React.FC = (): JSX.Element => {
     mode: 'onBlur',
   });
 
-  const { isFetching, data } = useGetProcedureDetail({
+  const { isFetching, response } = useGetProcedureDetail({
     id,
   });
 
   useEffect(() => {
-    if (!isFetching && data) {
-      reset(data);
+    if (!isFetching && response) {
+      reset(response);
     }
-  }, [data, isFetching]);
+  }, [response, isFetching]);
 
   const { mutate: patchProcedure, isPending: isPatchLoading } = usePatchProcedure(
     id,
@@ -76,9 +77,9 @@ const AddEditProcedure: React.FC = (): JSX.Element => {
   );
 
   const { mutate: createProcedure, isPending: isCreatingProcedure } =
-    useCreateProcedure({
+    useCreateProcedure(id, {
       onSuccess: () => {
-        navigate(PROCEDURES, {
+        navigate(PROCEDURES_ROUTE, {
           state: {
             alert: {
               severity: 'success',

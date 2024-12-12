@@ -24,6 +24,7 @@ import {
   PURCHASE_ORDERS,
   SALES_ORDERS,
   APPOINTMENTS,
+  NEW_PROCEDURE_PATH,
 } from './constants/paths';
 import Login from './pages/Login';
 import ProtectedRoute from './pages/Login/ProtectedRoute';
@@ -59,6 +60,7 @@ const AppRoutes: React.FC = () => (
       <Route path={VIEW_PATIENT_PATH} element={<ViewPatient />} />
 
       <Route path={PROCEDURES} element={<Procedures />} />
+      <Route path={NEW_PROCEDURE_PATH} element={<AddEditProcedure />} />
       <Route path={EDIT_PROCEDURE_PATH} element={<AddEditProcedure />} />
       <Route path={VIEW_PROCEDURE_PATH} element={<ViewProcedure />} />
 

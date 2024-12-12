@@ -86,16 +86,16 @@ const Procedures: React.FC = (): JSX.Element => {
           return (
             <Actions
               onEditClick={() => {
-                navigate(getEditProcedureRoute(procedureValues.id));
+                navigate(getEditProcedureRoute(procedureValues.procedureId.toString()));
               }}
               onDeleteClick={() => {
                 onShowDeleteConfirmationModal(
-                  procedureValues.id,
-                  procedureValues.procedureDetails,
+                  procedureValues.procedureId.toString(),
+                  procedureValues.procedureDetail,
                 );
               }}
               onViewDetails={() => {
-                navigate(getViewProcedurePath(procedureValues.id));
+                navigate(getViewProcedurePath(procedureValues.procedureId.toString()));
               }}
             />
           );

@@ -31,12 +31,12 @@ const ProcedureBasicInfo: React.FC<ProcedureBasicInfoProps> = ({
           />
           <InfoField
             label="Details"
-            value={procedureDetails?.procedureDetails}
+            value={procedureDetails?.procedureDetail}
             flexBasis="50%"
           />
           <InfoField
             label="Cashier Name"
-            value={procedureDetails?.procedureCashierName}
+            value={procedureDetails?.cashierName}
             flexBasis="50%"
           />
           <InfoField
@@ -51,7 +51,7 @@ const ProcedureBasicInfo: React.FC<ProcedureBasicInfoProps> = ({
           />
           <InfoField
             label="Time"
-            value={formatDate(procedureDetails?.procedureTime || new Date())}
+            value={formatDate(procedureDetails?.timestamp || new Date())}
             flexBasis="50%"
           />
           <InfoField

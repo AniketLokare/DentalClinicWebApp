@@ -16,13 +16,13 @@ const ProcedureForm: React.FC = (): JSX.Element => {
 
   return (
     <Stack spacing={4.5}>
-      <FormInput
+      {/* <FormInput
         name="patientName"
         label="Patient Name"
         control={control}
         error={errors.patientName?.message}
         trim
-      />
+      /> */}
       <FormInput
         type="date"
         name="procedureDate"
@@ -44,12 +44,12 @@ const ProcedureForm: React.FC = (): JSX.Element => {
         label="Procedure Details"
         control={control}
         placeholder="Enter patient's procedure details"
-        error={errors.procedureDetails?.message}
+        error={errors.procedureDetail?.message}
         trim
         multiline
         rows={4}
       />
-      <FormInput
+      {/* <FormInput
         type="radio"
         radioButtonProps={{
           ...procedurePaymentProps,
@@ -62,7 +62,7 @@ const ProcedureForm: React.FC = (): JSX.Element => {
           maxWidth: '556px',
           paddingRight: '21px',
         }}
-      />
+      /> */}
       <FormInput
         type="number"
         name="totalAmount"
