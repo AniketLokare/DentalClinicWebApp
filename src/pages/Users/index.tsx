@@ -89,11 +89,11 @@ const Users: React.FC = (): React.ReactElement => {
           return (
             <Actions
               onEditClick={() => {
-                navigate(getEditUserRoute(userValues.id));
+                navigate(getEditUserRoute(userValues.userId.toString()));
               }}
               onDeleteClick={() => {
                 onShowDeleteConfirmationModal(
-                  userValues.id,
+                  userValues.userId.toString(),
                   userValues.username,
                 );
               }}

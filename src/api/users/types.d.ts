@@ -1,5 +1,4 @@
 interface User {
-  id: string;
   userId: number;
   username: string;
   password: string;
@@ -7,4 +6,4 @@ interface User {
   mobileNumber?: number;
 }
 
-type CreateUserPayload = Omit<User, 'userId'| 'id'>;
+type CreateUserPayload = Omit<User, 'userId'>;

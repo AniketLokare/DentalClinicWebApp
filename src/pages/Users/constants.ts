@@ -22,14 +22,14 @@ export const getAddEditBreadCrumbLinks = (isEdit = false) => [
 
 export const userRoleProps = [
   { 
-    menuItemLabel: 'Admin', 
-    menuItemValue: 'admin', 
-    menuItemId: 'admin' 
+    menuItemLabel: 'ADMIN', 
+    menuItemValue: 'ADMIN', 
+    menuItemId: 'ADMIN' 
   },
   { 
-    menuItemLabel: 'User', 
-    menuItemValue: 'user', 
-    menuItemId: 'user' 
+    menuItemLabel: 'USER', 
+    menuItemValue: 'USER', 
+    menuItemId: 'USER' 
   },
 ];
 
