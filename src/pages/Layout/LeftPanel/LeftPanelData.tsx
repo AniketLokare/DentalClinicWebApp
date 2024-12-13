@@ -9,6 +9,7 @@ import {
   APPOINTMENTS,
   DASHBOARD_PATH,
   MEDICINES,
+  NEW_APPOINTMENT_PATH,
   NEW_PATIENT_PATH,
   NEW_USER_PATH,
   PATIENTS,
@@ -35,7 +36,7 @@ export const globalOptions = [
       {
         title: 'Add New Appointment',
         icon: <RiHeartAdd2Fill size="18px" />,
-        route: APPOINTMENTS,
+        route: NEW_APPOINTMENT_PATH,
         isSubItem: true,
         tooltip: 'Add New Appointment', 
       },

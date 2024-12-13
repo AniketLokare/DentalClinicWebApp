@@ -25,6 +25,9 @@ import {
   SALES_ORDERS,
   APPOINTMENTS,
   NEW_PROCEDURE_PATH,
+  NEW_APPOINTMENT_PATH,
+  EDIT_APPOINTMENT_PATH,
+  VIEW_APPOINTMENT_PATH,
 } from './constants/paths';
 import Login from './pages/Login';
 import ProtectedRoute from './pages/Login/ProtectedRoute';
@@ -44,6 +47,8 @@ import AddEditSupplier from './pages/Inventory/Suppliers/AddEdit';
 import PurchaseOrders from './pages/Inventory/PurchaseOrders';
 import SalesOrders from './pages/Inventory/SalesOrders';
 import Appointments from './pages/Appointments';
+import AddEditAppointment from './pages/Appointments/AddEdit';
+import ViewAppointment from './pages/Appointments/ViewAppointment';
 
 const AppRoutes: React.FC = () => (
   <Routes>
@@ -53,6 +58,9 @@ const AppRoutes: React.FC = () => (
       <Route path={DASHBOARD_PATH} element={<Dashboard />} />
 
       <Route path={APPOINTMENTS} element={<Appointments />} />
+      <Route path={NEW_APPOINTMENT_PATH} element={<AddEditAppointment />} />
+      <Route path={EDIT_APPOINTMENT_PATH} element={<AddEditAppointment />} />
+      <Route path={VIEW_APPOINTMENT_PATH} element={<ViewAppointment />} />
 
       <Route path={PATIENTS} element={<Patients />} />
       <Route path={NEW_PATIENT_PATH} element={<AddEditPatient />} />
