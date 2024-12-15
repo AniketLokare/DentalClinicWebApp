@@ -1,4 +1,4 @@
-import { ColumnDef } from '@tanstack/react-table';
+import { ExtendedColumnDef } from 'src/components/Table';
 import { USERS } from 'src/constants/paths';
 import { object as yupObject, number, ObjectSchema, string } from 'yup';
 
@@ -33,7 +33,7 @@ export const userRoleProps = [
   },
 ];
 
-export const usersTableColumns: ColumnDef<User, string>[] = [
+export const usersTableColumns: ExtendedColumnDef<User, string>[] = [
   {
     header: 'User Name',
     accessorKey: 'username',
@@ -41,6 +41,7 @@ export const usersTableColumns: ColumnDef<User, string>[] = [
   {
     header: 'Password',
     accessorKey: 'password',
+    mask: true,
   },
   {
     header: 'Role',

@@ -51,7 +51,7 @@ export const NavItem: React.FC<NavItemProps> = ({
   const navigate = useNavigate();
   const location = useLocation();
 
-  const isActive = `/${location.pathname.split('/')[1]}` === route;
+  const isActive = `${location.pathname}` === route;
 
   const handleListItemClick = () => {
     if (action) {

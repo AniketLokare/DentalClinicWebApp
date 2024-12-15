@@ -67,7 +67,7 @@ const PatientForm: React.FC = (): JSX.Element => {
       <FormInput
         type="date"
         name="patientRegDate"
-        inputProps={{ min: format(new Date(), 'dd-mm-yyyy') }}
+        inputProps={{ min: format(new Date(), 'dd-MM-yyyy') }}
         control={control}
         label="Registration Date"
         error={errors.patientRegDate?.message}

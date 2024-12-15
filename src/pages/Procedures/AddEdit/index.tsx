@@ -11,7 +11,7 @@ import {
   LoadingBackdrop,
 } from 'src/components';
 import Box from '@mui/material/Box';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { FiSave } from 'react-icons/fi';
 import ProcedureForm from './Form';
 import {
@@ -24,15 +24,16 @@ import {
   useGetProcedureDetail,
   usePatchProcedure
 } from 'src/hooks/useProcedures';
-import { PROCEDURES } from 'src/constants/paths';
+import { getViewPatientPath, PROCEDURES } from 'src/constants/paths';
 import useSnackbarAlert from 'src/hooks/useSnackbarAlert';
-import { PROCEDURES_ROUTE } from 'src/api/procedures/routes';
 
 const AddEditProcedure: React.FC = (): JSX.Element => {
   const navigate = useNavigate();
   const { id = '' } = useParams();
   const isEdit = !!id;
-
+  const location = useLocation();
+  const patientId  = location.state;
+  
   const { snackbarAlertState, setSnackbarAlertState, onDismiss } =
     useSnackbarAlert();
 
@@ -53,7 +54,7 @@ const AddEditProcedure: React.FC = (): JSX.Element => {
   }, [response, isFetching]);
 
   const { mutate: patchProcedure, isPending: isPatchLoading } = usePatchProcedure(
-    id,
+    patientId,
     {
       onSuccess: () => {
         navigate(PROCEDURES, {
@@ -77,9 +78,9 @@ const AddEditProcedure: React.FC = (): JSX.Element => {
   );
 
   const { mutate: createProcedure, isPending: isCreatingProcedure } =
-    useCreateProcedure(id, {
+    useCreateProcedure(patientId, {  
       onSuccess: () => {
-        navigate(PROCEDURES_ROUTE, {
+        navigate(getViewPatientPath(patientId), {
           state: {
             alert: {
               severity: 'success',

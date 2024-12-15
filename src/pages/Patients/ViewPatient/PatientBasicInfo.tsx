@@ -4,6 +4,7 @@ import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
 
 import {
+  Button,
   ErrorBoundary,
   InfoField,
   PageLoader,
@@ -18,8 +19,9 @@ import { ProceduresTableColumns } from '../../Procedures/constants';
 import { RiHistoryFill } from 'react-icons/ri';
 import { TbReportSearch } from 'react-icons/tb';
 import { useGetProceduresListByPatientId } from 'src/hooks/usePatients';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { usePagination } from 'src/hooks/usePagination';
+import { NEW_PROCEDURE_PATH } from 'src/constants/paths';
 
 interface PatientBasicInfoProps {
   patientDetails?: Patient;
@@ -29,6 +31,7 @@ const PatientBasicInfo: React.FC<PatientBasicInfoProps> = ({
   patientDetails
 }): JSX.Element => {
   const { id = '' } = useParams();
+  const navigate = useNavigate();
   const { pageNumber, changePageNumber } = usePagination();
   const { response, isFetching } = useGetProceduresListByPatientId(id, {
     apiConfig: {
@@ -37,7 +40,7 @@ const PatientBasicInfo: React.FC<PatientBasicInfoProps> = ({
       },
     },
   });
-
+      
   return (
     <Stack spacing={6}>
       <Stack spacing={2}>
@@ -214,6 +217,15 @@ const PatientBasicInfo: React.FC<PatientBasicInfoProps> = ({
         >
           Patient Procedures
         </Typography>
+        <Box>
+            <Button
+              variant="outlined"
+              sx={{ padding: '20px' }}
+              onClick={() => navigate(NEW_PROCEDURE_PATH, { state: id  })}
+            >
+              New Procedure
+            </Button>
+          </Box>
         <Box sx={{ marginTop: '13px' }}>
           <ErrorBoundary fallbackComponent={TableError}>
             <PageLoader

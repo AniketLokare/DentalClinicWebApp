@@ -1,7 +1,6 @@
 import { QueryKey, useQuery, useMutation } from '@tanstack/react-query';
 import { AxiosRequestConfig } from 'axios';
-import { PROCEDURES_ROUTE, deleteProcedureWithIdRoute, editProcedureWithIdRoute, getProceduresListByProcedureIdRoute } from 'src/api/procedures/routes';
-import { NEW_PROCEDURE_PATH } from 'src/constants/paths';
+import { NEW_PROCEDURE_ROUTE, PROCEDURES_ROUTE, deleteProcedureWithIdRoute, editProcedureWithIdRoute, getProceduresListByProcedureIdRoute } from 'src/api/procedures/routes';
 import axiosClient from 'src/util/axios';
 
 export const getProceduresList = (config?: AxiosRequestConfig) =>
@@ -20,7 +19,7 @@ export const createProcedure = (
   config?: AxiosRequestConfig,
 ) => {
   const updatedPayload = { ...payload, patientId: id };
-  return axiosClient.post<Procedure>(NEW_PROCEDURE_PATH, updatedPayload, config);
+  return axiosClient.post<Procedure>(NEW_PROCEDURE_ROUTE, updatedPayload, config);
 };
 
 export const patchProcedure = (id: string, payload: CreateProcedurePayload) =>
