@@ -45,3 +45,11 @@ export const NEW_SUPPLIER_PATH = '/suppliers/new';
 export const EDIT_SUPPLIER_PATH = '/suppliers/:id/edit';
 export const getEditSupplierRoute = (id: string) => `${SUPPLIERS}/${id}/edit`;
 
+export const EXTERNAL_PROCEDURE = '/external-procedures';
+export const EDIT_EXTERNAL_PROCEDURE_PATH = '/external-procedures/:id/edit';
+export const VIEW_EXTERNAL_PROCEDURE_PATH = '/external-procedures/:id';
+export const NEW_EXTERNAL_PROCEDURE_PATH = '/external-procedures/new';
+export const getNewExternalProcedureRoute = (id: string) => `${NEW_EXTERNAL_PROCEDURE_PATH}/${id}`;
+export const getEditExternalProcedureRoute = (id: string) => `${EXTERNAL_PROCEDURE}/${id}/edit`;
+export const getViewExternalProcedurePath = (id: string) => `${EXTERNAL_PROCEDURE}/${id}`;
+

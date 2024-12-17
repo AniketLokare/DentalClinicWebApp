@@ -1,15 +1,17 @@
 import React from 'react';
 import { FaCartPlus, FaProcedures, FaTruck } from 'react-icons/fa';
-import { FcBullish, FcCalendar, FcConferenceCall, FcFilingCabinet, FcPortraitMode } from 'react-icons/fc';
-import { MdBarChart, MdPersonAddAlt1, MdViewList } from 'react-icons/md';
+import { FcBriefcase, FcBullish, FcCalendar, FcConferenceCall, FcFilingCabinet, FcPortraitMode } from 'react-icons/fc';
+import { MdBarChart, MdNoteAdd, MdPersonAddAlt1, MdViewComfy, MdViewList } from 'react-icons/md';
 import { GiMedicinePills } from "react-icons/gi";
 import { FaUsersViewfinder } from "react-icons/fa6"
 
 import {
   APPOINTMENTS,
   DASHBOARD_PATH,
+  EXTERNAL_PROCEDURE,
   MEDICINES,
   NEW_APPOINTMENT_PATH,
+  NEW_EXTERNAL_PROCEDURE_PATH,
   NEW_PATIENT_PATH,
   NEW_USER_PATH,
   PATIENTS,
@@ -109,6 +111,27 @@ export const globalOptions = [
       },
     ],
     tooltip: 'Inventory', 
+  },
+  {
+    title: 'EXT PROCEDURES',
+    icon: <FcBriefcase size="24px" />,
+    options: [
+      {
+        title: 'Add New Procedure',
+        icon: <MdNoteAdd size="18px" />,
+        route: NEW_EXTERNAL_PROCEDURE_PATH,
+        isSubItem: true,
+        tooltip: 'Add New Procedure', 
+      },
+      {
+        title: 'View Procedures',
+        icon: <MdViewComfy size="18px" />,
+        route: EXTERNAL_PROCEDURE,
+        isSubItem: true,
+        tooltip: 'View Procedures', 
+      }
+    ],
+    tooltip: 'Appointments', 
   },
   {
     title: 'USERS',

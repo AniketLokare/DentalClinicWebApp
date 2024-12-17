@@ -28,6 +28,10 @@ import {
   NEW_APPOINTMENT_PATH,
   EDIT_APPOINTMENT_PATH,
   VIEW_APPOINTMENT_PATH,
+  EXTERNAL_PROCEDURE,
+  NEW_EXTERNAL_PROCEDURE_PATH,
+  EDIT_EXTERNAL_PROCEDURE_PATH,
+  VIEW_EXTERNAL_PROCEDURE_PATH,
 } from './constants/paths';
 import Login from './pages/Login';
 import ProtectedRoute from './pages/Login/ProtectedRoute';
@@ -49,6 +53,9 @@ import SalesOrders from './pages/Inventory/SalesOrders';
 import Appointments from './pages/Appointments';
 import AddEditAppointment from './pages/Appointments/AddEdit';
 import ViewAppointment from './pages/Appointments/ViewAppointment';
+import ExternalProcedures from './pages/ExternalProcedures';
+import AddEditExternalProcedure from './pages/ExternalProcedures/AddEdit';
+import ViewExternalProcedure from './pages/ExternalProcedures/ViewExternalProcedures';
 
 const AppRoutes: React.FC = () => (
   <Routes>
@@ -84,6 +91,11 @@ const AppRoutes: React.FC = () => (
       <Route path={SUPPLIERS} element={<Suppliers />} />
       <Route path={NEW_SUPPLIER_PATH} element={<AddEditSupplier />} />
       <Route path={EDIT_SUPPLIER_PATH} element={<AddEditSupplier />} />
+
+      <Route path={EXTERNAL_PROCEDURE} element={<ExternalProcedures />} />
+      <Route path={NEW_EXTERNAL_PROCEDURE_PATH} element={<AddEditExternalProcedure />} />
+      <Route path={EDIT_EXTERNAL_PROCEDURE_PATH} element={<AddEditExternalProcedure />} />
+      <Route path={VIEW_EXTERNAL_PROCEDURE_PATH} element={<ViewExternalProcedure />} />
 
       <Route path={USERS} element={<Users />} />
       <Route path={NEW_USER_PATH} element={<AddEditUser />} />
