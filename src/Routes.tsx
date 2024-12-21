@@ -2,30 +2,43 @@ import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 import Dashboard from './pages/Dashboard';
 import {
-  DASHBOARD_PATH,
-  EDIT_PATIENT_PATH,
-  INVENTORY,
   LOGIN,
-  MEDICINES,
-  NEW_PATIENT_PATH,
-  PATIENTS,
-  PROCEDURES,
-  EDIT_PROCEDURE_PATH,
-  VIEW_PATIENT_PATH,
-  VIEW_PROCEDURE_PATH,
   USERS,
   NEW_USER_PATH,
   EDIT_USER_PATH,
+  DASHBOARD_PATH,
+  PATIENTS,
+  NEW_PATIENT_PATH,
+  EDIT_PATIENT_PATH,
+  VIEW_PATIENT_PATH,
+  INVENTORY,  
+  MEDICINES,
   NEW_MEDICINE_PATH,
   VIEW_MEDICINE_PATH,
   EDIT_MEDICINE_PATH,
+  PROCEDURES,
+  EDIT_PROCEDURE_PATH,
+  VIEW_PROCEDURE_PATH,
+
+  APPOINTMENTS, 
+  NEW_APPOINTMENT_PATH, 
+  EDIT_APPOINTMENT_PATH,
+  VIEW_APPOINTMENTS_PATH, 
+
 } from './constants/paths';
 import Login from './pages/Login';
 import ProtectedRoute from './pages/Login/ProtectedRoute';
+
 import Patients from './pages/Patients';
+
 import Procedures from './pages/Procedures';
 import Medicines from './pages/Medicines';
 import Inventory from './pages/Inventory';
+
+import Appointments from './pages/Appointment';
+import AddEditAppointment from './pages/Appointment/AddEdit';
+import ViewAppointment from './pages/Appointment/ViewAppointment';
+
 import AddEditPatient from './pages/Patients/AddEdit';
 import ViewPatient from './pages/Patients/ViewPatient';
 import ViewProcedure from './pages/Procedures/ViewProcedure';
@@ -59,6 +72,11 @@ const AppRoutes: React.FC = () => (
       <Route path={NEW_MEDICINE_PATH} element={<AddEditMedicine />} />
       <Route path={EDIT_MEDICINE_PATH} element={<AddEditMedicine />} />
       <Route path={VIEW_MEDICINE_PATH} element={<ViewMedicine />} />
+
+      <Route path={APPOINTMENTS} element={<Appointments/>} />
+      <Route path={NEW_APPOINTMENT_PATH} element={<AddEditAppointment />} />
+      <Route path={EDIT_APPOINTMENT_PATH} element={<AddEditAppointment />} />
+      <Route path={VIEW_APPOINTMENTS_PATH} element={<ViewAppointment />} />
 
       <Route path={INVENTORY} element={<Inventory />} />
     </Route>

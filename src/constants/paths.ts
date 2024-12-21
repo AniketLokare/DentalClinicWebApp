@@ -27,4 +27,11 @@ export const VIEW_MEDICINE_PATH = '/medicines/:id';
 export const getEditMedicineRoute = (id: string) => `${MEDICINES}/${id}/edit`;
 export const getViewMedicinePath = (id: string) => `${MEDICINES}/${id}`;
 
+export const APPOINTMENTS = '/appointments';
+export const NEW_APPOINTMENT_PATH = '/appointments/new';
+export const EDIT_APPOINTMENT_PATH = '/appointments/:id/edit';
+export const VIEW_APPOINTMENTS_PATH = '/appointments/:id';
+export const getEditAppointmentRoute = (id: string) => `${APPOINTMENTS}/${id}/edit`;
+export const getViewAppointmentPath = (id: string) => `${APPOINTMENTS}/${id}`;
+
 export const INVENTORY = '/inventory';
