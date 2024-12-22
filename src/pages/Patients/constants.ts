@@ -1,7 +1,7 @@
 import { ColumnDef } from '@tanstack/react-table';
 import { PATIENTS } from 'src/constants/paths';
 import { requiredField } from 'src/constants/validationSchema';
-import { object as yupObject, number, string, ObjectSchema, date } from 'yup';
+import { object as yupObject, number, string, ObjectSchema } from 'yup';
 
 export const listPatientsBreadcrumbLinks = [
   {
@@ -61,9 +61,9 @@ export const patientDefaultFormValues: CreatePatientPayload = {
   lastName: '',
   patientAge: 0,
   patientGender: 'male',
-  patientRegDate: new Date(),
-  patientMobile1: '',
-  patientMobile2: '',
+  patientRegDate: '',
+  patientMobile1: 0,
+  patientMobile2: 0,
   patientMedicalHistory: '',
   cashierName: '',
   patientReports: '',
@@ -73,11 +73,11 @@ export const patientGenderProps = {
   options: [
     {
       label: 'Male',
-      value: 'male',
+      value: 'Male',
     },
     {
       label: 'Female',
-      value: 'female',
+      value: 'Female',
     },
   ],
   'aria-labelledby': 'patient-gender',
@@ -88,10 +88,9 @@ export const patientFormValidationSchema: ObjectSchema<CreatePatientPayload> =
   yupObject({
     firstName: requiredField,
     lastName: requiredField,
-    patientRegDate: date().required('Required'),
+    patientRegDate: string().required('Required'),
     patientMedicalHistory: string().optional(),
-    patientReports: string().optional(),
-    patientMobile2: string().optional(),
+    patientReports: string().optional(),    
     middleName: string().optional(),
     patientAge: number()
       .typeError('Required')
@@ -99,6 +98,13 @@ export const patientFormValidationSchema: ObjectSchema<CreatePatientPayload> =
       .positive('Invalid age')
       .integer(),
     patientGender: requiredField,
-    patientMobile1: string().required('Required'),
+    patientMobile1: number().required('Patient Mobile Number is required')
+    .positive()
+    .integer()
+    .test('len', 'Patient Mobile Number must be exactly 10 digits', val => val?.toString().length === 10),
+    patientMobile2: number().optional()
+    .positive()
+    .integer()
+    .test('len', 'Patient Mobile Number must be exactly 10 digits', val => val?.toString().length === 10),
     cashierName: requiredField,
   });

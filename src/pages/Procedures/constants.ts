@@ -1,7 +1,7 @@
 import { ColumnDef } from '@tanstack/react-table';
 import { PROCEDURES } from 'src/constants/paths';
 import { requiredField } from 'src/constants/validationSchema';
-import { object as yupObject, number, string, ObjectSchema, date } from 'yup';
+import { object as yupObject, number, string, ObjectSchema } from 'yup';
 
 export const listProceduresBreadcrumbLinks = [
   {
@@ -72,7 +72,7 @@ export const procedureDefaultFormValues: CreateProcedurePayload = {
   clinicName: '',
   discount: 0,
   finalAmount: 0,
-  procedureDate: new Date(),
+  procedureDate: '',
   onlinePayment: 0,
   procedureDetail: '',
   procedureType: '',
@@ -82,7 +82,7 @@ export const procedureDefaultFormValues: CreateProcedurePayload = {
 
 export const procedureFormValidationSchema: ObjectSchema<CreateProcedurePayload> =
   yupObject({
-    procedureDate: date().required('Required'),
+    procedureDate: string().required('Required'),
     //cashPayment: number().optional().positive('Invalid amount').integer(),
     //onlinePayment: number().optional().positive('Invalid amount').integer(),
     procedureType: requiredField,

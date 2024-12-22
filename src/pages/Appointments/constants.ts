@@ -67,6 +67,10 @@ export const appointmentDefaultFormValidateSchema: ObjectSchema<CreateAppointmen
     lastName: string().required('Last Name is required'),
     treatment: string().required('Treatment is required'),
     appointmentDate: string().optional(),
-    patientmobile1: number().required('Patient Mobile Number is required'),
+    patientmobile1: number()
+      .required('Patient Mobile Number is required')
+      .positive()
+      .integer()
+      .test('len', 'Patient Mobile Number must be exactly 10 digits', val => val?.toString().length === 10),
     cashiername: string().optional(),
   });

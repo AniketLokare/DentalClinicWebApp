@@ -2,7 +2,7 @@ import React from 'react';
 import Stack from '@mui/material/Stack';
 import { FormInput } from 'src/components';
 import { useFormContext } from 'react-hook-form';
-import { format } from 'date-fns/format';
+import { format } from 'date-fns';
 import { patientGenderProps } from '../constants';
 
 const PatientForm: React.FC = (): JSX.Element => {
@@ -67,7 +67,7 @@ const PatientForm: React.FC = (): JSX.Element => {
       <FormInput
         type="date"
         name="patientRegDate"
-        inputProps={{ min: format(new Date(), 'dd-MM-yyyy') }}
+        inputProps={{ min: format(new Date(), 'yyyy-MM-dd') }}
         control={control}
         label="Registration Date"
         error={errors.patientRegDate?.message}

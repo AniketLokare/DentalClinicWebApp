@@ -12,10 +12,11 @@ export const loginUser = async (payload: CreateLoginPayload, config?: AxiosReque
   try {
     const response = await axiosClient.post<CreateLoginResponse>(LOGIN_ROUTE, payload, config);
     const loggedInState: CreateLoginResponse = {
-      accessToken: response.data.accessToken,
+      jwtToken: response.data.jwtToken,
       refreshToken: response.data.refreshToken,
       username: response.data.username,
-      LoggedInState: response.data.LoggedInState,
+      role: response.data.role,
+      LoggedInState: true,
     };
     setAuthInfo(loggedInState);
   } catch (error) {

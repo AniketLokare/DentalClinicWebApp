@@ -13,9 +13,10 @@ type CreateRefreshTokenPayload = RefreshToken;
 
 interface LoginResponse {
   username: string;
-  accessToken: string;
+  jwtToken: string;
   refreshToken: string;
   LoggedInState: boolean;
+  role: string;
 }
 
 type CreateLoginResponse = LoginResponse;

@@ -22,6 +22,7 @@ import { APPOINTMENTS } from 'src/constants/paths';
 import useSnackbarAlert from 'src/hooks/useSnackbarAlert';
 import { useCreateAppointment, useGetAppointmentDetail, usePatchAppointment } from 'src/hooks/useAppointments';
 import AppointmentForm from './Form';
+import { formatRegDate } from 'src/util/common';
 
 const AddEditAppointment: React.FC = (): JSX.Element => {
   const navigate = useNavigate();
@@ -43,6 +44,9 @@ const AddEditAppointment: React.FC = (): JSX.Element => {
 
   useEffect(() => {
     if (!isFetching && data) {
+      if (data.appointmentDate) {
+        data.appointmentDate = formatRegDate(data.appointmentDate);
+      }
       reset(data);
     }
   }, [data, isFetching]);
@@ -100,6 +104,9 @@ const AddEditAppointment: React.FC = (): JSX.Element => {
   } = methods;
 
   const onSubmit = (data: CreateAppointmentPayload) => {
+    if (data.appointmentDate) {
+      data.appointmentDate = formatRegDate(data.appointmentDate);
+    }
     if (isEdit) {
       patchAppointment(data);
     } else {

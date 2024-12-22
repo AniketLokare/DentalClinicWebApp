@@ -22,7 +22,7 @@ const ExternalProcedureForm: React.FC = (): JSX.Element => {
       <FormInput
         type="date"
         name="procedureDate"
-        inputProps={{ min: format(new Date(), 'dd-mm-yyyy') }}
+        inputProps={{ min: format(new Date(), 'yyyy-MM-dd') }}
         control={control}
         label="Registration Date"
         error={errors.procedureDate?.message}

@@ -22,6 +22,7 @@ import { EXTERNAL_PROCEDURE } from 'src/constants/paths';
 import useSnackbarAlert from 'src/hooks/useSnackbarAlert';
 import { useCreateExternalProcedure, useGetExternalProcedureDetail, usePatchExternalProcedure } from 'src/hooks/useExternalProcedures';
 import ExternalProcedureForm from './Form';
+import { formatRegDate } from 'src/util/common';
 
 const AddEditExternalProcedure: React.FC = (): JSX.Element => {
   const navigate = useNavigate();
@@ -43,6 +44,9 @@ const AddEditExternalProcedure: React.FC = (): JSX.Element => {
 
   useEffect(() => {
     if (!isFetching && response) {
+      if (response.procedureDate) {
+        response.procedureDate = formatRegDate(response.procedureDate);;
+      }   
       reset(response);
     }
   }, [response, isFetching]);
@@ -100,6 +104,9 @@ const AddEditExternalProcedure: React.FC = (): JSX.Element => {
   } = methods;
 
   const onSubmit = (data: CreateExternalProcedurePayload) => {
+    if (data.procedureDate) {
+      data.procedureDate = formatRegDate(data.procedureDate);;
+    }
     if (isEdit) {
       patchExternalProcedure(data);
     } else {

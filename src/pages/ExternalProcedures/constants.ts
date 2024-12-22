@@ -1,7 +1,7 @@
 import { ColumnDef } from '@tanstack/react-table';
 import { EXTERNAL_PROCEDURE } from 'src/constants/paths';
 import { requiredField } from 'src/constants/validationSchema';
-import { object as yupObject, number, string, ObjectSchema, date } from 'yup';
+import { object as yupObject, number, string, ObjectSchema } from 'yup';
 
 export const listExternalProceduresBreadcrumbLinks = [
   {
@@ -57,7 +57,7 @@ export const externalProcedureDefaultFormValues: CreateExternalProcedurePayload 
   feesCharged: 0,
   discount: 0,
   finalAmount: 0,
-  procedureDate: new Date(),
+  procedureDate: '',
   procedureDetail: '',
   procedureType: '',
   cashierName: ''
@@ -65,7 +65,7 @@ export const externalProcedureDefaultFormValues: CreateExternalProcedurePayload 
 
 export const externalProcedureFormValidationSchema: ObjectSchema<CreateExternalProcedurePayload> =
   yupObject({
-    procedureDate: date().optional(),
+    procedureDate: string().default('').optional(),
     procedureType: requiredField,
     procedureDetail: requiredField,
     cashierName: string().optional(),

@@ -26,6 +26,7 @@ import {
 } from 'src/hooks/useProcedures';
 import { getViewPatientPath, PROCEDURES } from 'src/constants/paths';
 import useSnackbarAlert from 'src/hooks/useSnackbarAlert';
+import { formatRegDate } from 'src/util/common';
 
 const AddEditProcedure: React.FC = (): JSX.Element => {
   const navigate = useNavigate();
@@ -43,12 +44,13 @@ const AddEditProcedure: React.FC = (): JSX.Element => {
     mode: 'onBlur',
   });
 
-  const { isFetching, response } = useGetProcedureDetail({
+  const { isFetching, response } = useGetProcedureDetail({ 
     id,
   });
 
   useEffect(() => {
     if (!isFetching && response) {
+      response.procedureDate = formatRegDate(response.procedureDate);
       reset(response);
     }
   }, [response, isFetching]);
@@ -106,6 +108,7 @@ const AddEditProcedure: React.FC = (): JSX.Element => {
   } = methods;
 
   const onSubmit = (data: CreateProcedurePayload) => {
+    data.procedureDate = formatRegDate(data.procedureDate);
     if (isEdit) {
       patchProcedure(data);
     } else {

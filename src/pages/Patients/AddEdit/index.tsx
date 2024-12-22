@@ -26,6 +26,7 @@ import {
 } from 'src/hooks/usePatients';
 import { PATIENTS } from 'src/constants/paths';
 import useSnackbarAlert from 'src/hooks/useSnackbarAlert';
+import { formatRegDate } from 'src/util/common';
 
 const AddEditPatient: React.FC = (): JSX.Element => {
   const navigate = useNavigate();
@@ -44,6 +45,13 @@ const AddEditPatient: React.FC = (): JSX.Element => {
   const { isFetching, data } = useGetPatientDetail({
     id,
   });
+  
+  useEffect(() => {
+    if (data) {
+      data.patientRegDate = formatRegDate(data.patientRegDate);
+      reset(data);
+    }
+  }, [data, isFetching]);
 
   useEffect(() => {
     if (!isFetching && data) {
@@ -104,7 +112,8 @@ const AddEditPatient: React.FC = (): JSX.Element => {
   } = methods;
 
   const onSubmit = (data: CreatePatientPayload) => {
-    if (isEdit) {
+    data.patientRegDate = formatRegDate(data.patientRegDate);
+    if (isEdit) {   
       patchPatient(data);
     } else {
       createPatient(data);
