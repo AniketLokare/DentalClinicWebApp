@@ -43,21 +43,26 @@ const AppointmentBasicInfo: React.FC<AppointmentBasicInfoProps> = ({
             value={appointmentDetails?.lastName}
             flexBasis="50%"
           />
-          {/* <InfoField
-            label="Registration Date"
+          <InfoField
+            label="Treatment Details"
+            value={appointmentDetails?.treatment}
+            flexBasis="50%"
+          />
+          <InfoField
+            label="Start Date"
+            value={formatDate(appointmentDetails?.startTime || new Date())}
+            flexBasis="50%"
+          />
+          <InfoField
+            label="Appointment Date"
             value={formatDate(
-              appointmentDetails?.appointmentRegDate || new Date(),
+              appointmentDetails?.appointmentDate || new Date(),
             )}
             flexBasis="50%"
           />
           <InfoField
             label="Contact Number"
-            value={appointmentDetails?.patientMobile1}
-            flexBasis="50%"
-          />
-          <InfoField
-            label="Alternate Contact Number"
-            value={appointmentDetails?.patientMobile2}
+            value={appointmentDetails?.patientmobile1}
             flexBasis="50%"
           />
           <InfoField
@@ -66,15 +71,10 @@ const AppointmentBasicInfo: React.FC<AppointmentBasicInfoProps> = ({
             flexBasis="50%"
           />
           <InfoField
-            label="Medical History"
-            value={patientDetails?.patientMedicalHistory}
+            label="Timestamp"
+            value={formatDate(appointmentDetails?.timestamp || new Date())}
             flexBasis="50%"
           />
-          <InfoField
-            label="Medical Reports"
-            value={patientDetails?.patientReports}
-            flexBasis="50%"
-          /> */}
         </Box>
       </Stack>
       <Box>

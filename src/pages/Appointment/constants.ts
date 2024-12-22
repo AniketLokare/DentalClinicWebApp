@@ -86,11 +86,11 @@ export const appointmentDefaultFormValues: CreateAppointmentPayload = {
 export const appointmentFormValidationSchema: ObjectSchema<CreateAppointmentPayload> =
   yupObject({
     firstName: requiredField,
-    lastName: requiredField,
-    treatment: string().required(),
-    startTime: date().optional(),
-    appointmentDate: requiredField,
     middleName: string().optional(),
+    lastName: requiredField,
+    treatment: string().required('Required'),
+    startTime: date().optional(),
+    appointmentDate: date().required('Required'),
     patientmobile1: requiredField,
     cashierName: string().required(),
     timestamp: date().optional(),

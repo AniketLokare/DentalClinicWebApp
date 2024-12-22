@@ -38,7 +38,7 @@ const AppointmentForm: React.FC = (): JSX.Element => {
         trim
       />
       <FormInput
-        name="Treatment"
+        name="treatment"
         label="Treatment Details"
         control={control}
         placeholder="Enter treatment details"
@@ -76,7 +76,7 @@ const AppointmentForm: React.FC = (): JSX.Element => {
         label="Cashier Name"
         control={control}
         placeholder="Enter cashier's name"
-        error={errors.cashiername?.message}
+        error={errors.cashierName?.message}
         trim
       />
       <FormInput

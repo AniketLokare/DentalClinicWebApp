@@ -131,7 +131,8 @@ const AddEditAppointment: React.FC = (): JSX.Element => {
             secondaryButtonText={isEdit ? 'Save Changes' : undefined}
             secondaryButtonIcon={<FiSave />}
             disableSecondaryButton={!isDirty}
-            secondaryButtonType="submit"
+            secondaryButtonType="button" // Changed from "submit" to "button"
+            secondaryButtonClickEvent={handleSubmit(onSubmit)} // Added onSecondaryButtonClick to handle form submission
           />
 
           <Box sx={{ marginTop: '60px', maxWidth: '630px' }}>

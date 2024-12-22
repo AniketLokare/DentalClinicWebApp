@@ -9,8 +9,7 @@ import {
   TableContainer,
   Actions,
   Snackbar,
-  LoadingBackdrop,
-  Icon,
+  LoadingBackdrop
 } from 'src/components';
 import {
   listAppointmentsBreadcrumbLinks,
@@ -27,11 +26,11 @@ import {
   useGetAppointmentsList,
 } from 'src/hooks/useAppointments';
 import { usePagination } from 'src/hooks/usePagination';
-import { formatDate } from 'src/util/common';
 import { useDebounce } from '@uidotdev/usehooks';
 import useSnackbarAlert from 'src/hooks/useSnackbarAlert';
 import ConfirmationModal from 'src/components/ConfirmationModal';
 import useDeleteConfirmationModal from 'src/hooks/useDelete';
+import { FiUser } from 'react-icons/fi';
 
 const Appointments: React.FC = (): JSX.Element => {
   const navigate = useNavigate();
@@ -83,14 +82,12 @@ const Appointments: React.FC = (): JSX.Element => {
 
   const appointmentsTableColumnsWithActions = useMemo(
     () => [
-      ...AppointmentTableColumns,
       {
-        header: 'Registration Date',
-        accessorKey: 'appointmentRegDate',
-        cell: ({ getValue }) => (
-          <Box className="text-slate-gray">{formatDate(getValue())}</Box>
-        ),
+        id: 'avatar',
+        cell: () => <FiUser size="20px" />,
       },
+      ...AppointmentTableColumns,
+      
       {
         id: 'actions',
         cell: ({ row }) => {
@@ -105,7 +102,7 @@ const Appointments: React.FC = (): JSX.Element => {
                 onShowDeleteConfirmationModal(
                   appointmentValues.id,
                   appointmentValues.firstName,
-                );
+                )
               }}
               onViewDetails={() => {
                 navigate(getViewAppointmentPath(appointmentValues.id));
@@ -115,7 +112,7 @@ const Appointments: React.FC = (): JSX.Element => {
         },
       },
     ],
-    [],
+    [navigate],
   );
 
   return (
@@ -127,7 +124,7 @@ const Appointments: React.FC = (): JSX.Element => {
         message={snackbarAlertState.message}
         onClose={onDismiss}
       />
-      <Stack spacing={2}>
+      <Stack spacing={1}>
         <SubPanel
           pageTitle="APPOINTMENT"
           breadcrumbLinks={listAppointmentsBreadcrumbLinks}
@@ -153,7 +150,7 @@ const Appointments: React.FC = (): JSX.Element => {
                 <Table
                   columns={appointmentsTableColumnsWithActions}
                   data={response?.data || []}
-                  totalRecords={response?.items}
+                  totalRecords={response?.items || 0}
                   onPageChange={changePageNumber}
                   pageNumber={pageNumber}
                 />
