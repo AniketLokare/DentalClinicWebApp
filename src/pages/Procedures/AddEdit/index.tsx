@@ -56,7 +56,7 @@ const AddEditProcedure: React.FC = (): JSX.Element => {
   }, [response, isFetching]);
 
   const { mutate: patchProcedure, isPending: isPatchLoading } = usePatchProcedure(
-    patientId,
+    id,
     {
       onSuccess: () => {
         navigate(PROCEDURES, {

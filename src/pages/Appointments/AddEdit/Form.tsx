@@ -52,7 +52,6 @@ const AppointmentForm: React.FC = (): JSX.Element => {
       control={control}
       label="Appointment Date"
       error={errors.appointmentDate?.message}
-      sx={{ marginTop: '27px' }}
       />
       <FormInput
       name="patientmobile1"

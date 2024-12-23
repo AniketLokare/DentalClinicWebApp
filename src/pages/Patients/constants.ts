@@ -86,25 +86,51 @@ export const patientGenderProps = {
 
 export const patientFormValidationSchema: ObjectSchema<CreatePatientPayload> =
   yupObject({
-    firstName: requiredField,
-    lastName: requiredField,
-    patientRegDate: string().required('Required'),
-    patientMedicalHistory: string().optional(),
-    patientReports: string().optional(),    
-    middleName: string().optional(),
+    firstName: string()
+      .required('First name is required')
+      .min(2, 'First name must be at least 2 characters')
+      .max(50, 'First name cannot exceed 50 characters')
+      .matches(/^[A-Za-z]+$/, 'First name can only contain alphabets'),
+
+    middleName: string()
+      .optional()
+      .max(50, 'Middle name cannot exceed 50 characters')
+      .matches(/^[A-Za-z]*$/, 'Middle name can only contain alphabets'),
+
+    lastName: string()
+      .required('Last name is required')
+      .min(2, 'Last name must be at least 2 characters')
+      .max(50, 'Last name cannot exceed 50 characters')
+      .matches(/^[A-Za-z]+$/, 'Last name can only contain alphabets'),
+
+    patientRegDate: string()
+      .required('Registration Date is required'),
+    
+    patientMedicalHistory: string()
+      .optional(),
+    
+    patientReports: string()
+      .optional(),    
+   
     patientAge: number()
-      .typeError('Required')
+      .typeError('Age must be a number')
       .required('Required')
       .positive('Invalid age')
       .integer(),
+    
     patientGender: requiredField,
-    patientMobile1: number().required('Patient Mobile Number is required')
-    .positive()
-    .integer()
-    .test('len', 'Patient Mobile Number must be exactly 10 digits', val => val?.toString().length === 10),
-    patientMobile2: number().optional()
-    .positive()
-    .integer()
-    .test('len', 'Patient Mobile Number must be exactly 10 digits', val => val?.toString().length === 10),
-    cashierName: requiredField,
+
+    patientMobile1: number()
+      .required('Patient Mobile Number is required')
+      .positive()
+      .integer()
+      .test('len', 'Patient Mobile Number must be exactly 10 digits', val => val?.toString().length === 10),
+
+    patientMobile2: number()
+      .optional(),
+    
+    cashierName: string()
+      .required("Cashier name is required")
+      .max(50, 'Cashier name cannot exceed 50 characters')
+      .matches(/^[A-Za-z\s]*$/, 'Cashier name can only contain alphabets and spaces'),
   });

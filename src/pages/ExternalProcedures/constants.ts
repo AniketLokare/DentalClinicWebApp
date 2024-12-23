@@ -1,6 +1,5 @@
 import { ColumnDef } from '@tanstack/react-table';
 import { EXTERNAL_PROCEDURE } from 'src/constants/paths';
-import { requiredField } from 'src/constants/validationSchema';
 import { object as yupObject, number, string, ObjectSchema } from 'yup';
 
 export const listExternalProceduresBreadcrumbLinks = [
@@ -65,22 +64,44 @@ export const externalProcedureDefaultFormValues: CreateExternalProcedurePayload 
 
 export const externalProcedureFormValidationSchema: ObjectSchema<CreateExternalProcedurePayload> =
   yupObject({
-    procedureDate: string().default('').optional(),
-    procedureType: requiredField,
-    procedureDetail: requiredField,
-    cashierName: string().optional(),
+    procedureDate: string()
+    .default('')
+    .optional(),
+    
+    procedureType: string()
+    .required('Procedure Type is required')
+    .min(2, 'Procedure Type must be at least 2 characters')
+    .max(100, 'Procedure Type cannot exceed 100 characters'),
+
+    procedureDetail: string()
+    .required('Procedure Details is required')
+    .min(2, 'Procedure Details must be at least 2 characters')
+    .max(100, 'Procedure Details cannot exceed 100 characters'),
+
+    cashierName: string()
+    .optional()
+    .required("Cashier name is required")
+    .max(50, 'Cashier name cannot exceed 50 characters')
+    .matches(/^[A-Za-z\s]*$/, 'Cashier name can only contain alphabets and spaces'),
+
     finalAmount: number()
       .typeError('Required')
       .required('Required')
       .integer(),
+
     discount: number()
       .optional()
-      .positive('Invalid amount')
+      .min(0, 'Invalid amount')
       .integer(),
+      
     feesCharged: number()
       .typeError('Required')
       .required('Required')
       .integer(),
-    doctorName: requiredField,
+    
+    doctorName: string()
+    .required("Doctor name is required")
+    .max(50, 'Doctor name cannot exceed 50 characters')
+    .matches(/^[A-Za-z\s]*$/, 'Doctor name can only contain alphabets and spaces'),
   });
 

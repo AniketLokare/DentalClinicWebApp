@@ -55,20 +55,20 @@ const ExternalProcedureBasicInfo: React.FC<ExternalProcedureBasicInfoProps> = ({
             flexBasis="50%"
           />
           <InfoField
-            label="Fees Charged"
+            label="Fees Charged (₹)"
             value={`${externalProcedureDetails?.feesCharged}`}
             flexBasis="50%"
           />
           <InfoField
-            label="Total Amount"
-            value={`${externalProcedureDetails?.finalAmount}`}
-            flexBasis="50%"
-          />
-          <InfoField
-            label="Discount"
+            label="Discount (%)"
             value={`${externalProcedureDetails?.discount} %`}
             flexBasis="50%"
           />
+          <InfoField
+            label="Total Amount (₹)"
+            value={`${externalProcedureDetails?.finalAmount}`}
+            flexBasis="50%"
+          />  
         </Box>
       </Stack>
     </Stack>

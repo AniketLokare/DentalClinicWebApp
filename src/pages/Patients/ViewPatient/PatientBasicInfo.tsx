@@ -128,7 +128,7 @@ const PatientBasicInfo: React.FC<PatientBasicInfoProps> = ({
                 />
                 <InfoField
                   label="Alternate Contact Number"
-                  value={String(patientDetails?.patientMobile2)}
+                  value={String(patientDetails?.patientMobile2?.toString())}
                   flexBasis="50%"
                 />
               </Box>
@@ -209,23 +209,24 @@ const PatientBasicInfo: React.FC<PatientBasicInfoProps> = ({
             </Stack>
           </Box>
         </Box>
-      </Stack>
+      </Stack> 
       <Box>
-        <Typography
-          variant="appBlack"
-          sx={{ fontSize: '15px', fontWeight: 700 }}
-        >
-          Patient Procedures
-        </Typography>
-        <Box>
-            <Button
-              variant="outlined"
-              sx={{ padding: '20px' }}
-              onClick={() => navigate(NEW_PROCEDURE_PATH, { state: id  })}
-            >
-              New Procedure
-            </Button>
-          </Box>
+        <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
+          <Typography
+            variant="appBlack"
+            sx={{ fontSize: '23px', fontWeight: 700, marginTop: '13px' }}
+          >
+            Patient Procedures
+          </Typography>
+          
+          <Button
+            variant="outlined"
+            sx={{ padding: '20px' }}
+            onClick={() => navigate(NEW_PROCEDURE_PATH, { state: id  })}
+          >
+            New Procedure
+          </Button>
+        </Box>
         <Box sx={{ marginTop: '13px' }}>
           <ErrorBoundary fallbackComponent={TableError}>
             <PageLoader
