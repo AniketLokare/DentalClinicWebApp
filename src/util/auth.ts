@@ -77,7 +77,7 @@ export const getAuthInfo = () => {
   return { 
     loggedState: localStorage.getItem('IS_LOGGED_IN'),
     username: localStorage.getItem('USER_NAME'),
-    role: role,
+    role: role ? JSON.parse(role) : null,
     accessToken: localStorage.getItem('ACCESS_TOKEN'),
     ...(accessTokenExpiry 
       ? { accessTokenExpiry: Number(accessTokenExpiry) }
@@ -94,6 +94,17 @@ export const getAuthInfo = () => {
 } 
 
 export const isUserLoggedIn = () => !!localStorage.getItem('ACCESS_TOKEN');
+
+export const getAllowedRoutes = (allowedPaths: { [key: string]: string[] }) => {
+  const role = localStorage.getItem('ROLE');
+
+  if (role) {
+    const parsedRole = JSON.parse(role);
+    if (allowedPaths[parsedRole]) {
+      return new Set(allowedPaths[parsedRole]);
+    }
+  }
+};
 
 export const Logout = async () => {
   localStorage.clear();

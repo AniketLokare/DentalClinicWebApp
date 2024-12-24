@@ -2,6 +2,8 @@ export const DASHBOARD_PATH = '/';
 
 export const LOGIN = '/login';
 
+export const UNAUTHORIZED_PATH = '/unauthorized';
+
 export const APPOINTMENTS = '/appointments';
 export const NEW_APPOINTMENT_PATH = `${APPOINTMENTS}/new`;
 export const EDIT_APPOINTMENT_PATH = `${APPOINTMENTS}/:id/edit`;

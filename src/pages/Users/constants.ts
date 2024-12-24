@@ -27,9 +27,14 @@ export const userRoleProps = [
     menuItemId: 'ADMIN' 
   },
   { 
-    menuItemLabel: 'USER', 
-    menuItemValue: 'USER', 
-    menuItemId: 'USER' 
+    menuItemLabel: 'RECEP', 
+    menuItemValue: 'RECEP', 
+    menuItemId: 'RECEP' 
+  },
+  { 
+    menuItemLabel: 'MEDICO', 
+    menuItemValue: 'MEDICO', 
+    menuItemId: 'MEDICO' 
   },
 ];
 
