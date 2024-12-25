@@ -16,7 +16,7 @@ const PatientForm: React.FC = (): JSX.Element => {
 
   return (
     <Stack spacing={4.5}>
-      <FormInput
+      <FormInput 
         name="firstName"
         label="First Name"
         control={control}

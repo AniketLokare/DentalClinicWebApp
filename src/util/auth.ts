@@ -46,7 +46,7 @@ export const refreshAccessToken = async (config?: AxiosRequestConfig) => {
     const response = await axiosClient.post<CreateLoginResponse>(REFRESH_TOKEN_ROUTE, 
       payload, config);
 
-    const token = response.data.accessToken;
+    const token = response.data.jwtToken;
 
     setNewToken(token);
     setIsRefreshTokenLoading(false);
@@ -59,21 +59,24 @@ export const refreshAccessToken = async (config?: AxiosRequestConfig) => {
 }
 
 export const setAuthInfo = (loggedState: CreateLoginResponse) => {
-  setNewToken(loggedState.accessToken, 
+  setNewToken(loggedState.jwtToken, 
     loggedState.refreshToken);
   localStorage.setItem('IS_LOGGED_IN', loggedState.LoggedInState.toString());
-  localStorage.setItem('USER_INFO', JSON.stringify(loggedState.username));
+  localStorage.setItem('USER_NAME', JSON.stringify(loggedState.username));
+  localStorage.setItem('ROLE', JSON.stringify(loggedState.role));
 }
 
 export const getAuthInfo = () => {
-  const userInfo = localStorage.getItem('USER_INFO');
+  const userInfo = localStorage.getItem('USER_NAME');
+  const role = localStorage.getItem('ROLE');
   const isRefreshTokenLoading = localStorage.getItem('IS_REFRESH_TOKEN_LOADING');
   const accessTokenExpiry = localStorage.getItem('ACCESS_TOKEN_EXPIRY');
   const refreshTokenExpiry = localStorage.getItem('REFRESH_TOKEN_EXPIRY');
 
   return { 
     loggedState: localStorage.getItem('IS_LOGGED_IN'),
-    username: localStorage.getItem('username'),
+    username: localStorage.getItem('USER_NAME'),
+    role: role,
     accessToken: localStorage.getItem('ACCESS_TOKEN'),
     ...(accessTokenExpiry 
       ? { accessTokenExpiry: Number(accessTokenExpiry) }

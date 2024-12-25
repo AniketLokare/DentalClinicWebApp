@@ -36,7 +36,21 @@ export const NEW_MEDICINE_PATH = '/medicines/new';
 export const EDIT_MEDICINE_PATH = '/medicines/:id/edit';
 export const getEditMedicineRoute = (id: string) => `${MEDICINES}/${id}/edit`;
 
-export const PURCHASE_ORDERS = '/purchase-orders';
+export const PURCHASE_ORDERS = '/purchase-orders'; 
+export const NEW_PURCHASE_PATH = '/purchase-orders/new';
+export const EDIT_PURCHASE_PATH = '/purchase-orders/:id/edit';
+export const VIEW_PURCHASE_PATH = '/purchase-orders/:id';
+export const getEditPurchaseRoute = (id: string) => `${PURCHASE_ORDERS}/${id}/edit`;
+export const getViewPurchasePath = (id: string) => `${PURCHASE_ORDERS}/${id}`;
+
+export const PURCHASE_TRANSACTIONS = '/purchase-transaction'; 
+export const EDIT_PURCHASE_TRANSACTIONS_PATH = '/purchase-transaction/:id/edit';
+export const VIEW_PURCHASE_TRANSACTIONS_PATH = '/purchase-transaction/:id';
+export const NEW_PURCHASE_TRANSACTIONS_PATH = '/purchase-transaction/new';
+export const getNewPurchaseTransactionRoute = (id: string) => `${NEW_PURCHASE_TRANSACTIONS_PATH}/${id}`;
+export const getEditPurchaseTransactionRoute = (id: string) => `${PURCHASE_TRANSACTIONS}/${id}/edit`;
+export const getViewPurchaseTransactionPath = (id: string) => `${PURCHASE_TRANSACTIONS}/${id}`;
+
 
 export const SALES_ORDERS = '/sales-orders';
 

@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
+import { parse, isValid, format } from 'date-fns';
 import {
   Button,
   ErrorBoundary,
@@ -13,21 +14,21 @@ import {
 import Box from '@mui/material/Box';
 import { useNavigate, useParams } from 'react-router-dom';
 import { FiSave } from 'react-icons/fi';
-import PatientForm from './Form';
+import PurchaseOrderForm from './Form';
 import {
   getAddEditBreadCrumbLinks,
-  patientDefaultFormValues,
-  patientFormValidationSchema,
+  purchaseOrderDefaultFormValues,
+  purchaseFormValidationSchema,
 } from '../constants';
 import {
-  useCreatePatient,
-  useGetPatientDetail,
-  usePatchPatient, 
-} from 'src/hooks/usePatients';
-import { PATIENTS } from 'src/constants/paths';
+  useCreatePurchaseOrder,
+  useGetPurchaseOrderDetail,
+  usePatchPurchaseOrder,
+} from 'src/hooks/usePurchaseOrder';
+import { PURCHASE_ORDERS } from 'src/constants/paths';
 import useSnackbarAlert from 'src/hooks/useSnackbarAlert';
 
-const AddEditPatient: React.FC = (): JSX.Element => {
+const AddEditPurchase: React.FC = (): JSX.Element => {
   const navigate = useNavigate();
   const { id = '' } = useParams();
   const isEdit = !!id;
@@ -35,32 +36,37 @@ const AddEditPatient: React.FC = (): JSX.Element => {
   const { snackbarAlertState, setSnackbarAlertState, onDismiss } =
     useSnackbarAlert();
 
-  const methods = useForm<CreatePatientPayload>({
-    defaultValues: patientDefaultFormValues,
-    resolver: yupResolver<CreatePatientPayload>(patientFormValidationSchema),
+  const methods = useForm<CreatePurchasePayload>({
+    defaultValues: purchaseOrderDefaultFormValues,
+    resolver: yupResolver<CreatePurchasePayload>(purchaseFormValidationSchema),
     mode: 'onBlur',
   });
 
-  const { isFetching, data } = useGetPatientDetail({
-    id,
-  });
+  const { isFetching, data } = useGetPurchaseOrderDetail({ id });
 
   useEffect(() => {
     if (!isFetching && data) {
-      reset(data);
+      const formattedData = {
+        ...data,
+        purchaseDate: data.purchaseDate
+          ? format(parse(data.purchaseDate, 'dd-MM-yyyy', new Date()), 'yyyy-MM-dd')
+          : '',
+      };
+      reset(formattedData);  // Reset the form with the formatted date
     }
   }, [data, isFetching]);
+  
 
-  const { mutate: patchPatient, isPending: isPatchLoading } = usePatchPatient(
+  const { mutate: patchPurchaseOrder, isPending: isPatchLoading } = usePatchPurchaseOrder(
     id,
     {
       onSuccess: () => {
-        navigate(PATIENTS, {
+        navigate(PURCHASE_ORDERS, {
           state: {
             alert: {
               severity: 'success',
-              title: 'Patient Updated.',
-              message: `Patient updated successfully.`,
+              title: 'Purchase Order Updated',
+              message: `Purchase order updated successfully.`,
             },
           },
         });
@@ -68,22 +74,22 @@ const AddEditPatient: React.FC = (): JSX.Element => {
       onError: (err: Error) => {
         setSnackbarAlertState({
           severity: 'error',
-          title: 'ERROR.',
+          title: 'Error',
           message: err.message,
         });
       },
     },
   );
 
-  const { mutate: createPatient, isPending: isCreatingPatient } =
-    useCreatePatient({
+  const { mutate: createPurchaseOrder, isPending: isCreatingOrder } =
+    useCreatePurchaseOrder({
       onSuccess: () => {
-        navigate(PATIENTS, {
+        navigate(PURCHASE_ORDERS, {
           state: {
             alert: {
               severity: 'success',
-              title: 'Patient Created.',
-              message: `Patient created successfully.`,
+              title: 'Purchase Order Created',
+              message: `Purchase order created successfully.`,
             },
           },
         });
@@ -91,7 +97,7 @@ const AddEditPatient: React.FC = (): JSX.Element => {
       onError: (err: Error) => {
         setSnackbarAlertState({
           severity: 'error',
-          title: 'ERROR.',
+          title: 'Error',
           message: err.message,
         });
       },
@@ -103,15 +109,24 @@ const AddEditPatient: React.FC = (): JSX.Element => {
     reset,
   } = methods;
 
-  const onSubmit = (data: CreatePatientPayload) => {
+  const onSubmit = (data: CreatePurchasePayload) => {
+    // Ensure the date is in dd-MM-yyyy format before sending to the backend
+    const formattedData = {
+      ...data,
+      purchaseDate: data.purchaseDate
+        ? format(parse(data.purchaseDate, 'yyyy-MM-dd', new Date()), 'dd-MM-yyyy')
+        : '',
+    };
+  
     if (isEdit) {
-      patchPatient(data);
+      patchPurchaseOrder(formattedData);
     } else {
-      createPatient(data);
+      createPurchaseOrder(formattedData);
     }
   };
+  
 
-  const isMutating = isCreatingPatient || isPatchLoading;
+  const isMutating = isCreatingOrder || isPatchLoading;
 
   return (
     <ErrorBoundary fallbackComponent={FormError}>
@@ -126,7 +141,7 @@ const AddEditPatient: React.FC = (): JSX.Element => {
       <FormProvider {...methods}>
         <Box component="form" onSubmit={handleSubmit(onSubmit)}>
           <SubPanel
-            pageTitle={isEdit ? 'Edit Patient' : 'New Patient'}
+            pageTitle={isEdit ? 'Edit Purchase Order' : 'New Purchase Order'}
             breadcrumbLinks={getAddEditBreadCrumbLinks(isEdit)}
             secondaryButtonText={isEdit ? 'Save Changes' : undefined}
             secondaryButtonIcon={<FiSave />}
@@ -136,7 +151,7 @@ const AddEditPatient: React.FC = (): JSX.Element => {
 
           <Box sx={{ marginTop: '60px', maxWidth: '630px' }}>
             <PageLoader isLoading={isFetching} Components={{ Loading: 'form' }}>
-              <PatientForm />
+              <PurchaseOrderForm />
 
               <Box sx={{ marginTop: '60px' }}>
                 <Button
@@ -152,7 +167,7 @@ const AddEditPatient: React.FC = (): JSX.Element => {
                     variant="contained"
                     sx={{ width: 'fit-content', marginLeft: '20px' }}
                   >
-                    Create Patient
+                    Create Purchase Order
                   </Button>
                 )}
               </Box>
@@ -164,4 +179,4 @@ const AddEditPatient: React.FC = (): JSX.Element => {
   );
 };
 
-export default AddEditPatient;
+export default AddEditPurchase;

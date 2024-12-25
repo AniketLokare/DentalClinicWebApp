@@ -19,7 +19,9 @@ const ProtectedRoute: React.FC<PropsWithChildren> = ({ children }) => {
     return <Navigate to="/login" state={{ pathname }}/>;
   } else {
     return <Layout>{children || <Outlet />}</Layout>
+    
   }
+ 
 };
 
 export default ProtectedRoute;

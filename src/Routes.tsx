@@ -22,6 +22,13 @@ import {
   NEW_SUPPLIER_PATH,
   EDIT_SUPPLIER_PATH,
   PURCHASE_ORDERS,
+  NEW_PURCHASE_PATH,
+  VIEW_PURCHASE_PATH,
+  EDIT_PURCHASE_PATH,
+  PURCHASE_TRANSACTIONS,
+  NEW_PURCHASE_TRANSACTIONS_PATH,
+  EDIT_PURCHASE_TRANSACTIONS_PATH,
+
   SALES_ORDERS,
   APPOINTMENTS,
   NEW_PROCEDURE_PATH,
@@ -32,6 +39,7 @@ import {
   NEW_EXTERNAL_PROCEDURE_PATH,
   EDIT_EXTERNAL_PROCEDURE_PATH,
   VIEW_EXTERNAL_PROCEDURE_PATH,
+  
 } from './constants/paths';
 import Login from './pages/Login';
 import ProtectedRoute from './pages/Login/ProtectedRoute';
@@ -49,6 +57,9 @@ import AddEditMedicine from './pages/Medicines/AddEdit';
 import Suppliers from './pages/Inventory/Suppliers';
 import AddEditSupplier from './pages/Inventory/Suppliers/AddEdit';
 import PurchaseOrders from './pages/Inventory/PurchaseOrders';
+import AddEditPurchase from './pages/Inventory/PurchaseOrders/AddEdit';
+import ViewPurchase from './pages/Inventory/PurchaseOrders/ViewPurchaseOrders';
+import AddEditPurchaseTransactions from './pages/Inventory/PurchaseOrders/PurchaseTransactions/AddEdit';
 import SalesOrders from './pages/Inventory/SalesOrders';
 import Appointments from './pages/Appointments';
 import AddEditAppointment from './pages/Appointments/AddEdit';
@@ -86,6 +97,11 @@ const AppRoutes: React.FC = () => (
       <Route path={EDIT_MEDICINE_PATH} element={<AddEditMedicine />} />
 
       <Route path={PURCHASE_ORDERS} element={<PurchaseOrders />} />
+      <Route path={NEW_PURCHASE_PATH} element={<AddEditPurchase />} />
+      <Route path={EDIT_PURCHASE_PATH} element={<AddEditPurchase />} />
+      <Route path={VIEW_PURCHASE_PATH} element={<ViewPurchase />} />
+      <Route path={EDIT_PURCHASE_TRANSACTIONS_PATH} element={<AddEditPurchaseTransactions />} />
+      
       <Route path={SALES_ORDERS} element={<SalesOrders />} />
 
       <Route path={SUPPLIERS} element={<Suppliers />} />

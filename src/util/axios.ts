@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { getAuthInfo, refreshAccessToken } from './auth';
 import { LOGIN } from 'src/constants/paths';
+import { LOGIN_ROUTE } from 'src/api/login/routes';
 
 export const initAxiosClient = (baseURL?: string) => {
   const axiosClient = axios.create({
@@ -24,6 +25,7 @@ axiosClient.interceptors.request.use(async (config) => {
   const isInLogin = window.location.pathname === LOGIN;
 
   if ( isInLogin &&
+        config.url !== LOGIN_ROUTE &&
         (!authInfo?.refreshToken || 
           !authInfo?.accessToken || 
           (authInfo.refreshTokenExpiry &&
@@ -34,7 +36,10 @@ axiosClient.interceptors.request.use(async (config) => {
         return config;
       }
 
-  config.headers.Authorization = `Bearer ${authInfo?.accessToken}`;
+  if (config.url !== LOGIN_ROUTE) {
+    config.headers.Authorization = `Bearer ${authInfo?.accessToken}`;
+  }
+  //config.headers.Authorization = Bearer ${authInfo?.accessToken};
 
   if(
     authInfo.accessToken &&
@@ -42,7 +47,7 @@ axiosClient.interceptors.request.use(async (config) => {
     currentDate >= authInfo.accessTokenExpiry
   ) {
     const result = await refreshAccessToken();
-    config.headers.Authorization = `Bearer ${result?.accessToken}`;
+    config.headers.Authorization = `Bearer ${result?.jwtToken}`;
   }
   
 

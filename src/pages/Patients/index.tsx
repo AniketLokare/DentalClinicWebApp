@@ -16,7 +16,7 @@ import { listPatientsBreadcrumbLinks, patientsTableColumns } from './constants';
 import { useNavigate } from 'react-router-dom';
 import {
   getEditPatientRoute,
-  getNewProcedureRoute,
+  getNewProcedureRoute, 
   getViewPatientPath,
   NEW_PATIENT_PATH,
 } from 'src/constants/paths';
