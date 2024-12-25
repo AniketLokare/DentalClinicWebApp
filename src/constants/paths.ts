@@ -2,11 +2,13 @@ export const DASHBOARD_PATH = '/';
 
 export const LOGIN = '/login';
 
+export const UNAUTHORIZED_PATH = '/unauthorized';
+
 export const APPOINTMENTS = '/appointments';
 export const NEW_APPOINTMENT_PATH = `${APPOINTMENTS}/new`;
 export const EDIT_APPOINTMENT_PATH = `${APPOINTMENTS}/:id/edit`;
 export const VIEW_APPOINTMENT_PATH = `${APPOINTMENTS}/:id`;
-export const getEditAppointmentRoute = (id: string) => `${APPOINTMENTS}/edit/${id}`;
+export const getEditAppointmentRoute = (id: string) => `${APPOINTMENTS}/${id}/edit`;
 export const getViewAppointmentPath = (id: string) => `${APPOINTMENTS}/${id}`;
 
 export const PATIENTS = '/patients';

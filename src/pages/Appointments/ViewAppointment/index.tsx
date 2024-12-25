@@ -133,8 +133,8 @@ const ViewAppointment: React.FC = (): JSX.Element => {
                 variant="contained"
                 onClick={() =>
                   onShowDeleteConfirmationModal(
-                    appointmentDetails?.data?.toString() || '',
-                    appointmentDetails.data?.firstName || '',
+                    appointmentDetails?.data?.appointmentId.toString() || '',
+                    appointmentDetails.data?.appointmentId.toString() || '',
                   )
                 }
                 startIcon={<Icon icon="trash" size="15" />}

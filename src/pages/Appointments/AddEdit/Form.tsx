@@ -2,6 +2,7 @@ import React from 'react';
 import Stack from '@mui/material/Stack';
 import { FormInput } from 'src/components';
 import { useFormContext } from 'react-hook-form';
+import { format } from 'date-fns';
 
 const AppointmentForm: React.FC = (): JSX.Element => {
   const {
@@ -41,21 +42,19 @@ const AppointmentForm: React.FC = (): JSX.Element => {
       control={control}
       placeholder="Enter patient's treatment"
       error={errors.treatment?.message}
-      trim
       multiline
       rows={3}
       />
-      {/* <FormInput
+      <FormInput
       type="date"
       name="appointmentDate"
       inputProps={{ min: format(new Date(), 'yyyy-MM-dd') }}
       control={control}
       label="Appointment Date"
       error={errors.appointmentDate?.message}
-      sx={{ marginTop: '27px' }}
-      /> */}
+      />
       <FormInput
-      name="patientMobile1"
+      name="patientmobile1"
       label="Patient's Contact Number"
       control={control}
       placeholder="Enter patient's contact number"
@@ -68,7 +67,6 @@ const AppointmentForm: React.FC = (): JSX.Element => {
       control={control}
       placeholder="Enter cashier's name"
       error={errors.cashiername?.message}
-      trim
       />
     </Stack>
   );

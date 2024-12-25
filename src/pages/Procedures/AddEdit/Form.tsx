@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Stack from '@mui/material/Stack';
 import { FormInput } from 'src/components';
 import { useFormContext } from 'react-hook-form';
@@ -7,10 +7,20 @@ import { format } from 'date-fns/format';
 const ProcedureForm: React.FC = (): JSX.Element => {
   const {
     control,
+    watch,
+    setValue,
     formState: { errors },
   } = useFormContext<CreateProcedurePayload>();
 
   //const procedurePayment = watch('procedurePayment');
+
+  const totalAmount = watch('totalAmount');
+  const discount = watch('discount');
+
+  useEffect(() => {
+    const finalAmount = totalAmount - (totalAmount * (discount / 100));
+    setValue('finalAmount', finalAmount);
+  }, [totalAmount, discount, setValue]);
 
   return (
     <Stack spacing={4.5}>
@@ -24,7 +34,7 @@ const ProcedureForm: React.FC = (): JSX.Element => {
       <FormInput
         type="date"
         name="procedureDate"
-        inputProps={{ min: format(new Date(), 'dd-mm-yyyy') }}
+        inputProps={{ min: format(new Date(), 'yyyy-MM-dd') }}
         control={control}
         label="Registration Date"
         error={errors.procedureDate?.message}
@@ -35,7 +45,6 @@ const ProcedureForm: React.FC = (): JSX.Element => {
         control={control}
         placeholder="Enter patient's procedure type"
         error={errors.procedureType?.message}
-        trim
       />
        <FormInput
         name="procedureDetails"
@@ -43,7 +52,6 @@ const ProcedureForm: React.FC = (): JSX.Element => {
         control={control}
         placeholder="Enter patient's procedure details"
         error={errors.procedureDetail?.message}
-        trim
         multiline
         rows={4}
       />
@@ -62,13 +70,6 @@ const ProcedureForm: React.FC = (): JSX.Element => {
         }}
       /> */}
       <FormInput
-        type="number"
-        name="totalAmount"
-        control={control}
-        label="Total Amount"
-        error={errors.totalAmount?.message}
-      />
-     <FormInput
         name="clinicName"
         label="Enter External Clinic Name"
         control={control}
@@ -78,17 +79,33 @@ const ProcedureForm: React.FC = (): JSX.Element => {
       />
       <FormInput
         type="number"
+        name="totalAmount"
+        control={control}
+        label="Total Amount (₹)"
+        error={errors.totalAmount?.message}
+      />
+      <FormInput
+        type="number"
         name="discount"
         control={control}
-        label="Discount"
+        label="Discount (%)"
         error={errors.discount?.message}
       />
       <FormInput
         type="number"
-        name="FinalAmount"
+        name="finalAmount"
         control={control}
-        label="Final Amount"
+        label="Final Amount (₹)"
         error={errors.finalAmount?.message}
+        disabled
+      />
+      <FormInput
+        name="cashierName"
+        label="Cashier Name"
+        control={control}
+        placeholder="Enter cashier's name"
+        error={errors.cashierName?.message}
+        trim
       />
     </Stack>
   );

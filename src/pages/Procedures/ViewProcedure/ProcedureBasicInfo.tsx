@@ -55,13 +55,18 @@ const ProcedureBasicInfo: React.FC<ProcedureBasicInfoProps> = ({
             flexBasis="50%"
           />
           <InfoField
-            label="Total Amount"
+            label="Total Amount (₹)"
             value={`${procedureDetails?.totalAmount}`}
             flexBasis="50%"
           />
           <InfoField
-            label="Discount"
+            label="Discount (%)"
             value={`${procedureDetails?.discount} %`}
+            flexBasis="50%"
+          />
+           <InfoField
+            label="Final Amount (₹)"
+            value={`${procedureDetails?.finalAmount}`}
             flexBasis="50%"
           />
         </Box>

@@ -62,11 +62,39 @@ export const appointmentDefaultFormValues: CreateAppointmentPayload = {
 
 export const appointmentDefaultFormValidateSchema: ObjectSchema<CreateAppointmentPayload> =
   yupObject({
-    firstName: string().required('First name is required'),
-    middleName: string().optional(),
-    lastName: string().required('Last Name is required'),
-    treatment: string().required('Treatment is required'),
-    appointmentDate: string().optional(),
-    patientmobile1: number().required('Patient Mobile Number is required'),
-    cashiername: string().optional(),
+    firstName: string()
+      .required('First name is required')
+      .min(2, 'First name must be at least 2 characters')
+      .max(50, 'First name cannot exceed 50 characters')
+      .matches(/^[A-Za-z]+$/, 'First name can only contain alphabets'),
+
+    middleName: string()
+      .optional()
+      .max(50, 'Middle name cannot exceed 50 characters')
+      .matches(/^[A-Za-z]*$/, 'Middle name can only contain alphabets'),
+
+    lastName: string()
+      .required('Last name is required')
+      .min(2, 'Last name must be at least 2 characters')
+      .max(50, 'Last name cannot exceed 50 characters')
+      .matches(/^[A-Za-z]+$/, 'Last name can only contain alphabets'),
+    
+    treatment: string()
+      .required('Treatment is required')
+      .min(2, 'Treatment must be at least 2 characters')
+      .max(100, 'Treatment cannot exceed 100 characters'),
+
+    appointmentDate: string()
+      .optional(),
+
+    patientmobile1: number()
+      .required('Patient Mobile Number is required')
+      .positive()
+      .integer()
+      .test('len', 'Patient Mobile Number must be exactly 10 digits', val => val?.toString().length === 10),
+
+    cashiername: string()
+      .optional()
+      .max(50, 'Cashier name cannot exceed 50 characters')
+      .matches(/^[A-Za-z\s]*$/, 'Cashier name can only contain alphabets and spaces'),
   });

@@ -130,7 +130,7 @@ const Procedures: React.FC = (): JSX.Element => {
               <PageLoader
                 isLoading={isFetching}
                 isEmpty={(noData && !isError) || (noData && showFilters)}
-                emptyMessage="No patients found"
+                emptyMessage="No procedures found"
                 Components={{ Loading: 'table' }}
               >
                 <Table

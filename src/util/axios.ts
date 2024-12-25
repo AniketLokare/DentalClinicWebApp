@@ -39,7 +39,7 @@ axiosClient.interceptors.request.use(async (config) => {
   if (config.url !== LOGIN_ROUTE) {
     config.headers.Authorization = `Bearer ${authInfo?.accessToken}`;
   }
-  //config.headers.Authorization = Bearer ${authInfo?.accessToken};
+  //config.headers.Authorization = `Bearer ${authInfo?.accessToken}`;
 
   if(
     authInfo.accessToken &&

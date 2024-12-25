@@ -12,10 +12,10 @@ interface RefreshToken {
 type CreateRefreshTokenPayload = RefreshToken;
 
 interface LoginResponse {
+  username: string;
   jwtToken: string;
   refreshToken: string;
   LoggedInState: boolean;
-  username: string;
   role: string;
 }
 

@@ -49,9 +49,23 @@ export const medicineDefaultFormValues: CreateMedicinePayload = {
 
 export const medicineFormValidationSchema: ObjectSchema<CreateMedicinePayload> =
   yupObject({
-    medicineName: string().required('Medicine name is required'),
-    medicineType: string().required('Medicine Type is required'),
-    medicinePack: number().required('Medicine Pack is required'),
-    quantity: number().required('Medicine Quantity is required'),
+    medicineName: string()
+    .required('Medicine name is required'),
+
+    medicineType: string()
+    .required('Medicine Type is required'),
+
+    medicinePack: number()
+    .required('Medicine Pack is required')
+    .positive()
+    .integer()
+    .min(1, 'Medicine Pack should be greater than 0'),
+
+    quantity: number()
+    .required('Medicine Quantity is required')
+    .positive()
+    .integer()
+    .min(1, 'Medicine Quantity should be greater than 0'),
+
   });
 

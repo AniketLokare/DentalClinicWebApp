@@ -84,7 +84,7 @@ const Patients: React.FC = (): JSX.Element => {
           const patientValues = row.original;
           // Determine the appropriate icon or avatar based on gender
           const icon =
-            patientValues.patientGender === 'male' ? 'businessman' : 'businesswoman';
+            patientValues.patientGender === 'Male' ? 'businessman' : 'businesswoman';
           return (
             <Icon icon={icon} size="30px" />
           );

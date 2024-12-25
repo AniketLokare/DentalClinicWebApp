@@ -39,7 +39,6 @@ import {
   NEW_EXTERNAL_PROCEDURE_PATH,
   EDIT_EXTERNAL_PROCEDURE_PATH,
   VIEW_EXTERNAL_PROCEDURE_PATH,
-  
 } from './constants/paths';
 import Login from './pages/Login';
 import ProtectedRoute from './pages/Login/ProtectedRoute';
@@ -67,11 +66,13 @@ import ViewAppointment from './pages/Appointments/ViewAppointment';
 import ExternalProcedures from './pages/ExternalProcedures';
 import AddEditExternalProcedure from './pages/ExternalProcedures/AddEdit';
 import ViewExternalProcedure from './pages/ExternalProcedures/ViewExternalProcedures';
+import Unauthorized from './pages/Unauthorized';
 
 const AppRoutes: React.FC = () => (
   <Routes>
     <Route path={LOGIN} element={<Login />} />
-
+    <Route path={UNAUTHORIZED_PATH} element={<Unauthorized />} />
+    
     <Route element={<ProtectedRoute />}>
       <Route path={DASHBOARD_PATH} element={<Dashboard />} />
 

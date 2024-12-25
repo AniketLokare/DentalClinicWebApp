@@ -6,7 +6,7 @@ interface Procedure {
   clinicName: string;
   discount: number;
   finalAmount: number;
-  procedureDate: Date;
+  procedureDate: string;
   onlinePayment: number;
   procedureDetail: string;
   procedureType: string;

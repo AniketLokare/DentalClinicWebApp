@@ -27,9 +27,14 @@ export const userRoleProps = [
     menuItemId: 'ADMIN' 
   },
   { 
-    menuItemLabel: 'USER', 
-    menuItemValue: 'USER', 
-    menuItemId: 'USER' 
+    menuItemLabel: 'RECEP', 
+    menuItemValue: 'RECEP', 
+    menuItemId: 'RECEP' 
+  },
+  { 
+    menuItemLabel: 'MEDICO', 
+    menuItemValue: 'MEDICO', 
+    menuItemId: 'MEDICO' 
   },
 ];
 
@@ -62,8 +67,23 @@ export const userDefaultFormValues: CreateUserPayload = {
 
 export const userFormValidationSchema: ObjectSchema<CreateUserPayload> =
   yupObject({
-    username: string().required('User name is required'),
-    password: string().required('Password is required'),
-    role: string().required('Role is required'),
-    mobileNumber: number().optional(),
+    username: string()
+    .required('User name is required')
+    .max(50, 'User name cannot exceed 50 characters')
+    .matches(/^[A-Za-z\s]*$/, 'User name can only contain alphabets and spaces'),
+    
+    password: string()
+    .required('Password is required')
+    .min(8, 'Password must be at least 8 characters')
+    .max(50, 'Password cannot exceed 50 characters'),    
+    
+    role: string()
+    .required('Role is required'),
+    
+    mobileNumber: number()
+    .optional()
+    .required('Mobile number is required')
+    .positive('Mobile number must be positive')
+    .integer('Mobile number must be an integer')
+    .test('len', 'Patient Mobile Number must be exactly 10 digits', val => val?.toString().length === 10),
   });

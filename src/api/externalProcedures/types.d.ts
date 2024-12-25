@@ -1,7 +1,7 @@
 interface ExternalProcedure {
   doctorId: number,
   doctorName: string,
-  procedureDate?: Date,
+  procedureDate?: string,
   procedureType: string,
   procedureDetail: string,
   feesCharged: number,
