@@ -1,10 +1,9 @@
 interface Medicine {
-  id : string;
+  id: string;
   medicineId: number;
-  medicineName: string;
+  medName: string;
   medicinePack: number;
   medicineType: string;
   medicinePrice: number;
 }
-
-type CreateMedicinePayload = Omit<Medicine, 'medicineId' | 'id'>;
+type CreateMedicinePayload = Omit<Medicine, 'medicineId' | 'timestamp' | 'id'>;

@@ -10,22 +10,24 @@ import {
   Actions,
   Snackbar,
   LoadingBackdrop,
+  Icon,
 } from 'src/components';
-import { listMedicinesBreadcrumbLinks, MedicinesTableColumns } from './constants';
+import { listAppointmentsBreadcrumbLinks, appointmentsTableColumns } from './constants';
 import { useNavigate } from 'react-router-dom';
 import {
-  getEditMedicineRoute,
-  getViewMedicinePath,
-  NEW_MEDICINE_PATH,
+  getEditAppointmentRoute,
+  getViewAppointmentPath,
+  NEW_APPOINTMENT_PATH,
 } from 'src/constants/paths';
-import { useDeleteMedicine, useGetMedicineList } from 'src/hooks/useMedicines';
+import { useDeleteAppointment, useGetAppointmentList } from 'src/hooks/useAppointments';
 import { usePagination } from 'src/hooks/usePagination';
+import { formatDate } from 'src/util/common';
 import { useDebounce } from '@uidotdev/usehooks';
 import useSnackbarAlert from 'src/hooks/useSnackbarAlert';
 import ConfirmationModal from 'src/components/ConfirmationModal';
 import useDeleteConfirmationModal from 'src/hooks/useDelete';
 
-const Medicines: React.FC = (): JSX.Element => {
+const Appointments: React.FC = (): JSX.Element => {
   const navigate = useNavigate();
   const [filters, setFilters] = useState<FiltersState>();
   const debouncedSearchQuery = useDebounce(filters?.searchQuery, 500);
@@ -34,7 +36,7 @@ const Medicines: React.FC = (): JSX.Element => {
     useSnackbarAlert();
 
   const { pageNumber, changePageNumber } = usePagination();
-  const { response, isFetching, isError, refetch } = useGetMedicineList({
+  const { response, isFetching, isError, refetch } = useGetAppointmentList({
     apiConfig: {
       params: {
         _page: pageNumber,
@@ -44,13 +46,13 @@ const Medicines: React.FC = (): JSX.Element => {
     },
   });
 
-  const { mutate: deleteMedicine, isPending: isDeleteInProgress } =
-    useDeleteMedicine({
+  const { mutate: deleteAppointment, isPending: isDeleteInProgress } =
+    useDeleteAppointment({
       onSuccess: () => {
         setSnackbarAlertState({
           severity: 'success',
-          title: 'Medicine Deleted.',
-          message: `Medicine "${deleteConfirmationModalValues?.name}" is deleted successfully.`,
+          title: 'Appointment Deleted.',
+          message: `Appointment "${deleteConfirmationModalValues?.name}" is deleted successfully.`,
         });
 
         refetch();
@@ -69,31 +71,38 @@ const Medicines: React.FC = (): JSX.Element => {
     showDeleteConfirmationModal,
     onShowDeleteConfirmationModal,
     onClose,
-  } = useDeleteConfirmationModal({ onDelete: deleteMedicine });
+  } = useDeleteConfirmationModal({ onDelete: deleteAppointment });
 
   const noData = !response?.data?.length;
 
-  const MedicinesTableColumnsWithActions = useMemo(
+  const appointmentsTableColumnsWithActions = useMemo(
     () => [
-      ...MedicinesTableColumns,
+      ...appointmentsTableColumns,
+      {
+        header: 'Registration Date',
+        accessorKey: 'appointmentDate',
+        cell: ({ getValue }) => (
+          <Box className="text-slate-gray">{formatDate(getValue())}</Box>
+        ),
+      },
       {
         id: 'actions',
         cell: ({ row }) => {
-          const medicineValues = row.original;
+          const appointmentValues = row.original;
 
           return (
             <Actions
               onEditClick={() => {
-                navigate(getEditMedicineRoute(medicineValues.id));
+                navigate(getEditAppointmentRoute(appointmentValues.id));
               }}
               onDeleteClick={() => {
                 onShowDeleteConfirmationModal(
-                  medicineValues.id,
-                  medicineValues.medName,
+                    appointmentValues.id,
+                    appointmentValues.firstName,
                 );
               }}
               onViewDetails={() => {
-                navigate(getViewMedicinePath(medicineValues.id));
+                navigate(getViewAppointmentPath(appointmentValues.id));
               }}
             />
           );
@@ -114,29 +123,29 @@ const Medicines: React.FC = (): JSX.Element => {
       />
       <Stack spacing={2}>
         <SubPanel
-          pageTitle="MEDICINES"
-          breadcrumbLinks={listMedicinesBreadcrumbLinks}
-          rightSideButtonText="New Medicine"
+          pageTitle="APPOINTMENTS"
+          breadcrumbLinks={listAppointmentsBreadcrumbLinks}
+          rightSideButtonText="New Appointment"
           rightSideButtonClickEvent={() => {
-            navigate(NEW_MEDICINE_PATH);
+            navigate(NEW_APPOINTMENT_PATH);
           }}
         />
         <TableContainer
           onFiltersChange={(filters) => {
             setFilters(filters);
           }}
-          placeholder="Search By Medicine Name"
+          placeholder="Search By Patient Name"
         >
           {({ showFilters }) => (
             <Box>
               <PageLoader
                 isLoading={isFetching}
                 isEmpty={(noData && !isError) || (noData && showFilters)}
-                emptyMessage="No Medicines found"
+                emptyMessage="No patients found"
                 Components={{ Loading: 'table' }}
               >
                 <Table
-                  columns={MedicinesTableColumnsWithActions}
+                  columns={appointmentsTableColumnsWithActions}
                   data={response?.data || []}
                   totalRecords={response?.items}
                   onPageChange={changePageNumber}
@@ -156,5 +165,4 @@ const Medicines: React.FC = (): JSX.Element => {
   );
 };
 
-export default Medicines;
-
+export default Appointments;

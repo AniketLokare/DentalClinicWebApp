@@ -1,5 +1,7 @@
-import { ColumnDef } from "@tanstack/react-table";
-import { MEDICINES } from "src/constants/paths";
+import { ColumnDef } from '@tanstack/react-table';
+import { MEDICINES } from 'src/constants/paths';
+import { requiredField } from 'src/constants/validationSchema';
+import { object as yupObject, number, string, ObjectSchema, date } from 'yup';
 
 export const listMedicinesBreadcrumbLinks = [
   {
@@ -8,11 +10,32 @@ export const listMedicinesBreadcrumbLinks = [
   },
 ];
 
+export const getAddEditBreadCrumbLinks = (isEdit = false) => [
+  {
+    label: 'Medicines',
+    href: MEDICINES,
+  },
+  {
+    label: isEdit ? 'Edit Medicine' : 'New Medicine',
+    href: '#',
+  },
+];
 
-export const medicinesTableColumns: ColumnDef<User, string>[] = [
+export const viewMedicineBreadCrumbLinks = [
+  {
+    label: 'Medicines',
+    href: MEDICINES,
+  },
+  {
+    label: 'Medicine Details',
+    href: '#',
+  },
+];
+
+export const MedicinesTableColumns: ColumnDef<Medicine, string>[] = [
   {
     header: 'Medicine Name',
-    accessorKey: 'medicineName',
+    accessorKey: 'medName',
   },
   {
     header: 'Medicine Pack',
@@ -23,7 +46,30 @@ export const medicinesTableColumns: ColumnDef<User, string>[] = [
     accessorKey: 'medicineType',
   },
   {
-    header: 'medicine Price',
+    header: 'Medicine Price',
     accessorKey: 'medicinePrice',
   },
 ];
+
+export const medicineDefaultFormValues: CreateMedicinePayload = {
+  medName: '',
+  medicinePack: 0,
+  medicineType: '',
+  medicinePrice: 0,
+};
+
+export const medicineFormValidationSchema: ObjectSchema<CreateMedicinePayload> =
+  yupObject({
+    medName: requiredField,
+    medicinePack: number()
+      .typeError('Required')
+      .required('Required')
+      .positive('Invalid Pack')
+      .integer(),
+    medicineType: string().required('Required'),
+    medicinePrice: number()
+      .typeError('Required')
+      .required('Required')
+      .positive('Invalid Price')
+      .integer(),
+  });
