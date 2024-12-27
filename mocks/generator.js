@@ -65,13 +65,27 @@ const createMedicines = () => {
     medicinePrice: faker.number.int({ min: 1, max: 9999 }),
   }));
 };
-
+const createAppointments = () => {
+  return Array.from({ length: 100 }, () => ({
+    appointmentId: faker.number.int({ min: 1, max: 9999 }),
+    firstName: faker.person.firstName(),
+    middleName: faker.person.middleName(),
+    lastName: faker.person.lastName(),
+    treatment: faker.lorem.words(2),
+    startTime: faker.date.soon().toISOString(), // Adjust as per requirement
+    appointmentDate: faker.date.between({ from: '2024-01-01', to: '2024-12-31' }).toISOString().split('T')[0], // Generates date only
+    patientMobile1: faker.phone.number('##########'),
+    cashierName: faker.person.fullName(),
+    timestamp: new Date().toISOString(),
+  }));
+};
+const appointments = createAppointments();
 const procedures = createProcedures();
 const patients = createPatients();
 const users = createUsers();
 const medicines = createMedicines();
 
-const jsonData = JSON.stringify({ patients, procedures, users, medicines }, null, 2);
+const jsonData = JSON.stringify({ patients, procedures, users, medicines, appointments }, null, 2);
 
 if (fs.existsSync(`${dir}/db.json`)) {
   console.log('db.json already exists!');
