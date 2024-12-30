@@ -28,6 +28,12 @@ export const EDIT_MEDICINE_PATH = '/medicines/:id/edit';
 export const VIEW_MEDICINE_PATH = '/medicines/:id';
 export const MEDICINES_ROUTE = '/medicines';
 
+export const APPOINTMENTS = '/appointments';
+export const NEW_APPOINTMENTS_PATH = '/appointments/new';
+export const EDIT_APPOINTMENTS_PATH = '/appointments/:id/edit';
+export const VIEW_APPOINTMENTS_PATH = '/appointments/:id';
+export const getEditAppointmentsRoute = (id: string) => `${APPOINTMENTS}/${id}/edit`;
+export const getViewAppointmentsPath = (id: string) => `${APPOINTMENTS}/${id}`;
 
 export const INVENTORY = '/inventory';
 
