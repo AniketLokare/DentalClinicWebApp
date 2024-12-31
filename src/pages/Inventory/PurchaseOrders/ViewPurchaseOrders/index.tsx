@@ -17,14 +17,14 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { useDeletePurchaseOrder, useGetPurchaseOrderDetail } from 'src/hooks/usePurchaseOrder';
 import {
   viewPurchaseOrdersBreadCrumbLinks,
-  getAddEditBreadCrumbLinks,
+  getAddEditBreadCrumbLinks, 
 } from '../constants';
 import PurchaseBasicInfo from './PurchaseBasicInfo';
 import { ERROR_RED, WHITE_SMOKE } from 'src/constants/colors';
 import useDeleteConfirmationModal from 'src/hooks/useDelete';
 import useSnackbarAlert from 'src/hooks/useSnackbarAlert';
 import { Avatar } from '@mui/material';
-import { getEditPurchaseRoute } from 'src/constants/paths';
+import { getEditPurchaseRoute,NEW_PURCHASE_TRANSACTIONS_PATH } from 'src/constants/paths';
 
 const ViewPurchaseOrders: React.FC = (): JSX.Element => {
   const { id = '' } = useParams();
@@ -84,6 +84,10 @@ const ViewPurchaseOrders: React.FC = (): JSX.Element => {
       <SubPanel
         pageTitle="ORDER DETAILS"
         breadcrumbLinks={viewPurchaseOrdersBreadCrumbLinks}
+        rightSideButtonText="Add Medicine"
+                  rightSideButtonClickEvent={() => {
+                    navigate(NEW_PURCHASE_TRANSACTIONS_PATH, { state: id  });
+                  }}
       />
       <PageLoader isLoading={isFetching} Components={{ Loading: 'form' }}>
         <Stack spacing={3} sx={{ marginTop: '60px' }}>

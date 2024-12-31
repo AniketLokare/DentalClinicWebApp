@@ -1,7 +1,7 @@
 import React from 'react';
 import { FaCartPlus, FaProcedures, FaTruck } from 'react-icons/fa';
-import { FcBriefcase, FcBullish, FcCalendar, FcConferenceCall, FcFilingCabinet, FcPortraitMode } from 'react-icons/fc';
-import { MdBarChart, MdNoteAdd, MdPersonAddAlt1, MdViewComfy, MdViewList } from 'react-icons/md';
+import { FcBriefcase, FcBullish, FcCalendar, FcConferenceCall, FcFilingCabinet, FcPortraitMode,FcViewDetails ,FcPrint  } from 'react-icons/fc';
+import { MdBarChart, MdNoteAdd, MdPersonAddAlt1, MdViewComfy, MdViewList,MdHail,MdHotel   } from 'react-icons/md';
 import { GiMedicinePills } from "react-icons/gi";
 import { FaUsersViewfinder } from "react-icons/fa6"
 
@@ -17,11 +17,14 @@ import {
   PATIENTS,
   PROCEDURES,
   PURCHASE_ORDERS,
+  APPOINTMENT_BYDATE_PATH,
   SALES_ORDERS,
   SUPPLIERS,
   USERS,
+  CLINIC_PROCEDURE_REPORT,
+  EXTERNAL_PROCEDURE_REPORT,
 } from 'src/constants/paths';
-import { RiCalendarView, RiHeartAdd2Fill } from 'react-icons/ri';
+import { RiCalendarView, RiHeartAdd2Fill,RiCalendarCheckLine  } from 'react-icons/ri';
 import { HiUserAdd } from 'react-icons/hi';
 
 export const globalOptions = [
@@ -44,8 +47,16 @@ export const globalOptions = [
       },
       {
         title: 'View Appointments',
-        icon: <RiCalendarView size="18px" />,
+        icon: <RiCalendarCheckLine  size="18px" />,
         route: APPOINTMENTS,
+        isSubItem: true,
+        tooltip: 'View Appointments', 
+      },
+
+      {
+        title: 'View By Date',
+        icon: <RiCalendarView size="18px" />,
+        route: APPOINTMENT_BYDATE_PATH,
         isSubItem: true,
         tooltip: 'View Appointments', 
       }
@@ -132,6 +143,27 @@ export const globalOptions = [
       }
     ],
     tooltip: 'Appointments', 
+  },
+  {
+    title: 'REPORTS',
+    icon: <FcPrint  size="24px" />,
+    options: [
+      {
+        title: 'Clinic Procedures',
+        icon: <MdHotel  size="18px" />,
+        route: CLINIC_PROCEDURE_REPORT,
+        isSubItem: true,
+        tooltip: 'Add New User', 
+      },
+      {
+        title: 'External Procedures',
+        icon: <MdHail  size="18px" />,
+        route: EXTERNAL_PROCEDURE_REPORT,
+        isSubItem: true,
+        tooltip: 'Vies Users', 
+      },
+    ],
+    tooltip: 'Reports', 
   },
   {
     title: 'USERS',

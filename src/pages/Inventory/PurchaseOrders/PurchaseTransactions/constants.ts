@@ -1,7 +1,7 @@
 import { ColumnDef } from '@tanstack/react-table';
 import { PURCHASE_ORDERS } from 'src/constants/paths';
 import { requiredField } from 'src/constants/validationSchema';
-import { object as yupObject, number, string, ObjectSchema, date } from 'yup';
+import { object as yupObject, number, string, ObjectSchema } from 'yup';
 
 // Breadcrumb Links
 export const listPurchaseTransactionsBreadcrumbLinks = [
@@ -39,6 +39,7 @@ export const PurchaseTransactionTableColumns: ColumnDef<purchaseTransaction, str
     header: 'Transaction ID',
     accessorKey: 'medtransactionId',
   },
+  
   {
     header: 'Medicine Name',
     accessorKey: 'medicineName',
@@ -48,42 +49,48 @@ export const PurchaseTransactionTableColumns: ColumnDef<purchaseTransaction, str
     accessorKey: 'medicineBatch',
   },
   {
+    header: 'Pack',
+    accessorKey: 'medicinePack',
+  },
+  {
     header: 'Expiry Date',
     accessorKey: 'expiry',
-    cell: ({ getValue }) => new Date(getValue()).toLocaleDateString(), // Format date
   },
   {
     header: 'Quantity',
     accessorKey: 'quantity',
   },
   {
+    header: 'Available Quantity',
+    accessorKey: 'availableQuantity',
+  },
+  {
     header: 'MRP',
     accessorKey: 'mrp',
-    
   },
   {
     header: 'Rate',
     accessorKey: 'rate',
-    
   },
   {
     header: 'Amount',
     accessorKey: 'amount',
-    
   },
 ];
 
 // Default Form Values
 export const purchaseTransactionDefaultFormValues: CreatePuchaseTransactionPayload = {
-    medicineName: '',
-    medicineBatch: '',
-    expiry: new Date(),
-    medicinePack: 0,
-    quantity: 0,
-    availableQuantity: 0,
-    mrp: 0,
-    rate: 0,
-    amount: 0,
+  medicineName: '',
+  medicineBatch: '',
+  expiry: '',
+  medicinePack: 0,
+  quantity: 0,
+  availableQuantity: 0,
+  mrp: 0,
+  rate: 0,
+  amount: 0,
+  invoiceId: 0, // Added default value
+  medicineId: 0, // Added default value
 };
 
 // Form Validation Schema
@@ -91,7 +98,7 @@ export const purchaseTransactionFormValidationSchema: ObjectSchema<CreatePuchase
   yupObject({
     medicineName: requiredField,
     medicineBatch: string().required('Required'),
-    expiry: date().required('Required'),
+    expiry: string().required('Required'),
     medicinePack: number()
       .typeError('Required')
       .required('Required')
@@ -119,4 +126,14 @@ export const purchaseTransactionFormValidationSchema: ObjectSchema<CreatePuchase
       .typeError('Required')
       .required('Required')
       .positive('Invalid value'),
+    invoiceId: number()
+      .typeError('Required')
+      .required('Required')
+      .positive('Invalid value')
+      .integer(), // Added validation
+    medicineId: number()
+      .typeError('Required')
+      .required('Required')
+      .positive('Invalid value')
+      .integer(), // Added validation
   });

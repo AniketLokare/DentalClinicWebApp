@@ -1,6 +1,6 @@
 import { QueryKey, useMutation, useQuery } from "@tanstack/react-query";
 import { AxiosRequestConfig } from "axios";
-import { APPOINTMENTS_ROUTE, deleteAppointmentWithIdRoute, editAppointmentWithIdRoute, getAppointmentWithIdRoute, NEW_APPOINTMENT_ROUTE } from "src/api/appointments/routes";
+import { APPOINTMENTS_ROUTE, deleteAppointmentWithIdRoute, editAppointmentWithIdRoute, getAppointmentWithIdRoute, NEW_APPOINTMENT_ROUTE ,getAppointmentByDateRoute } from "src/api/appointments/routes";
 import axiosClient from "src/util/axios";
 
 /**
@@ -34,6 +34,15 @@ export const getAppointmentDetail = (id: string, config?: AxiosRequestConfig) =>
 
 export const deleteAppointment = (id: string) =>
   axiosClient.delete<null>(deleteAppointmentWithIdRoute(id));
+
+
+export const getAppointmentsByDate = (
+  appointmentDate: string, 
+  config?: AxiosRequestConfig
+) =>
+  axiosClient
+    .get<Appointments[]>(getAppointmentByDateRoute(appointmentDate), config)
+    .then((res) => res.data);
 /**
  * HOOKS
  */
@@ -91,4 +100,22 @@ export const useDeleteAppointment = (opts?: MutationConfig<null, string>) => {
     mutationFn: (id: string) => deleteAppointment(id),
     ...opts,
   });
+};
+
+
+export const useGetAppointmentsByDate = <Override = Appointments[]>(
+  appointmentDate: string,
+  opts?: UseQueryOption<Appointments[], Override>,
+) => {
+  const { key, useQueryConfig, apiConfig } = opts || {};
+  const queryKey = (key || ['appointments', 'byDate', appointmentDate]) as QueryKey;
+
+  const { data, ...rest } = useQuery<Appointments[]>({
+    queryKey,
+    queryFn: ({ signal }) => getAppointmentsByDate(appointmentDate, { ...apiConfig, signal }),
+    enabled: !!appointmentDate,
+    ...useQueryConfig,
+  });
+
+  return { response: data, ...rest };
 };

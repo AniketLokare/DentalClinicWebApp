@@ -137,7 +137,7 @@ const AddEditAppointment: React.FC = (): JSX.Element => {
             secondaryButtonType="submit"
           />
 
-          <Box sx={{ marginTop: '60px', maxWidth: '630px' }}>
+          <Box sx={{ marginTop: '60px'}}>
             <PageLoader isLoading={isFetching} Components={{ Loading: 'form' }}>
               <AppointmentForm />
 

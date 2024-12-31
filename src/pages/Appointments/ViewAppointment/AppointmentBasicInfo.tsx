@@ -51,7 +51,7 @@ const AppointmentBasicInfo: React.FC<AppointmentBasicInfoProps> = ({
           />
           <InfoField
             label="Time"
-            value={formatDate(appointmentDetails?.timestamp || new Date())}
+            value= {appointmentDetails?.startTime}
             flexBasis="50%"
           />
           <InfoField

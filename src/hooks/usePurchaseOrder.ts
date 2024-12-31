@@ -11,7 +11,7 @@ import {
 import axiosClient from 'src/util/axios';
 
 /**
- * API
+ * API 
  */
 export const getPurchaseOrderList = (config?: AxiosRequestConfig) =>
   axiosClient
@@ -31,7 +31,7 @@ export const getMedicinesListByPurchaseOrderId = (id: string, config?: AxiosRequ
 export const createPurchaseOrder = (
   payload: CreatePurchasePayload,
   config?: AxiosRequestConfig,
-) => axiosClient.post<PurchaseOrder>(NEW_PURCHASE_ROUTE, payload, config);
+) => axiosClient.post<PurchaseOrder>(NEW_PURCHASE_ROUTE, payload, config).then((res) => res.data);
 
 export const getPurchaseOrderDetail = (id: string, config?: AxiosRequestConfig) =>
   axiosClient

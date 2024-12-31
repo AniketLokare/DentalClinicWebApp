@@ -1,6 +1,6 @@
 import { QueryKey, useQuery, useMutation } from '@tanstack/react-query';
 import { AxiosRequestConfig } from 'axios';
-import { NEW_PROCEDURE_ROUTE, PROCEDURES_ROUTE, deleteProcedureWithIdRoute, editProcedureWithIdRoute, getProceduresListByProcedureIdRoute } from 'src/api/procedures/routes';
+import { NEW_PROCEDURE_ROUTE, PROCEDURES_ROUTE, deleteProcedureWithIdRoute, editProcedureWithIdRoute, getProceduresListByProcedureIdRoute,GET_FILTERED_PROCEDURES_ROUTE } from 'src/api/procedures/routes';
 import axiosClient from 'src/util/axios';
 
 export const getProceduresList = (config?: AxiosRequestConfig) =>
@@ -13,6 +13,19 @@ export const getProceduresList = (config?: AxiosRequestConfig) =>
       pageSize: res.data.length,
     }));
 
+    export const getFilteredProcedures = (
+      fromDate: string,
+      toDate: string,
+      session: string,
+      config?: AxiosRequestConfig,
+    ) =>
+      axiosClient
+        .get<Procedure[]>(GET_FILTERED_PROCEDURES_ROUTE, {
+          ...config,
+          params: { fromDate, toDate, session },
+        })
+        .then((res) => res.data);
+    
 export const createProcedure = (
   id: string,
   payload: CreateProcedurePayload,
@@ -97,3 +110,23 @@ export const useDeleteProcedure = (opts?: MutationConfig<null, string>) => {
     ...opts,
   });
 };
+
+export const useGetFilteredProcedures = <Override = Procedure[]>(opts: UseQueryOption<Procedure[], Override> & {
+  fromDate: string;
+  toDate: string;
+  session: string;
+}) => {
+  const { key, useQueryConfig, apiConfig, fromDate, toDate, session } = opts;
+  const queryKey = (key || ['filtered-procedures', fromDate, toDate, session]) as QueryKey;
+
+  const { data, ...rest } = useQuery<Procedure[]>({
+      queryKey,
+      queryFn: ({ signal }) =>
+          getFilteredProcedures(fromDate, toDate, session, { ...apiConfig, signal }),
+      enabled: !!fromDate && !!toDate && !!session,  // Ensures query is only enabled if all filters are set
+      ...useQueryConfig,
+  });
+
+  return { response: data, ...rest };
+};
+

@@ -10,7 +10,7 @@ import {
   Snackbar,
   SubPanel,
   LoadingBackdrop,
-} from 'src/components';
+} from 'src/components'; 
 import Box from '@mui/material/Box';
 import { useNavigate, useParams } from 'react-router-dom';
 import { FiSave } from 'react-icons/fi';
@@ -25,7 +25,7 @@ import {
   useGetPurchaseOrderDetail,
   usePatchPurchaseOrder,
 } from 'src/hooks/usePurchaseOrder';
-import { PURCHASE_ORDERS } from 'src/constants/paths';
+import { PURCHASE_ORDERS,getViewPurchasePath } from 'src/constants/paths';
 import useSnackbarAlert from 'src/hooks/useSnackbarAlert';
 
 const AddEditPurchase: React.FC = (): JSX.Element => {
@@ -55,13 +55,13 @@ const AddEditPurchase: React.FC = (): JSX.Element => {
       reset(formattedData);  // Reset the form with the formatted date
     }
   }, [data, isFetching]);
-  
+
 
   const { mutate: patchPurchaseOrder, isPending: isPatchLoading } = usePatchPurchaseOrder(
     id,
     {
       onSuccess: () => {
-        navigate(PURCHASE_ORDERS, {
+        navigate(getViewPurchasePath(id), {
           state: {
             alert: {
               severity: 'success',
@@ -69,7 +69,7 @@ const AddEditPurchase: React.FC = (): JSX.Element => {
               message: `Purchase order updated successfully.`,
             },
           },
-        });
+        }); 
       },
       onError: (err: Error) => {
         setSnackbarAlertState({
@@ -81,10 +81,12 @@ const AddEditPurchase: React.FC = (): JSX.Element => {
     },
   );
 
-  const { mutate: createPurchaseOrder, isPending: isCreatingOrder } =
-    useCreatePurchaseOrder({
-      onSuccess: () => {
-        navigate(PURCHASE_ORDERS, {
+  const { mutate: createPurchaseOrder, isPending: isCreatingOrder } = useCreatePurchaseOrder({
+    onSuccess: (createdData: PurchaseOrder) => {
+      console.log('Created Purchase Order Data:', createdData);
+      const { invoiceId } = createdData || {};
+      if (invoiceId) {
+        navigate(getViewPurchasePath(invoiceId.toString()), {
           state: {
             alert: {
               severity: 'success',
@@ -93,15 +95,25 @@ const AddEditPurchase: React.FC = (): JSX.Element => {
             },
           },
         });
-      },
-      onError: (err: Error) => {
+      } else {
         setSnackbarAlertState({
           severity: 'error',
           title: 'Error',
-          message: err.message,
+          message: 'Unable to retrieve Invoice ID after creation.',
         });
-      },
-    });
+      }
+    },
+    onError: (err: Error) => {
+      setSnackbarAlertState({
+        severity: 'error',
+        title: 'Error',
+        message: err.message,
+      });
+    },
+  });
+  
+  
+
 
   const {
     formState: { isDirty },
@@ -117,14 +129,14 @@ const AddEditPurchase: React.FC = (): JSX.Element => {
         ? format(parse(data.purchaseDate, 'yyyy-MM-dd', new Date()), 'dd-MM-yyyy')
         : '',
     };
-  
+
     if (isEdit) {
       patchPurchaseOrder(formattedData);
     } else {
       createPurchaseOrder(formattedData);
     }
   };
-  
+
 
   const isMutating = isCreatingOrder || isPatchLoading;
 

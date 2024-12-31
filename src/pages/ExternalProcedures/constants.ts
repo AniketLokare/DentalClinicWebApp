@@ -32,6 +32,17 @@ export const viewProceduresBreadCrumbLinks = [
   },
 ];
 
+export const viewProcedureReportBreadCrumbLinks = [
+  {
+    label: 'Reports',
+    href: EXTERNAL_PROCEDURE,
+  },
+  {
+    label: 'External Procedures',
+    href: '#',
+  },
+];
+
 export const ExternalProceduresTableColumns: ColumnDef<ExternalProcedure, string>[] = [
   {
     header: 'Doctor Name',
@@ -49,6 +60,49 @@ export const ExternalProceduresTableColumns: ColumnDef<ExternalProcedure, string
     header: 'Procedure Date',
     accessorKey: 'procedureDate',
   },
+];
+
+
+export const ExternalProceduresReportTableColumns: ColumnDef<ExternalProcedure, string>[] = [
+  {
+    header: 'ID',
+    accessorKey: 'doctorId',
+  },
+  
+  {
+    header: 'Procedure Date',
+    accessorKey: 'procedureDate',
+  },
+  {
+    header: 'Doctor Name',
+    accessorKey: 'doctorName',
+  },
+  {
+    header: 'Procedure Type',
+    accessorKey: 'procedureType',
+  },
+  
+  {
+    header: 'Fees',
+    accessorKey: 'feesCharged',
+  },
+
+  {
+    header: 'Discount',
+    accessorKey: 'discount',
+  },
+
+  {
+    header: 'Final Amount',
+    accessorKey: 'finalAmount',
+  },
+
+  {
+    header: 'Cashier',
+    accessorKey: 'cashierName',
+  },
+
+  
 ];
 
 export const externalProcedureDefaultFormValues: CreateExternalProcedurePayload = {

@@ -31,6 +31,17 @@ export const viewAppointmentBreadCrumbLinks = [
   },
 ];
 
+export const viewAppointmentByDateBreadCrumbLinks = [
+  {
+    label: 'Appointment',
+    href: APPOINTMENTS,
+  },
+  {
+    label: 'Appointment List',
+    href: '#',
+  },
+];
+
 export const appointmentsTableColumns: ColumnDef<Appointments, string>[] = [
   {
     header: 'Appointment Id',
@@ -47,6 +58,10 @@ export const appointmentsTableColumns: ColumnDef<Appointments, string>[] = [
   {
     header: 'Appointment Date',
     accessorKey: 'appointmentDate',
+  },
+  {
+    header: 'Appointment Time',
+    accessorKey: 'startTime',
   }
 ];
 
@@ -55,7 +70,9 @@ export const appointmentDefaultFormValues: CreateAppointmentPayload = {
   middleName: '',
   lastName: '',
   treatment: '',
+  
   appointmentDate: '',
+  startTime: '',
   patientmobile1: 0,
   cashiername: '',
 };
@@ -87,6 +104,8 @@ export const appointmentDefaultFormValidateSchema: ObjectSchema<CreateAppointmen
     appointmentDate: string()
       .optional(),
 
+    startTime: string()
+      .optional(),
     patientmobile1: number()
       .required('Patient Mobile Number is required')
       .positive()

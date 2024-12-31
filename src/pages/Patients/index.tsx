@@ -42,7 +42,7 @@ const Patients: React.FC = (): JSX.Element => {
       params: {
         _page: pageNumber,
         // TODO: Change this to full text search
-        firstName: debouncedSearchQuery,
+        name: debouncedSearchQuery,
       },
     },
   });

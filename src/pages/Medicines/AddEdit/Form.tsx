@@ -17,7 +17,7 @@ const MedicineForm: React.FC = (): JSX.Element => {
         control={control}
         placeholder="Enter medicine name"
         error={errors.medicineName?.message}
-        trim
+        
       />
        <FormInput
         name="medicineType"
@@ -25,7 +25,7 @@ const MedicineForm: React.FC = (): JSX.Element => {
         control={control}
         placeholder="Enter Medicine Type"
         error={errors.medicineType?.message}
-        trim
+        
       />
       <FormInput
         name="medicinePack"

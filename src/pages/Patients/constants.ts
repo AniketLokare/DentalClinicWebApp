@@ -131,6 +131,5 @@ export const patientFormValidationSchema: ObjectSchema<CreatePatientPayload> =
     
     cashierName: string()
       .required("Cashier name is required")
-      .max(50, 'Cashier name cannot exceed 50 characters')
-      .matches(/^[A-Za-z\s]*$/, 'Cashier name can only contain alphabets and spaces'),
+      .max(50, 'Cashier name cannot exceed 50 characters'),
   });

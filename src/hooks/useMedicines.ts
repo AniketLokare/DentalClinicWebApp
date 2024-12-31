@@ -41,12 +41,14 @@ export const useGetMedicinesList = <Override = PaginatedResponse<Medicine>>(
   opts?: UseQueryOption<PaginatedResponse<Medicine>, Override>,
 ) => {
   const { key, useQueryConfig, apiConfig } = opts || {};
-  const queryKey = (key || ['medicines', apiConfig.params]) as QueryKey;
+  const queryKey = (key || ['medicines', apiConfig?.params]) as QueryKey;
+
+  const defaultConfig: AxiosRequestConfig = { params: {} };
 
   const { data, ...rest } = useQuery<PaginatedResponse<Medicine>>({
     queryKey,
-    queryFn: ({ signal }) => getMedicinesList({ ...apiConfig, signal }),
-    enabled: !!apiConfig,
+    queryFn: ({ signal }) => getMedicinesList({ ...defaultConfig, ...apiConfig, signal }),
+    enabled: !!apiConfig?.params,
     ...useQueryConfig,
   });
 

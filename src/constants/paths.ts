@@ -8,6 +8,7 @@ export const APPOINTMENTS = '/appointments';
 export const NEW_APPOINTMENT_PATH = `${APPOINTMENTS}/new`;
 export const EDIT_APPOINTMENT_PATH = `${APPOINTMENTS}/:id/edit`;
 export const VIEW_APPOINTMENT_PATH = `${APPOINTMENTS}/:id`;
+export const APPOINTMENT_BYDATE_PATH = `${APPOINTMENTS}/by-date`;
 export const getEditAppointmentRoute = (id: string) => `${APPOINTMENTS}/${id}/edit`;
 export const getViewAppointmentPath = (id: string) => `${APPOINTMENTS}/${id}`;
 
@@ -50,11 +51,27 @@ export const EDIT_PURCHASE_TRANSACTIONS_PATH = '/purchase-transaction/:id/edit';
 export const VIEW_PURCHASE_TRANSACTIONS_PATH = '/purchase-transaction/:id';
 export const NEW_PURCHASE_TRANSACTIONS_PATH = '/purchase-transaction/new';
 export const getNewPurchaseTransactionRoute = (id: string) => `${NEW_PURCHASE_TRANSACTIONS_PATH}/${id}`;
+
 export const getEditPurchaseTransactionRoute = (id: string) => `${PURCHASE_TRANSACTIONS}/${id}/edit`;
 export const getViewPurchaseTransactionPath = (id: string) => `${PURCHASE_TRANSACTIONS}/${id}`;
 
 
 export const SALES_ORDERS = '/sales-orders';
+export const NEW_SALES_PATH = '/sales-orders/new';
+export const EDIT_SALE_PATH = '/sales-orders/:id/edit';
+export const VIEW_SALE_PATH = '/sales-orders/:id';
+export const getEditSaleRoute = (id: string) => `${SALES_ORDERS}/${id}/edit`;
+export const getViewSalePath = (id: string) => `${SALES_ORDERS}/${id}`;
+
+export const SALES_TRANSACTIONS = '/sales-transaction'; 
+export const EDIT_SALES_TRANSACTIONS_PATH = '/sales-transaction/:id/edit';
+export const VIEW_SALES_TRANSACTIONS_PATH = '/sales-transaction/:id';
+export const NEW_SALES_TRANSACTIONS_PATH = '/sales-transaction/new';
+export const getNewSalesTransactionRoute = (id: string) => `${NEW_SALES_TRANSACTIONS_PATH}/${id}`;
+
+export const getEditSalesTransactionRoute = (id: string) => `${SALES_TRANSACTIONS}/${id}/edit`;
+export const getViewSalesTransactionPath = (id: string) => `${SALES_TRANSACTIONS}/${id}`;
+
 
 export const SUPPLIERS = '/suppliers';
 export const NEW_SUPPLIER_PATH = '/suppliers/new';
@@ -69,3 +86,8 @@ export const getNewExternalProcedureRoute = (id: string) => `${NEW_EXTERNAL_PROC
 export const getEditExternalProcedureRoute = (id: string) => `${EXTERNAL_PROCEDURE}/${id}/edit`;
 export const getViewExternalProcedurePath = (id: string) => `${EXTERNAL_PROCEDURE}/${id}`;
 
+
+
+export const REPORTS = '/reports';
+export const CLINIC_PROCEDURE_REPORT = '/income-by-procedures';
+export const EXTERNAL_PROCEDURE_REPORT = '/income-by-externalprocedures';

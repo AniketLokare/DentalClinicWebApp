@@ -19,6 +19,9 @@ const ProtectedRoute: React.FC<PropsWithChildren> = ({ children }) => {
   const rootPath = `/${location.pathname.split('/')[1] || ''}`;
   const pathname = `$${location.pathname}${location.search}`;
 
+  const isRouteAllowed = allowedRoutes && Array.from(allowedRoutes).some(route => location.pathname.startsWith(route));
+
+
   if (!isUserLoggedIn() || isRefreshTokenExpired()) {
     return <Navigate to="/login" state={{ pathname }}/>;
   } else if (allowedRoutes && !allowedRoutes.has(rootPath)) {

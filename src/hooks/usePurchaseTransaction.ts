@@ -6,6 +6,7 @@ import {
   getPurchaseTransactionWithIdRoute,
   editPurchaseTransactionWithIdRoute,
   deletePurchaseTransactionWithIdRoute,
+  getAvailableMedicinesListByMedicineIdRoute
 } from 'src/api/purchaseTransactions/routes';
 import axiosClient from 'src/util/axios';
 
@@ -22,16 +23,26 @@ export const getPurchaseTransactionList = (config?: AxiosRequestConfig) =>
       pageSize: res.data.length,
     }));
 
+    export const getAvailableMedicinesListByMedicineId = (id: string, config?: AxiosRequestConfig) =>
+      axiosClient
+        .get<purchaseTransaction[]>(getAvailableMedicinesListByMedicineIdRoute(id), config)
+        .then((res) => ({
+          content: res.data,
+          total: res.data.length,
+          page: 1,
+          pageSize: res.data.length,
+        }));    
+
 export const createPurchaseTransaction = (
   payload: CreatePuchaseTransactionPayload,
   config?: AxiosRequestConfig
-) => axiosClient.post<purchaseTransaction>(NEW_TRANSACTION_ROUTE, payload, config);
+) => axiosClient.post<purchaseTransaction>(NEW_TRANSACTION_ROUTE, payload, config).then((res) => res.data);
 
 export const patchPurchaseTransaction = (id: string, payload: CreatePuchaseTransactionPayload) =>
   axiosClient.patch<purchaseTransaction>(
     editPurchaseTransactionWithIdRoute(id),
     payload
-  );
+  ).then((res) => res.data);
 
 export const getPurchaseTransactionDetail = (id: string, config?: AxiosRequestConfig) =>
   axiosClient
@@ -55,6 +66,23 @@ export const useGetPurchaseTransactionList = <
   const { data, ...rest } = useQuery<PaginatedResponse<purchaseTransaction>>({
     queryKey,
     queryFn: ({ signal }) => getPurchaseTransactionList({ ...apiConfig, signal }),
+    enabled: !!apiConfig,
+    ...useQueryConfig,
+  });
+
+  return { response: data, ...rest };
+};
+
+export const useGetAvailableMedicinesListByMedicineId = <Override = PaginatedResponse<purchaseTransaction>>(
+  id: string,
+  opts?: UseQueryOption<PaginatedResponse<purchaseTransaction>, Override>,
+) => {
+  const { key, useQueryConfig, apiConfig } = opts || {};
+  const queryKey = (key || ['purchaseOrderMedicines', id]) as QueryKey;
+
+  const { data, ...rest } = useQuery<PaginatedResponse<purchaseTransaction>>({
+    queryKey,
+    queryFn: ({ signal }) => getAvailableMedicinesListByMedicineId(id, { ...apiConfig, signal }),
     enabled: !!apiConfig,
     ...useQueryConfig,
   });
