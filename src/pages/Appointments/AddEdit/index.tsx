@@ -13,7 +13,7 @@ import {
 import Box from '@mui/material/Box';
 import { useNavigate, useParams } from 'react-router-dom';
 import { FiSave } from 'react-icons/fi';
-import PatientForm from './Form';
+import AppointmentsForm from './Form';
 import {
     getAddEditBreadCrumbLinks,
     appointmentsDefaultFormValues,
@@ -37,7 +37,7 @@ const AddEditAppointments: React.FC = (): JSX.Element => {
 
     const methods = useForm<CreateAppointmentsPayload>({
         defaultValues: appointmentsDefaultFormValues,
-        resolver: yupResolver<CreatePatientPayload>(appointmentsFormValidationSchema),
+        resolver: yupResolver<CreateAppointmentsPayload>(appointmentsFormValidationSchema),
         mode: 'onBlur',
     });
 

@@ -6,14 +6,9 @@ interface Appointments {
     treatment: string;
     startTime: Date;
     appointmentDate: Date;
-    procedureDate: Date;
-    onlinePayment: number;
-    procedureDetails: string;
-    procedureType: string;
-    procedureTime: Date;
-    totalAmount: number;
-    patientName: string;
-    timeStamp: Date;
+    patientMobile1: string;
+    cashierName: string;
+    timestamp: Date;
 }
 
-type CreateProcedurePayload = Omit<procedure, 'proceduretId' | 'procedureTime' | 'id'>;
+type CreateAppointmentsPayload = Omit<Appointments, 'appointmentId' | 'timestamp' | 'id'>;

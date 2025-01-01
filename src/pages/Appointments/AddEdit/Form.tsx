@@ -3,7 +3,6 @@ import Stack from '@mui/material/Stack';
 import { FormInput } from 'src/components';
 import { useFormContext } from 'react-hook-form';
 import { format } from 'date-fns/format';
-import { patientGenderProps } from '../constants';
 
 const AppointmentsForm: React.FC = (): JSX.Element => {
     const {
@@ -11,8 +10,6 @@ const AppointmentsForm: React.FC = (): JSX.Element => {
         formState: { errors },
         watch,
     } = useFormContext<CreateAppointmentsPayload>();
-
-    const patientGender = watch('patientGender');
 
     return (
         <Stack spacing={4.5}>
@@ -41,36 +38,29 @@ const AppointmentsForm: React.FC = (): JSX.Element => {
                 trim
             />
             <FormInput
-                type="number"
-                name="patientAge"
-                label="Age"
+                name="treatment"
+                label="Treatment"
                 control={control}
-                placeholder="Enter patient's age"
-                error={errors.patientAge?.message}
+                placeholder="Enter patient's treatment information"
+                error={errors.treatment?.message}
                 trim
             />
             <FormInput
-                type="radio"
-                radioButtonProps={{
-                    ...patientGenderProps,
-                    value: patientGender,
-                }}
-                name="patientGender"
+                type="timestamp"
+                name="startTime"
+                label="Start Time"
                 control={control}
-                label="Gender"
-                sx={{
-                    maxWidth: '556px',
-                    marginTop: '7px',
-                    paddingRight: '21px',
-                }}
+                placeholder="Enter treatment start time"
+                error={errors.startTime?.message}
+                trim
             />
             <FormInput
                 type="date"
-                name="patientRegDate"
+                name="appointmentDate"
                 inputProps={{ min: format(new Date(), 'dd-mm-yyyy') }}
                 control={control}
-                label="Registration Date"
-                error={errors.patientRegDate?.message}
+                label="Appointment Date"
+                error={errors.appointmentDate?.message}
                 sx={{ marginTop: '27px' }}
             />
             <FormInput
@@ -82,41 +72,12 @@ const AppointmentsForm: React.FC = (): JSX.Element => {
                 trim
             />
             <FormInput
-                name="patientMobile2"
-                label="Alternate Contact Number"
-                control={control}
-                placeholder="Enter patient's alternate contact number"
-                error={errors.patientMobile2?.message}
-                trim
-            />
-            <FormInput
                 name="cashierName"
                 label="Cashier Name"
                 control={control}
                 placeholder="Enter cashier's name"
                 error={errors.cashierName?.message}
                 trim
-            />
-            <FormInput
-                name="patientMedicalHistory"
-                label="Medical History"
-                control={control}
-                placeholder="Enter patient's medical history"
-                error={errors.patientMedicalHistory?.message}
-                trim
-                multiline
-                rows={6}
-            />
-            <FormInput
-                type="textarea"
-                name="patientReports"
-                label="Reports"
-                control={control}
-                placeholder="Enter patient's reports"
-                error={errors.patientReports?.message}
-                trim
-                multiline
-                rows={6}
             />
         </Stack>
     );

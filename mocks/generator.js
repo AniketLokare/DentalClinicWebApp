@@ -73,12 +73,12 @@ const createAppointments = () => {
     firstName: faker.person.firstName(),
     middleName: faker.person.middleName(),
     lastName: faker.person.lastName(),
-    treatment: faker.person.sentence(),
-    startTime: faker.date.timestamp,
+    treatment: faker.lorem.sentence(),
+    startTime: faker.date.recent(),
     appointmentDate: faker.date.recent(),
-    patientmobile1: faker.phone.number(),
+    patientMobile1: faker.phone.number(),
     cashierName: faker.person.firstName(),
-    timestamp: faker.date.recent(),
+    timestamp: faker.date.timestamp,
   }));
 };
 

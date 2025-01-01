@@ -5,100 +5,83 @@ import { object as yupObject, number, string, ObjectSchema, date } from 'yup';
 
 export const listAppointmentsBreadcrumbLinks = [
     {
-        label: 'Patients',
-        href: PATIENTS,
+        label: 'Appointments',
+        href: APPOINTMENTS,
     },
 ];
 
 export const getAddEditBreadCrumbLinks = (isEdit = false) => [
     {
-        label: 'Patients',
-        href: PATIENTS,
+        label: 'Appointments',
+        href: APPOINTMENTS,
     },
     {
-        label: isEdit ? 'Edit Patient' : 'New Patient',
+        label: isEdit ? 'Edit Appointments' : 'New Appointments',
         href: '#',
     },
 ];
 
-export const viewPatientBreadCrumbLinks = [
+export const viewAppointmentsBreadCrumbLinks = [
     {
-        label: 'Patients',
-        href: PATIENTS,
+        label: 'Appointments',
+        href: APPOINTMENTS,
     },
     {
-        label: 'Patient Details',
+        label: 'Appointments Details',
         href: '#',
     },
 ];
 
-export const patientsTableColumns: ColumnDef<Patient, string>[] = [
+export const appointmentsTableColumns: ColumnDef<Appointments, string>[] = [
     {
         header: 'First Name',
         accessorKey: 'firstName',
+    },
+    {
+        header: 'Middle Name',
+        accessorKey: 'middleName',
     },
     {
         header: 'Last Name',
         accessorKey: 'lastName',
     },
     {
-        header: 'Age',
-        accessorKey: 'patientAge',
+        header: 'Treatment',
+        accessorKey: 'treatment',
     },
     {
-        header: 'Gender',
-        accessorKey: 'patientGender',
+        header: 'Date',
+        accessorKey: 'startTime',
     },
     {
         header: 'Contact Number',
         accessorKey: 'patientMobile1',
     },
+    {
+        header: 'Cashier Name',
+        accessorKey: 'cashierName',
+    },
 ];
 
-export const patientDefaultFormValues: CreatePatientPayload = {
+export const appointmentsDefaultFormValues: CreateAppointmentsPayload = {
     firstName: '',
     middleName: '',
     lastName: '',
-    patientAge: 0,
-    patientGender: 'male',
-    patientRegDate: new Date(),
+    treatment: '',
+    startTime: new Date(),
+    appointmentDate: new Date(),
     patientMobile1: '',
-    patientMobile2: '',
-    patientMedicalHistory: '',
     cashierName: '',
-    patientReports: '',
 };
 
-export const patientGenderProps = {
-    options: [
-        {
-            label: 'Male',
-            value: 'male',
-        },
-        {
-            label: 'Female',
-            value: 'female',
-        },
-    ],
-    'aria-labelledby': 'patient-gender',
-    defaultValue: 'Male',
-};
-
-export const patientFormValidationSchema: ObjectSchema<CreatePatientPayload> =
+export const appointmentsFormValidationSchema: ObjectSchema<CreateAppointmentsPayload> =
     yupObject({
         firstName: requiredField,
+        middleName: requiredField,
         lastName: requiredField,
-        patientRegDate: date().required('Required'),
-        patientMedicalHistory: string().optional(),
-        patientReports: string().optional(),
-        patientMobile2: string().optional(),
-        middleName: string().optional(),
-        patientAge: number()
-            .typeError('Required')
-            .required('Required')
-            .positive('Invalid age')
-            .integer(),
-        patientGender: requiredField,
+        treatment: requiredField,
+        startTime: date().required('Required'),
+        appointmentDate: date().required('Required'),
         patientMobile1: string().required('Required'),
         cashierName: requiredField,
     });

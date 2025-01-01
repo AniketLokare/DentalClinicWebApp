@@ -12,12 +12,12 @@ import {
 } from 'src/components';
 import { formatDate } from 'src/util/common';
 
-interface PatientBasicInfoProps {
-    patientDetails?: Patient;
+interface AppointmentsBasicInfoProps {
+    appointmentsDetails?: Appointments;
 }
 
-const PatientBasicInfo: React.FC<PatientBasicInfoProps> = ({
-    patientDetails,
+const AppointmentsBasicInfo: React.FC<AppointmentsBasicInfoProps> = ({
+    appointmentsDetails,
 }): JSX.Element => {
     return (
         <Stack spacing={6}>
@@ -31,57 +31,42 @@ const PatientBasicInfo: React.FC<PatientBasicInfoProps> = ({
                 >
                     <InfoField
                         label="First Name"
-                        value={patientDetails?.firstName}
+                        value={appointmentsDetails?.firstName}
                         flexBasis="50%"
                     />
                     <InfoField
                         label="Middle Name"
-                        value={patientDetails?.middleName}
+                        value={appointmentsDetails?.middleName}
                         flexBasis="50%"
                     />
                     <InfoField
                         label="Last Name"
-                        value={patientDetails?.lastName}
+                        value={appointmentsDetails?.lastName}
                         flexBasis="50%"
                     />
                     <InfoField
-                        label="Age"
-                        value={`${patientDetails?.patientAge}`}
+                        label="Treatment"
+                        value={`${appointmentsDetails?.treatment}`}
                         flexBasis="50%"
                     />
                     <InfoField
-                        label="Gender"
-                        value={patientDetails?.patientGender}
+                        label="Start Time"
+                        value={appointmentsDetails?.startTime ? formatDate(appointmentsDetails.startTime) : undefined}
                         flexBasis="50%"
                     />
                     <InfoField
-                        label="Registration Date"
-                        value={formatDate(patientDetails?.patientRegDate || new Date())}
+                        label="Appointment Date"
+                        value={formatDate(appointmentsDetails?.appointmentDate || new Date())}
                         flexBasis="50%"
                     />
                     <InfoField
                         label="Contact Number"
-                        value={patientDetails?.patientMobile1}
-                        flexBasis="50%"
-                    />
-                    <InfoField
-                        label="Alternate Contact Number"
-                        value={patientDetails?.patientMobile2}
+                        value={appointmentsDetails?.patientMobile1}
                         flexBasis="50%"
                     />
                     <InfoField
                         label="Cashier Name"
-                        value={patientDetails?.cashierName}
-                        flexBasis="50%"
-                    />
-                    <InfoField
-                        label="Medical History"
-                        value={patientDetails?.patientMedicalHistory}
-                        flexBasis="50%"
-                    />
-                    <InfoField
-                        label="Medical Reports"
-                        value={patientDetails?.patientReports}
+                        value={appointmentsDetails?.cashierName}
                         flexBasis="50%"
                     />
                 </Box>
@@ -91,7 +76,7 @@ const PatientBasicInfo: React.FC<PatientBasicInfoProps> = ({
                     variant="appBlack"
                     sx={{ fontSize: '15px', fontWeight: 700 }}
                 >
-                    Patient Procedures
+                    Appointments Procedures
                 </Typography>
                 <Box sx={{ marginTop: '13px' }}>
                     <ErrorBoundary fallbackComponent={TableError}>
@@ -99,7 +84,7 @@ const PatientBasicInfo: React.FC<PatientBasicInfoProps> = ({
                             isLoading={false}
                             Components={{ Loading: 'table' }}
                             isEmpty={true}
-                            emptyMessage="No Patient Procedures"
+                            emptyMessage="No Appointments"
                         >
                             {/** TODO: Implement patient procedures table */}
                             <Table data={[]} columns={[]} enableRowSelection={false} />
@@ -111,4 +96,4 @@ const PatientBasicInfo: React.FC<PatientBasicInfoProps> = ({
     );
 };
 
-export default PatientBasicInfo;
+export default AppointmentsBasicInfo;

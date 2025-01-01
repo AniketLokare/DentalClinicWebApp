@@ -5,7 +5,7 @@ import axiosClient from 'src/util/axios';
 
 export const getAppointmentsList = (config?: AxiosRequestConfig) =>
     axiosClient
-        .get<PaginatedResponse<Procedure>>(APPOINTMENTS_ROUTE, config)
+        .get<PaginatedResponse<Appointments>>(APPOINTMENTS_ROUTE, config)
         .then((res) => res.data);
 
 export const createAppointments = (
