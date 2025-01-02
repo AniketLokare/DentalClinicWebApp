@@ -10,7 +10,6 @@ import {
   Table,
   TableError,
 } from 'src/components';
-//import { formatDate } from 'src/util/common';
 
 interface MedicineBasicInfoProps {
   medicineDetails?: Medicine;
@@ -44,31 +43,11 @@ const MedicineBasicInfo: React.FC<MedicineBasicInfoProps> = ({
             value={medicineDetails?.medicineName}
             flexBasis="50%"
           />
-          {/* /* <InfoField
-            label="Clinic Name"
-            value={medicineDetails?.clinicName}
-            flexBasis="50%"
-          />
-          <InfoField
-            label="Date"
-            value={formatDate(medicineDetails?.procedureDate || new Date())}
-            flexBasis="50%"
-          />
-          <InfoField
-            label="Time"
-            value={formatDate(medicineDetails?.procedureTime || new Date())}
-            flexBasis="50%"
-          /> */}
           <InfoField
             label="Medicine Price"
             value={`${medicineDetails?.medicinePrice}`}
             flexBasis="50%"
           />
-          {/* <InfoField
-            label="Discount"
-            value={`${medicineDetails?.discount} %`}
-            flexBasis="50%"
-          /> */}
         </Box>
       </Stack>
       <Box>

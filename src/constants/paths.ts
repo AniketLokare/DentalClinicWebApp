@@ -15,6 +15,12 @@ export const VIEW_PROCEDURE_PATH = '/procedures/:id';
 export const getEditProcedureRoute = (id: string) => `${PROCEDURES}/${id}/edit`;
 export const getViewProcedurePath = (id: string) => `${PROCEDURES}/${id}`;
 
+export const APPOINTMENTS = '/appointments';
+export const EDIT_APPOINTMENT_PATH = '/appointments/:id/edit';
+export const VIEW_APPOINTMENT_PATH = '/appointments/:id';
+export const getEditAppointmentRoute = (id: string) => `${APPOINTMENTS}/${id}/edit`;
+export const getViewAppointmentPath = (id: string) => `${APPOINTMENTS}/${id}`;
+
 export const USERS = '/users';
 export const NEW_USER_PATH = '/users/new';
 export const EDIT_USER_PATH = '/users/:id/edit';

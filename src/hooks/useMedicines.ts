@@ -1,4 +1,4 @@
-import { QueryKey, useMutation, useQuery, } from "@tanstack/react-query";
+import { QueryKey, useMutation, useQuery } from "@tanstack/react-query";
 import { AxiosRequestConfig } from "axios";
 import { MEDICINES } from "src/constants/paths";
 import axiosClient from "src/util/axios";
