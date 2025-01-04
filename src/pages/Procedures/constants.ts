@@ -50,6 +50,10 @@ export const ProceduresTableColumns: ColumnDef<Procedure, string>[] = [
     accessorKey: 'procedureId',
   },
   {
+    header: 'Procedure Date',
+    accessorKey: 'procedureDate',
+  },
+  {
     header: 'Procedure Name',
     accessorKey: 'procedureType',
   },

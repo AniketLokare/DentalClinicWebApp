@@ -1,6 +1,6 @@
 import { QueryKey, useMutation, useQuery } from "@tanstack/react-query";
 import { AxiosRequestConfig } from "axios";
-import { deleteMedicineWithIdRoute, editMedicineWithIdRoute, getMedicineWithIdRoute, MEDICINES_ROUTE, NEW_MEDICINE_ROUTE } from "src/api/medicine/routes";
+import { deleteMedicineWithIdRoute, editMedicineWithIdRoute, getMedicineWithIdRoute, MEDICINES_ROUTE, NEW_MEDICINE_ROUTE,getLowStockMedicineRoute } from "src/api/medicine/routes";
 import axiosClient from "src/util/axios";
 
 /**
@@ -15,6 +15,12 @@ export const getMedicinesList = (config?: AxiosRequestConfig) =>
       page: 1,
       pageSize: res.data.length,
     }));
+
+
+  export const getLowStockMedicines = (config?: AxiosRequestConfig) =>
+      axiosClient
+        .get<Medicine[]>(getLowStockMedicineRoute, config)
+        .then((res) => res.data);   
 
 export const createMedicine = (
   payload: CreateMedicinePayload,
@@ -48,12 +54,15 @@ export const useGetMedicinesList = <Override = PaginatedResponse<Medicine>>(
   const { data, ...rest } = useQuery<PaginatedResponse<Medicine>>({
     queryKey,
     queryFn: ({ signal }) => getMedicinesList({ ...defaultConfig, ...apiConfig, signal }),
-    enabled: !!apiConfig?.params,
+    enabled: true, // Ensure the query always runs
     ...useQueryConfig,
   });
 
+  console.log('Query result:', data); // Log the data for debugging
+
   return { response: data, ...rest };
 };
+
 
 export const useCreateMedicine = (
   opts?: MutationConfig<Medicine, CreateMedicinePayload>,
@@ -94,3 +103,23 @@ export const useDeleteMedicine = (opts?: MutationConfig<null, string>) => {
     ...opts,
   });
 };
+
+
+export const useGetLowStockMedicines = <Override = Medicine[]>(
+  opts?: UseQueryOption<Medicine[], Override>,
+) => {
+  const { key, useQueryConfig, apiConfig } = opts || {};
+  const queryKey = (key || ['medicines', 'low-stock', apiConfig?.params]) as QueryKey;
+
+  const defaultConfig: AxiosRequestConfig = { params: {} };
+
+  const { data, ...rest } = useQuery<Medicine[]>({
+    queryKey,
+    queryFn: ({ signal }) => getLowStockMedicines({ ...defaultConfig, ...apiConfig, signal }),
+    enabled: true, // Ensure the query always runs
+    ...useQueryConfig,
+  });
+
+  return { response: data, ...rest };
+};
+

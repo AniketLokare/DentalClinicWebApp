@@ -140,7 +140,7 @@ const PatientForm: React.FC = (): JSX.Element => {
         </Grid>
 
         {/* Cashier Name Field */}
-        <Grid item xs={12} sm={6}  sx={{ visibility: 'hidden' }}>
+        <Grid item xs={12} sm={6}>
           <Controller
             name="cashierName"
             defaultValue="" // Leave default value empty as it will be set in useEffect

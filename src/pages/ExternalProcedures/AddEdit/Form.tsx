@@ -19,14 +19,14 @@ const ExternalProcedureForm: React.FC = (): JSX.Element => {
 
 
   const { username } = getAuthInfo(); // Extract username from auth info
-    
-  
-    // Set cashierName using useEffect
-    useEffect(() => {
-      if (username && typeof username === 'string') {
-        setValue('cashierName', username.trim()); // Ensure no quotes or spaces
-      }
-    }, [username, setValue]);
+
+
+  // Set cashierName using useEffect
+  useEffect(() => {
+    if (username && typeof username === 'string') {
+      setValue('cashierName', username.trim()); // Ensure no quotes or spaces
+    }
+  }, [username, setValue]);
 
   useEffect(() => {
     const finalAmount = feesCharged - (discount);
@@ -104,11 +104,11 @@ const ExternalProcedureForm: React.FC = (): JSX.Element => {
             disabled
           />
         </Grid>
-        <Grid item xs={12} sm={6}  sx={{ visibility: 'hidden' }}>
+        <Grid item xs={12} sm={6} >
           <Controller
             name="cashierName"
-            defaultValue="" // Leave default value empty as it will be set in useEffect
-            render={({ field }) => (
+            defaultValue=""
+            render={({ field: { ref, ...field } }) => (
               <FormInput
                 {...field}
                 control={control}
@@ -118,7 +118,9 @@ const ExternalProcedureForm: React.FC = (): JSX.Element => {
               />
             )}
           />
+
         </Grid>
+
       </Grid>
     </Stack>
   );

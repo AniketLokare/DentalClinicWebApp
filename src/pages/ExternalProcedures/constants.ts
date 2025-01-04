@@ -136,7 +136,7 @@ export const externalProcedureFormValidationSchema: ObjectSchema<CreateExternalP
     .optional()
     .required("Cashier name is required")
     .max(50, 'Cashier name cannot exceed 50 characters')
-    .matches(/^[A-Za-z\s]*$/, 'Cashier name can only contain alphabets and spaces'),
+    ,
 
     finalAmount: number()
       .typeError('Required')

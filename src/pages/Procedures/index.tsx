@@ -72,13 +72,7 @@ const Procedures: React.FC = (): JSX.Element => {
   const proceduresTableColumnsWithActions = useMemo(
     () => [
       ...ProceduresTableColumns,
-      {
-        header: 'Procedure Date',
-        accessorKey: 'procedureDate',
-        cell: ({ getValue }) => (
-          <Box className="text-slate-gray">{formatDate(getValue())}</Box>
-        ),
-      },
+      
       {
         id: 'actions',
         cell: ({ row }) => {
