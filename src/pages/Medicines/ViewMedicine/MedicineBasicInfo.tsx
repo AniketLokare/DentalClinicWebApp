@@ -1,12 +1,18 @@
-// src/components/MedicineBasicInfo.tsx
 import React from 'react';
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
-import { InfoField } from 'src/components';
-import { Medicine } from 'src/types';  // Import the shared Medicine type
+import Typography from '@mui/material/Typography';
+
+import {
+  ErrorBoundary,
+  InfoField,
+  PageLoader,
+  Table,
+  TableError,
+} from 'src/components';
 
 interface MedicineBasicInfoProps {
-  medicineDetails?: Medicine;  // Use the Medicine type
+  medicineDetails?: Medicine;
 }
 
 const MedicineBasicInfo: React.FC<MedicineBasicInfoProps> = ({
@@ -22,32 +28,48 @@ const MedicineBasicInfo: React.FC<MedicineBasicInfoProps> = ({
           flexWrap="wrap"
           rowGap="20px"
         >
-          {/* Medicine Name */}
           <InfoField
             label="Medicine Name"
-            value={medicineDetails?.name || 'Not available'}
+            value={medicineDetails?.medicineName}
             flexBasis="50%"
           />
-          {/* Medicine Pack */}
           <InfoField
             label="Medicine Pack"
-            value={medicineDetails?.pack?.toString() || 'Not available'} // Convert number to string
+            value={medicineDetails?.medicinePack?.toString()}
             flexBasis="50%"
           />
-          {/* Medicine Type */}
           <InfoField
             label="Medicine Type"
-            value={medicineDetails?.type || 'Not available'}
+            value={medicineDetails?.medicineType}
             flexBasis="50%"
           />
-          {/* Medicine Price */}
           <InfoField
             label="Medicine Price"
-            value={medicineDetails?.price !== undefined ? `$${medicineDetails.price}` : 'Not available'}
+            value={`${medicineDetails?.medicinePrice}`}
             flexBasis="50%"
           />
         </Box>
       </Stack>
+      <Box>
+        <Typography
+          variant="appBlack"
+          sx={{ fontSize: '15px', fontWeight: 700 }}
+        >
+          Medicine Details
+        </Typography>
+        <Box sx={{ marginTop: '13px' }}>
+          <ErrorBoundary fallbackComponent={TableError}>
+            <PageLoader
+              isLoading={false}
+              Components={{ Loading: 'table' }}
+              isEmpty={true}
+              emptyMessage="No Medicines Found"
+            >
+              <Table data={[]} columns={[]} enableRowSelection={false} />
+            </PageLoader>
+          </ErrorBoundary>
+        </Box>
+      </Box>
     </Stack>
   );
 };

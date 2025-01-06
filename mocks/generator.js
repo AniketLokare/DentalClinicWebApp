@@ -28,36 +28,46 @@ const createPatients = () => {
 const createProcedures = () => {
   return Array.from({ length: 100 }, () => ({
     id: faker.number.int({ min: 1, max: 9999 }),
-    procedureName: faker.lorem.words(),
-    procedureDescription: faker.lorem.sentence(),
-    procedureCost: faker.number.float({ min: 100, max: 10000, precision: 0.01 }),
-    timestamp: faker.date.recent(),
+    procedureId: faker.number.int({ min: 1, max: 9999 }),
+    procedureCashierName: faker.person.fullName(),
+    cashPayment: faker.number.int({ min: 1, max: 9999 }),
+    clinicName: faker.company.name(),
+    discount: faker.number.int({ min: 10, max: 30 }),
+    finalAmount: faker.number.int({ min: 1, max: 9999 }),
+    procedureDate: faker.date.recent(),
+    onlinePayment: faker.number.int({ min: 1, max: 9999 }),
+    procedureDetails: faker.lorem.sentence(),
+    procedureType: faker.lorem.sentence(),
+    procedureTime: faker.date.timestamp,
+    patientReports: faker.lorem.sentence(),
+    totalAmount: faker.number.int({ min: 1, max: 9999 }),
+    patientName: faker.person.fullName(),
   }));
 };
 
 const createUsers = () => {
-  return Array.from({ length: 100 }, () => ({
+  return Array.from({ length: 10 }, () => ({
     id: faker.number.int({ min: 1, max: 9999 }),
-    username: faker.internet.userName(),
-    email: faker.internet.email(),
+    userId: faker.number.int({ min: 1, max: 9999 }),
+    username: faker.internet.username(),
     password: faker.internet.password(),
-    role: faker.helpers.arrayElement(['admin', 'user']),
-    timestamp: faker.date.recent(),
+    role: faker.animal.type(),
+    mobileNumber: faker.phone.number(),
   }));
 };
 
 const createMedicines = () => {
   return Array.from({ length: 100 }, () => ({
-    id: faker.number.int({ min: 1, max: 9999 }),
-    medicineName: faker.lorem.words(),
-    medicineDescription: faker.lorem.sentence(),
-    medicineCost: faker.number.float({ min: 10, max: 500, precision: 0.01 }),
-    timestamp: faker.date.recent(),
+    medicineId: faker.number.int({ min: 1, max: 9999 }),
+    medicineName: faker.person.fullName(),
+    medicinePack: faker.number.int({ min: 1, max: 9999 }),
+    medicineType: faker.lorem.sentence(),
+    medicinePrice: faker.number.int({ min: 1, max: 9999 }),
   }));
 };
 
 const createAppointments = () => {
-  const appointments = Array.from({ length: 100 }, () => ({
+  return Array.from({ length: 100 }, () => ({
     id: faker.number.int({ min: 1, max: 9999 }),
     appointmentId: faker.number.int({ min: 1, max: 9999 }),
     firstName: faker.person.firstName(),
@@ -70,8 +80,6 @@ const createAppointments = () => {
     cashierName: faker.person.firstName(),
     timestamp: faker.date.recent(),
   }));
-  console.log(appointments); // Debugging statement to check generated data
-  return appointments;
 };
 
 const procedures = createProcedures();

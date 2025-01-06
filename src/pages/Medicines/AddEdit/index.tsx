@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo } from 'react';
+import React, { useEffect } from 'react';
 import { FormProvider, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import {
@@ -15,94 +15,87 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { FiSave } from 'react-icons/fi';
 import MedicineForm from './Form';
 import {
-  getAddEditMedicineBreadCrumbLinks,
-  medicineFormValidationSchema,
+  getAddEditBreadCrumbLinks,
   medicineDefaultFormValues,
-  CreateMedicinePayload,
+  medicineFormValidationSchema,
 } from '../constants';
-
-import { useCreateMedicine, useGetMedicineDetail, usePatchMedicine } from 'src/hooks/useMedicines';
+import {
+  useCreateMedicines,
+  useGetMedicinesDetail,
+  usePatchMedicines,
+} from 'src/hooks/useMedicines';
 import { MEDICINES } from 'src/constants/paths';
 import useSnackbarAlert from 'src/hooks/useSnackbarAlert';
-import Typography from '@mui/material/Typography'; // Import Typography
 
-const AddEditMedicine: React.FC = (): JSX.Element => {
+const AddEditMedicines: React.FC = (): JSX.Element => {
   const navigate = useNavigate();
   const { id = '' } = useParams();
   const isEdit = !!id;
 
-  const { snackbarAlertState, setSnackbarAlertState, onDismiss } = useSnackbarAlert();
+  const { snackbarAlertState, setSnackbarAlertState, onDismiss } =
+    useSnackbarAlert();
 
-  const defaultValues = useMemo(() => medicineDefaultFormValues, []);
   const methods = useForm<CreateMedicinePayload>({
-    defaultValues,
+    defaultValues: medicineDefaultFormValues,
     resolver: yupResolver<CreateMedicinePayload>(medicineFormValidationSchema),
     mode: 'onBlur',
   });
 
-  const { isFetching, data, error } = useGetMedicineDetail({ id });
-
-  useEffect(() => {
-    if (error) {
-      navigate(MEDICINES, {
-        state: {
-          alert: {
-            severity: 'error',
-            title: 'Error Fetching Medicine',
-            message: 'Failed to load medicine details.',
-          },
-        },
-      });
-    }
-  }, [error, navigate]);
+  const { isFetching, data } = useGetMedicinesDetail({
+    id,
+  });
 
   useEffect(() => {
     if (!isFetching && data) {
-      methods.reset(data); // Reset form with fetched data
+      reset(data);
     }
-  }, [data, isFetching, methods]);
+  }, [data, isFetching]);
 
-  const { mutate: patchMedicine, isPending: isPatchLoading } = usePatchMedicine(id, {
-    onSuccess: () => {
-      navigate(MEDICINES, {
-        state: {
-          alert: {
-            severity: 'success',
-            title: 'Medicine Updated.',
-            message: `Medicine updated successfully.`,
+  const { mutate: patchMedicine, isPending: isPatchLoading } = usePatchMedicines(
+    id,
+    {
+      onSuccess: () => {
+        navigate(MEDICINES, {
+          state: {
+            alert: {
+              severity: 'success',
+              title: 'Medicine Updated.',
+              message: `Medicine updated successfully.`,
+            },
           },
-        },
-      });
+        });
+      },
+      onError: (err: Error) => {
+        setSnackbarAlertState({
+          severity: 'error',
+          title: 'ERROR.',
+          message: err.message,
+        });
+      },
     },
-    onError: (err: Error) => {
-      setSnackbarAlertState({
-        severity: 'error',
-        title: 'ERROR.',
-        message: err.message,
-      });
-    },
-  });
+  );
 
-  const { mutate: createMedicine, isPending: isCreatingMedicine } = useCreateMedicine({
-    onSuccess: () => {
-      navigate(MEDICINES, {
-        state: {
-          alert: {
-            severity: 'success',
-            title: 'Medicine Created.',
-            message: `Medicine created successfully.`,
+  const { mutate: createMedicine, isPending: isCreatingMedicine } =
+    useCreateMedicines({
+      onSuccess: () => {
+        navigate(MEDICINES, {
+          state: {
+            alert: {
+              severity: 'success',
+              title: 'Medicine Created.',
+              message: `Medicine created successfully.`,
+            },
           },
-        },
-      });
-    },
-    onError: (err: Error) => {
-      setSnackbarAlertState({
-        severity: 'error',
-        title: 'ERROR.',
-        message: err.message,
-      });
-    },
-  });
+        });
+      },
+      onError: (err: Error) => {
+        setSnackbarAlertState({
+          severity: 'error',
+          title: 'ERROR.',
+          message: err.message,
+        });
+      },
+    });
 
   const {
     formState: { isDirty },
@@ -120,11 +113,6 @@ const AddEditMedicine: React.FC = (): JSX.Element => {
 
   const isMutating = isCreatingMedicine || isPatchLoading;
 
-  const handleCloseSnackbar = () => {
-    setSnackbarAlertState({ severity: 'error', title: '', message: '' });
-    onDismiss();
-  };
-
   return (
     <ErrorBoundary fallbackComponent={FormError}>
       <LoadingBackdrop loading={isMutating} />
@@ -132,31 +120,22 @@ const AddEditMedicine: React.FC = (): JSX.Element => {
         open={!!snackbarAlertState.message}
         severity={snackbarAlertState.severity}
         message={snackbarAlertState.message}
-        onClose={handleCloseSnackbar}
+        onClose={onDismiss}
       />
 
       <FormProvider {...methods}>
         <Box component="form" onSubmit={handleSubmit(onSubmit)}>
           <SubPanel
             pageTitle={isEdit ? 'Edit Medicine' : 'New Medicine'}
-            breadcrumbLinks={getAddEditMedicineBreadCrumbLinks(isEdit)}
+            breadcrumbLinks={getAddEditBreadCrumbLinks(isEdit)}
             secondaryButtonText={isEdit ? 'Save Changes' : undefined}
             secondaryButtonIcon={<FiSave />}
-            disableSecondaryButton={!isDirty || isMutating}
+            disableSecondaryButton={!isDirty}
             secondaryButtonType="submit"
           />
 
           <Box sx={{ marginTop: '60px', maxWidth: '630px' }}>
-            <PageLoader
-              isLoading={isFetching || isMutating}
-              Components={{
-                Loading: (
-                  <Typography variant="body1" sx={{ textAlign: 'center' }}>
-                    {isFetching ? 'Loading form...' : 'Saving changes...'}
-                  </Typography>
-                ),
-              }}
-            >
+            <PageLoader isLoading={isFetching} Components={{ Loading: 'form' }}>
               <MedicineForm />
 
               <Box sx={{ marginTop: '60px' }}>
@@ -185,4 +164,4 @@ const AddEditMedicine: React.FC = (): JSX.Element => {
   );
 };
 
-export default AddEditMedicine;
+export default AddEditMedicines;

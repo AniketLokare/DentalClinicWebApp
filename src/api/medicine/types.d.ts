@@ -1,5 +1,4 @@
-// src/api/medicine/types.d.ts
-export interface Medicine {
+interface Medicine {
   id: string;            // Medicine ID (string type, required)
   medicineId: number;    // Medicine Unique ID (required)
   medicineName: string;  // Medicine Name (required)
@@ -8,5 +7,4 @@ export interface Medicine {
   medicinePrice: number; // Medicine Price (required)
 }
 
-// CreateMedicinePayload should omit the 'medicineId' and 'id' fields
-export type CreateMedicinePayload = Omit<Medicine, 'medicineId' | 'id'>;
+type CreateMedicinePayload = Omit<Medicine, 'medicineId' | 'id'>;

@@ -1,8 +1,4 @@
 import React, { useMemo, useState } from 'react';
-import { Actions } from 'src/components';
-import { useNavigate } from 'react-router-dom';
-import { getEditMedicineRoute, NEW_MEDICINE_PATH, getViewMedicinePath } from 'src/constants/paths';
-import useDeleteConfirmationModal from 'src/hooks/useDelete';
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import {
@@ -11,107 +7,118 @@ import {
   PageLoader,
   Table,
   TableContainer,
+  Actions,
   Snackbar,
+  ConfirmationModal,
   LoadingBackdrop,
 } from 'src/components';
+import { listMedicinesBreadcrumbLinks, medicinesTableColumns } from './constants';
+import { useDeleteMedicines, useGetMedicinesList } from 'src/hooks/useMedicines';
 import { usePagination } from 'src/hooks/usePagination';
 import { useDebounce } from '@uidotdev/usehooks';
+import { useNavigate } from 'react-router-dom';
+import { formatDate } from 'src/util/common';
 import useSnackbarAlert from 'src/hooks/useSnackbarAlert';
-import { useGetMedicinesList, useDeleteMedicine } from 'src/hooks/useMedicines';
-import { listMedicinesBreadcrumbLinks, medicinesTableColumns } from './constants';
-import { Medicine } from 'src/api/medicine/types';
-import { ColumnDef } from '@tanstack/react-table';
+import { getEditMedicineRoute, getViewMedicinePath } from 'src/constants/paths';
+import useDeleteConfirmationModal from 'src/hooks/useDelete';
 
-const Medicines: React.FC = (): React.ReactElement => {
+const Medicine: React.FC = (): JSX.Element => {
   const navigate = useNavigate();
-  const [filters, setFilters] = useState<FiltersState | undefined>();
+  const [filters, setFilters] = useState<FiltersState>();
   const debouncedSearchQuery = useDebounce(filters?.searchQuery, 500);
 
-  const { snackbarAlertState, onDismiss, setSnackbarAlertState } = useSnackbarAlert();
+  const { snackbarAlertState, setSnackbarAlertState, onDismiss } =
+    useSnackbarAlert();
+
   const { pageNumber, changePageNumber } = usePagination();
-
   const { response, isFetching, isError, refetch } = useGetMedicinesList({
-    apiConfig: { params: { _page: pageNumber, firstName: debouncedSearchQuery } },
-  });
-
-  const { mutate: deleteMedicine, isPending: isDeleteInProgress } = useDeleteMedicine({
-    onSuccess: () => {
-      setSnackbarAlertState({
-        severity: 'success',
-        title: 'Success',
-        message: 'Medicine deleted successfully.',
-      });
-      refetch(); // Refresh table data after successful delete
-    },
-    onError: (err: Error) => {
-      setSnackbarAlertState({
-        severity: 'error',
-        title: 'Error',
-        message: err.message,
-      });
-    },
-  });
-
-  const { onShowDeleteConfirmationModal } = useDeleteConfirmationModal({
-    onDelete: (id: string) => {
-      deleteMedicine(id); // Call the delete hook
-    },
-  });
-
-  // Memoize columns with proper types
-  const medicineTableColumns: ColumnDef<Medicine, unknown>[] = useMemo(() => {
-    const baseColumns: ColumnDef<Medicine, unknown>[] = medicinesTableColumns;
-
-    const actionsColumn: ColumnDef<Medicine, unknown> = {
-      id: 'actions',
-      header: 'Actions',
-      cell: ({ row }: { row: { original: Medicine } }) => {
-        const medicineValues = row.original;
-
-        return (
-          <Actions
-            onEditClick={() => navigate(getEditMedicineRoute(medicineValues.id))}
-            onDeleteClick={() =>
-              onShowDeleteConfirmationModal(medicineValues.id, medicineValues.medicineName)
-            }
-            onViewDetails={() => navigate(getViewMedicinePath(medicineValues.id))}
-          />
-        );
+    apiConfig: {
+      params: {
+        _page: pageNumber,
+        medicineName: debouncedSearchQuery,
       },
-    };
+    },
+  });
 
-    return [...baseColumns, actionsColumn];
-  }, [navigate, onShowDeleteConfirmationModal]);
+  const { mutate: deleteMedicine, isPending: isDeleteInProgress } =
+    useDeleteMedicines({
+      onSuccess: () => {
+        setSnackbarAlertState({
+          severity: 'success',
+          title: 'Medicine Deleted.',
+          message: `Medicine "${deleteConfirmationModalValues?.name}" is deleted successfully.`,
+        });
 
-  // Handle empty data state more explicitly
-  const medicinesData: Medicine[] = response?.data || [];
-  const noData = medicinesData.length === 0;
+        refetch();
+      },
+      onError: (err: Error) => {
+        setSnackbarAlertState({
+          severity: 'error',
+          title: 'ERROR.',
+          message: err.message,
+        });
+      },
+    });
+  const {
+    deleteConfirmationModalValues,
+    onDeleteConfirm,
+    showDeleteConfirmationModal,
+    onShowDeleteConfirmationModal,
+    onClose,
+  } = useDeleteConfirmationModal({ onDelete: deleteMedicine });
+
+  const noData = !response?.data?.length;
+
+  const medicinesTableColumnsWithActions = useMemo(
+    () => [
+      ...medicinesTableColumns,
+      {
+        header: 'Medicine Id',
+        accessorKey: 'medicineId',
+        cell: ({ getValue }) => (
+          <Box className="text-slate-gray">{getValue()}</Box>
+        ),
+      },
+      {
+        id: 'actions',
+        cell: ({ row }) => {
+          const medicineValues = row.original;
+          return (
+            <Actions
+              onEditClick={() => {
+                navigate(getEditMedicineRoute(medicineValues.id));
+              }}
+              onDeleteClick={() => {
+                onShowDeleteConfirmationModal(
+                  medicineValues.id,
+                  medicineValues.medicineName,
+                );
+              }}
+              onViewDetails={() => {
+                navigate(getViewMedicinePath(medicineValues.id));
+              }}
+            />
+          );
+        },
+      },
+    ],
+    [],
+  );
 
   return (
     <>
-      {/* Snackbar for Feedback */}
       <Snackbar
         open={!!snackbarAlertState.message}
         severity={snackbarAlertState.severity}
         message={snackbarAlertState.message}
         onClose={onDismiss}
       />
-
-      {/* Loading Backdrop for Delete Operation */}
       <LoadingBackdrop loading={isDeleteInProgress} />
-
       <Stack spacing={2}>
-        {/* SubPanel for Page Title and Breadcrumbs */}
         <SubPanel
           pageTitle="MEDICINES"
           breadcrumbLinks={listMedicinesBreadcrumbLinks}
-          rightSideButtonText="New Medicine"
-          rightSideButtonClickEvent={() => {
-            navigate(NEW_MEDICINE_PATH);
-          }}
         />
-
-        {/* Table Container */}
         <TableContainer
           onFiltersChange={(filters) => {
             setFilters(filters);
@@ -120,18 +127,16 @@ const Medicines: React.FC = (): React.ReactElement => {
         >
           {({ showFilters }) => (
             <Box>
-              {/* PageLoader for Loading State */}
               <PageLoader
                 isLoading={isFetching}
                 isEmpty={(noData && !isError) || (noData && showFilters)}
-                emptyMessage="No medicines found"
+                emptyMessage="No medicine found"
                 Components={{ Loading: 'table' }}
               >
-                {/* Table Component */}
-                <Table<Medicine>
-                  columns={medicineTableColumns} // Use updated column definitions
-                  data={medicinesData} // Ensure the data matches the Medicine type
-                  totalRecords={response?.items || 0} // Make sure totalRecords is a number
+                <Table
+                  columns={medicinesTableColumnsWithActions}
+                  data={response?.data || []}
+                  totalRecords={response?.items}
                   onPageChange={changePageNumber}
                   pageNumber={pageNumber}
                 />
@@ -140,8 +145,14 @@ const Medicines: React.FC = (): React.ReactElement => {
           )}
         </TableContainer>
       </Stack>
+      <ConfirmationModal
+        onClose={onClose}
+        onSubmit={onDeleteConfirm}
+        open={showDeleteConfirmationModal}
+      />
     </>
   );
+
 };
 
-export default Medicines;
+export default Medicine;

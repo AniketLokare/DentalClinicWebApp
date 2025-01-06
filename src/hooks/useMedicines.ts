@@ -1,45 +1,37 @@
-import { QueryKey, useQuery, useMutation } from "@tanstack/react-query";
-import { AxiosRequestConfig } from "axios";
-import { getViewMedicinePath, MEDICINES } from "src/constants/paths";
-import axiosClient from "src/util/axios";
-import { MEDICINES_ROUTE } from "src/constants/paths";
-import { useState } from "react";
+import { QueryKey, useMutation, useQuery } from '@tanstack/react-query';
+import { AxiosRequestConfig } from 'axios';
+import { getMedicinesWithIdRoute, MEDICINES_ROUTE } from 'src/api/medicine/routes';
+import axiosClient from 'src/util/axios';
 
-/**
- * API Functions
- */
 export const getMedicinesList = (config?: AxiosRequestConfig) =>
   axiosClient
-    .get<PaginatedResponse<Medicine>>(MEDICINES, config)
+    .get<PaginatedResponse<Medicine>>(MEDICINES_ROUTE, config)
     .then((res) => res.data);
 
-export const createMedicine = (
+export const createMedicines = (
   payload: CreateMedicinePayload,
   config?: AxiosRequestConfig,
 ) => axiosClient.post<Medicine>(MEDICINES_ROUTE, payload, config);
 
-export const getMedicineDetail = (id: string, config?: AxiosRequestConfig) =>
+export const getMedicinesDetail = (id: string, config?: AxiosRequestConfig) =>
   axiosClient
-    .get<Medicine>(getViewMedicinePath(id), config)
+    .get<Medicine>(getMedicinesWithIdRoute(id), config)
     .then((res) => res.data);
 
-export const patchMedicine = (id: string, payload: CreateMedicinePayload) =>
+export const patchMedicines = (id: string, payload: CreateMedicinePayload) =>
   axiosClient.patch<Medicine, CreateMedicinePayload>(
-    getViewMedicinePath(id),
+    getMedicinesWithIdRoute(id),
     payload,
   );
 
-export const deleteMedicine = (id: string) =>
-  axiosClient.delete<null>(getViewMedicinePath(id));
+export const deleteMedicines = (id: string) =>
+  axiosClient.delete<null>(getMedicinesWithIdRoute(id));
 
-/**
- * React Query Hooks
- */
 export const useGetMedicinesList = <Override = PaginatedResponse<Medicine>>(
   opts?: UseQueryOption<PaginatedResponse<Medicine>, Override>,
 ) => {
   const { key, useQueryConfig, apiConfig } = opts || {};
-  const queryKey = (key || ["medicines", apiConfig?.params]) as QueryKey;
+  const queryKey = (key || ['medicines', apiConfig.params]) as QueryKey;
 
   const { data, ...rest } = useQuery<PaginatedResponse<Medicine>>({
     queryKey,
@@ -51,72 +43,42 @@ export const useGetMedicinesList = <Override = PaginatedResponse<Medicine>>(
   return { response: data, ...rest };
 };
 
-export const useCreateMedicine = (
+export const useCreateMedicines = (
   opts?: MutationConfig<Medicine, CreateMedicinePayload>,
 ) => {
   return useMutation({
-    mutationFn: (payload: CreateMedicinePayload) => createMedicine(payload),
+    mutationFn: (payload: CreateMedicinePayload) => createMedicines(payload),
     ...opts,
   });
 };
 
-export const useGetMedicineDetail = <Override = Medicine>(
+export const useGetMedicinesDetail = <Override = Medicine>(
   opts: SingleUseQueryOption<Medicine, Override>,
 ) => {
   const { apiConfig, id } = opts;
-  const queryKey = ["medicine", id] as QueryKey;
-
+  const queryKey = ['registry', id] as QueryKey;
   return useQuery({
     queryKey,
-    queryFn: ({ signal }) => getMedicineDetail(id, { ...apiConfig, signal }),
+    queryFn: ({ signal }) => getMedicinesDetail(id, { ...apiConfig, signal }),
     enabled: !!id,
   });
 };
 
-export const usePatchMedicine = (
+export const usePatchMedicines = (
   id: string,
   opts?: MutationConfig<Medicine, CreateMedicinePayload>,
 ) => {
   return useMutation({
-    mutationFn: (payload: CreateMedicinePayload) => patchMedicine(id, payload),
+    mutationFn: (payload: CreateMedicinePayload) => {
+      return patchMedicines(id, payload);
+    },
     ...opts,
   });
 };
 
-export const useDeleteMedicine = (opts?: MutationConfig<null, string>) => {
+export const useDeleteMedicines = (opts?: MutationConfig<null, string>) => {
   return useMutation({
-    mutationFn: (id: string) => deleteMedicine(id),
+    mutationFn: (id: string) => deleteMedicines(id),
     ...opts,
   });
-};
-
-/**
- * Delete Confirmation Modal Hook
- */
-export const useDeleteConfirmationModal = (onDelete: (id: string) => void) => {
-  const [modalValues, setModalValues] = useState<{ id: string; name: string }>({
-    id: "",
-    name: "",
-  });
-  const [isModalOpen, setIsModalOpen] = useState(false);
-
-  const showModal = (id: string, name: string) => {
-    setModalValues({ id, name });
-    setIsModalOpen(true);
-  };
-
-  const closeModal = () => setIsModalOpen(false);
-
-  const confirmDelete = () => {
-    onDelete(modalValues.id);
-    setIsModalOpen(false);
-  };
-
-  return {
-    modalValues,
-    isModalOpen,
-    showModal,
-    closeModal,
-    confirmDelete,
-  };
 };

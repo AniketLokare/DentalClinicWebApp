@@ -1,69 +1,71 @@
 import React from 'react';
+import {
+  Button,
+  ErrorBoundary,
+  FormError,
+  Icon,
+  PageLoader,
+  Snackbar,
+  SubPanel,
+  LoadingBackdrop,
+} from 'src/components';
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
-import { InfoField, Button, Snackbar, SubPanel, LoadingBackdrop } from 'src/components';
 import Typography from '@mui/material/Typography';
-import { useNavigate, useParams } from 'react-router-dom';
-import { useGetMedicineDetail, useDeleteMedicine } from 'src/hooks/useMedicines';
-import { Medicine } from 'src/api/medicine/types';  // Ensure correct import
 import ConfirmationModal from 'src/components/ConfirmationModal';
+import { useNavigate, useParams } from 'react-router-dom';
+import { useDeleteMedicines, useGetMedicinesDetail } from 'src/hooks/useMedicines';
+import { viewMedicineBreadCrumbLinks } from '../constants';
+import { getEditMedicineRoute, MEDICINES } from 'src/constants/paths';
+import MedicineBasicInfo from './MedicineBasicInfo';
+import { ERROR_RED } from 'src/constants/colors';
 import useDeleteConfirmationModal from 'src/hooks/useDelete';
 import useSnackbarAlert from 'src/hooks/useSnackbarAlert';
-import { ERROR_RED } from 'src/constants/colors';
-import { getEditMedicineRoute, MEDICINES } from 'src/constants/paths';
 
 const ViewMedicine: React.FC = (): JSX.Element => {
   const { id = '' } = useParams();
   const navigate = useNavigate();
+  const { isFetching, data } = useGetMedicinesDetail({
+    id,
+  });
+  const { snackbarAlertState, onDismiss, setSnackbarAlertState } =
+    useSnackbarAlert();
 
-  // Fetch medicine details using the correct 'id'
-  const { isFetching, data } = useGetMedicineDetail({ id });
-
-  // Ensure data is typed as Medicine
-  const medicineData = data as Medicine;
-
-  const { snackbarAlertState, onDismiss, setSnackbarAlertState } = useSnackbarAlert();
-
-  // Edit medicine route
-  const onEditMedicine = () => {
+  const onEditMedicines = () => {
     navigate(getEditMedicineRoute(id));
   };
 
-  // Delete medicine logic
-  const { mutate: deleteMedicine, isPending: isDeleteInProgress } = useDeleteMedicine({
-    onSuccess: () => {
-      navigate(MEDICINES, {
-        state: {
-          alert: {
-            severity: 'success',
-            title: 'Medicine Deleted.',
-            message: `Medicine "${medicineData.medicineName}" has been deleted successfully.`,
+  const { mutate: deleteMedicine, isPending: isDeleteInProgress } =
+    useDeleteMedicines({
+      onSuccess: () => {
+        navigate(MEDICINES, {
+          state: {
+            alert: {
+              severity: 'success',
+              title: 'Medicine Deleted.',
+              message: `Medicine "${deleteConfirmationModalValues?.name}" is deleted successfully.`,
+            },
           },
-        },
-      });
-    },
-    onError: (err: Error) => {
-      setSnackbarAlertState({
-        severity: 'error',
-        title: 'ERROR.',
-        message: err.message,
-      });
-    },
-  });
-
-  // Delete confirmation modal logic
+        });
+      },
+      onError: (err: Error) => {
+        setSnackbarAlertState({
+          severity: 'error',
+          title: 'ERROR.',
+          message: err.message,
+        });
+      },
+    });
   const {
     deleteConfirmationModalValues,
     onDeleteConfirm,
     showDeleteConfirmationModal,
     onShowDeleteConfirmationModal,
     onClose,
-  } = useDeleteConfirmationModal({
-    onDelete: deleteMedicine,
-  });
+  } = useDeleteConfirmationModal({ onDelete: deleteMedicine });
 
   return (
-    <div>
+    <ErrorBoundary fallbackComponent={FormError}>
       <Snackbar
         open={!!snackbarAlertState.message}
         severity={snackbarAlertState.severity}
@@ -74,16 +76,10 @@ const ViewMedicine: React.FC = (): JSX.Element => {
 
       <SubPanel
         pageTitle="MEDICINE DETAILS"
-        breadcrumbLinks={[
-          { label: 'Home', href: '/' },
-          { label: 'Medicines', href: MEDICINES },
-          { label: 'View Medicine', href: '#' },  // Use `#` for the current page or any placeholder
-        ]}
+        breadcrumbLinks={viewMedicineBreadCrumbLinks}
       />
-
-
-      <Box sx={{ marginTop: '60px' }}>
-        <Stack spacing={3}>
+      <PageLoader isLoading={isFetching} Components={{ Loading: 'form' }}>
+        <Stack spacing={3} sx={{ marginTop: '60px' }}>
           <Box
             sx={{
               display: 'flex',
@@ -99,14 +95,22 @@ const ViewMedicine: React.FC = (): JSX.Element => {
                 alignItems: 'flex-start',
               }}
             >
-              <Typography sx={{ fontWeight: '600', fontSize: '26px', lineHeight: '31px' }}>
-                {medicineData?.medicineName || 'Loading...'}
+              <Typography
+                sx={{ fontWeight: '600', fontSize: '26px', lineHeight: '31px' }}
+              >
+                {data?.medicineName}
               </Typography>
             </Box>
-            <Box sx={{ justifyContent: 'center', alignItems: 'flex-start' }}>
+            <Box
+              sx={{
+                justifyContent: 'center',
+                alignItems: 'flex-start',
+              }}
+            >
               <Button
                 variant="outlined"
-                onClick={onEditMedicine}
+                onClick={onEditMedicines}
+                startIcon={<Icon icon="edit" size="15" />}
                 sx={{ marginRight: '20px' }}
               >
                 Edit
@@ -114,61 +118,37 @@ const ViewMedicine: React.FC = (): JSX.Element => {
               <Button
                 variant="contained"
                 onClick={() =>
-                  onShowDeleteConfirmationModal(medicineData?.id, medicineData?.medicineName)
+                  onShowDeleteConfirmationModal(
+                    data?.id || '',
+                    data?.medicineName || '',
+                  )
                 }
+                startIcon={<Icon icon="trash" size="15" />}
                 sx={{ backgroundColor: ERROR_RED }}
               >
                 Delete
               </Button>
             </Box>
           </Box>
-
-          {/* Display Medicine Basic Information */}
-          <Box sx={{ marginTop: '20px' }}>
-            <Stack spacing={2}>
-              <Box display="flex" alignItems="center" justifyContent="flex-start" flexWrap="wrap">
-                <InfoField
-                  label="Medicine Name"
-                  value={medicineData?.medicineName || 'Not available'}
-                  flexBasis="50%"
-                />
-                <InfoField
-                  label="Medicine Pack"
-                  value={medicineData?.medicinePack?.toString() || 'Not available'}
-                  flexBasis="50%"
-                />
-                <InfoField
-                  label="Medicine Type"
-                  value={medicineData?.medicineType || 'Not available'}
-                  flexBasis="50%"
-                />
-                <InfoField
-                  label="Medicine Price"
-                  value={medicineData?.medicinePrice ? `$${medicineData.medicinePrice}` : 'Not available'}
-                  flexBasis="50%"
-                />
-              </Box>
-            </Stack>
-          </Box>
-
+          <MedicineBasicInfo medicineDetails={data} />
           <Box>
             <Button
               variant="outlined"
+              startIcon={<Icon icon="arrowLeft" size="15" />}
+              sx={{ padding: '20px' }}
               onClick={() => navigate(-1)}
             >
               Back
             </Button>
           </Box>
-
-          {/* Confirmation Modal */}
           <ConfirmationModal
             onClose={onClose}
             onSubmit={onDeleteConfirm}
             open={showDeleteConfirmationModal}
           />
         </Stack>
-      </Box>
-    </div>
+      </PageLoader>
+    </ErrorBoundary>
   );
 };
 
