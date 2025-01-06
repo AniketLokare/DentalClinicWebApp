@@ -74,7 +74,7 @@ const Appointments: React.FC = (): JSX.Element => {
             ...appointmentsTableColumns,
             {
                 header: 'Appointment Date',
-                accessorKey: 'startDate',
+                accessorKey: 'appointmentDate',
                 cell: ({ getValue }) => (
                     <Box className="text-slate-gray">{formatDate(getValue())}</Box>
                 ),
