@@ -27,9 +27,6 @@ export const getAppointmentsDetail = (id: string, config?: AxiosRequestConfig) =
 export const deleteAppointments = (id: string) =>
     axiosClient.delete<null>(getAppointmentsWithIdRoute(id));
 
-/**
- * HOOKS
- */
 export const useGetAppointmentsList = <Override = PaginatedResponse<Appointments>>(
     opts?: UseQueryOption<PaginatedResponse<Appointments>, Override>,
 ) => {
