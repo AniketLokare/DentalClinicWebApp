@@ -4,6 +4,7 @@ import { FiClipboard, FiUsers } from 'react-icons/fi';
 import { MdOutlineInventory } from 'react-icons/md';
 import { RxDashboard } from 'react-icons/rx';
 import {
+  APPOINTMENTS,
   DASHBOARD_PATH,
   INVENTORY,
   MEDICINES,
@@ -27,6 +28,11 @@ export const globalOptions = [
     title: 'Procedures',
     icon: <FiClipboard size="24px" />,
     route: PROCEDURES,
+  },
+  {
+    title: 'Appointment',
+    icon: <FiClipboard size="24px" />,
+    route: APPOINTMENTS,
   },
   {
     title: 'Medicines',
