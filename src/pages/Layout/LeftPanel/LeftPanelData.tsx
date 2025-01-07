@@ -10,6 +10,7 @@ import {
   PATIENTS,
   PROCEDURES,
   USERS,
+  APPOINTMENTS,
 } from 'src/constants/paths';
 
 export const globalOptions = [
@@ -42,5 +43,10 @@ export const globalOptions = [
     title: 'Users',
     icon: <FiUsers size="24px" />,
     route: USERS,
+  },
+  {
+    title: 'Appointments',
+    icon: <FiUsers size="24px" />,
+    route: APPOINTMENTS,
   },
 ];

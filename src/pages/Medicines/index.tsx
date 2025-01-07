@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import Box from '@mui/material/Box';
 import Stack from '@mui/material/Stack';
 import {
@@ -7,67 +7,106 @@ import {
   PageLoader,
   Table,
   TableContainer,
+  Actions,
   Snackbar,
+  ConfirmationModal,
+  LoadingBackdrop,
 } from 'src/components';
+import { listMedicinesBreadcrumbLinks, medicinesTableColumns } from './constants';
+import { useDeleteMedicines, useGetMedicinesList } from 'src/hooks/useMedicines';
 import { usePagination } from 'src/hooks/usePagination';
 import { useDebounce } from '@uidotdev/usehooks';
+import { useNavigate } from 'react-router-dom';
+import { formatDate } from 'src/util/common';
 import useSnackbarAlert from 'src/hooks/useSnackbarAlert';
-import { useGetMedicinesList } from 'src/hooks/useMedicines';
-import { listMedicinesBreadcrumbLinks, medicinesTableColumns } from './constant';
+import { getEditMedicineRoute, getViewMedicinePath } from 'src/constants/paths';
+import useDeleteConfirmationModal from 'src/hooks/useDelete';
 
-const Medicines: React.FC = (): React.ReactElement => {
+const Medicine: React.FC = (): JSX.Element => {
+  const navigate = useNavigate();
   const [filters, setFilters] = useState<FiltersState>();
   const debouncedSearchQuery = useDebounce(filters?.searchQuery, 500);
 
-  const { snackbarAlertState, onDismiss } =
+  const { snackbarAlertState, setSnackbarAlertState, onDismiss } =
     useSnackbarAlert();
 
   const { pageNumber, changePageNumber } = usePagination();
-  const { response, isFetching, isError } = useGetMedicinesList({
+  const { response, isFetching, isError, refetch } = useGetMedicinesList({
     apiConfig: {
       params: {
         _page: pageNumber,
-        firstName: debouncedSearchQuery,
+        medicineName: debouncedSearchQuery,
       },
     },
   });
 
+  const { mutate: deleteMedicine, isPending: isDeleteInProgress } =
+    useDeleteMedicines({
+      onSuccess: () => {
+        setSnackbarAlertState({
+          severity: 'success',
+          title: 'Medicine Deleted.',
+          message: `Medicine "${deleteConfirmationModalValues?.name}" is deleted successfully.`,
+        });
+
+        refetch();
+      },
+      onError: (err: Error) => {
+        setSnackbarAlertState({
+          severity: 'error',
+          title: 'ERROR.',
+          message: err.message,
+        });
+      },
+    });
+  const {
+    deleteConfirmationModalValues,
+    onDeleteConfirm,
+    showDeleteConfirmationModal,
+    onShowDeleteConfirmationModal,
+    onClose,
+  } = useDeleteConfirmationModal({ onDelete: deleteMedicine });
+
   const noData = !response?.data?.length;
 
-  // const usersTableColumnsWithActions = useMemo(
-  //   () => [
-  //     {
-  //       id: 'avatar',
-  //       cell: () => {
-  //         return (
-  //           <FiUser size="20px" />
-  //         );
-  //       },
-  //     },
-  //     ...usersTableColumns,
-  //     {
-  //       id: 'actions',
-  //       cell: ({ row }) => {
-  //         const userValues = row.original;
-
-  //         return (
-  //           <Actions
-  //             onEditClick={() => {
-  //               navigate(getEditUserRoute(userValues.id));
-  //             }}
-  //             onDeleteClick={() => {
-  //               onShowDeleteConfirmationModal(
-  //                 userValues.id,
-  //                 userValues.username,
-  //               );
-  //             }}
-  //           />
-  //         );
-  //       },
-  //     },
-  //   ],
-  //   [],
-  // );
+  const medicinesTableColumnsWithActions = useMemo(
+    () => [
+      ...medicinesTableColumns,
+      {
+        header: 'Medicine Id',
+        accessorKey: 'medicineId',
+        cell: ({ getValue }) => (
+          <Box className="text-slate-gray">{getValue()}</Box>
+        ),
+      },
+      {
+        id: 'actions',
+        cell: ({ row }) => {
+          const medicineValues = row.original;
+          return (
+            <Actions
+              onAddClick={() => {
+                navigate(getEditMedicineRoute(medicineValues.id));
+              }}
+              onEditClick={() => {
+                navigate(getEditMedicineRoute(medicineValues.id));
+              }}
+              onDeleteClick={() => {
+                onShowDeleteConfirmationModal(
+                  medicineValues.id,
+                  medicineValues.medicineName,
+                );
+              }}
+              onViewDetails={() => {
+                navigate(getViewMedicinePath(medicineValues.id));
+              }}
+            />
+          );
+        },
+      },
+    ],
+    [],
+  );
 
   return (
     <>
@@ -77,6 +116,7 @@ const Medicines: React.FC = (): React.ReactElement => {
         message={snackbarAlertState.message}
         onClose={onDismiss}
       />
+      <LoadingBackdrop loading={isDeleteInProgress} />
       <Stack spacing={2}>
         <SubPanel
           pageTitle="MEDICINES"
@@ -93,12 +133,12 @@ const Medicines: React.FC = (): React.ReactElement => {
               <PageLoader
                 isLoading={isFetching}
                 isEmpty={(noData && !isError) || (noData && showFilters)}
-                emptyMessage="No medicines found"
+                emptyMessage="No medicine found"
                 Components={{ Loading: 'table' }}
               >
                 <Table
-                  columns={medicinesTableColumns}
-                  data={response?.data}
+                  columns={medicinesTableColumnsWithActions}
+                  data={response?.data || []}
                   totalRecords={response?.items}
                   onPageChange={changePageNumber}
                   pageNumber={pageNumber}
@@ -108,8 +148,14 @@ const Medicines: React.FC = (): React.ReactElement => {
           )}
         </TableContainer>
       </Stack>
+      <ConfirmationModal
+        onClose={onClose}
+        onSubmit={onDeleteConfirm}
+        open={showDeleteConfirmationModal}
+      />
     </>
   );
+
 };
 
-export default Medicines;
+export default Medicine;

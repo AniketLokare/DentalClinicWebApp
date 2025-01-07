@@ -1,10 +1,10 @@
 interface Medicine {
-  id : string;
-  medicineId: number;
-  medicineName: string;
-  medicinePack: number;
-  medicineType: string;
-  medicinePrice: number;
+  id: string;            // Medicine ID (string type, required)
+  medicineId: number;    // Medicine Unique ID (required)
+  medicineName: string;  // Medicine Name (required)
+  medicinePack: number;  // Medicine Pack Quantity (required)
+  medicineType: string;  // Medicine Type (required)
+  medicinePrice: number; // Medicine Price (required)
 }
 
 type CreateMedicinePayload = Omit<Medicine, 'medicineId' | 'id'>;

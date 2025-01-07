@@ -21,5 +21,18 @@ export const EDIT_USER_PATH = '/users/:id/edit';
 export const getEditUserRoute = (id: string) => `${USERS}/${id}/edit`;
 
 export const MEDICINES = '/medicines';
+export const NEW_MEDICINE_PATH = '/medicines/new';
+export const EDIT_MEDICINE_PATH = '/medicines/:id/edit';
+export const VIEW_MEDICINE_PATH = '/medicines/:id';
+export const getEditMedicineRoute = (id: string) => `${MEDICINES}/${id}/edit`;
+export const getViewMedicinePath = (id: string) => `${MEDICINES}/${id}`;
+
+export const APPOINTMENTS = '/appointments';
+export const NEW_APPOINTMENTS_PATH = '/appointments/new';
+export const EDIT_APPOINTMENTS_PATH = '/appointments/:id/edit';
+export const VIEW_APPOINTMENTS_PATH = '/appointments/:id';
+export const getEditAppointmentsRoute = (id: string) => `${APPOINTMENTS}/${id}/edit`;
+export const getViewAppointmentsPath = (id: string) => `${APPOINTMENTS}/${id}`;
+
 export const INVENTORY = '/inventory';
 
