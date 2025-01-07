@@ -6,8 +6,9 @@ if (!fs.existsSync(dir)) {
   fs.mkdirSync(dir);
 }
 
+
 const createPatients = () => {
-  return Array.from({ length: 100 }, () => ({
+  return Array.from({ length: 100 }, () => ({ 
     id: faker.number.int({ min: 1, max: 9999 }),
     patientId: faker.number.int({ min: 1, max: 9999 }),
     firstName: faker.person.firstName(),
@@ -66,12 +67,33 @@ const createMedicines = () => {
   }));
 };
 
+const createAppointments = () => {
+  return Array.from({ length: 10 }, () => ({
+    id: faker.number.int({ min: 1, max: 9999 }),
+    appointmentId: faker.number.int({ min: 1, max: 9999 }),
+    firstName: faker.person.firstName(),
+    middleName: faker.person.middleName(),
+    lastName: faker.person.lastName(),
+    treatment: faker.lorem.sentence(),
+    startTime: faker.date.recent(),
+    appointmentDate: faker.date.recent(),
+    patientmobile1: faker.phone.number(),
+    cashiername: faker.person.fullName(),
+    timestamp: faker.date.recent(),
+  }));
+};
+
 const procedures = createProcedures();
 const patients = createPatients();
 const users = createUsers();
 const medicines = createMedicines();
+const appointments = createAppointments(); 
 
-const jsonData = JSON.stringify({ patients, procedures, users, medicines }, null, 2);
+const jsonData = JSON.stringify(
+  { patients, procedures, users, medicines, appointments },
+  null,
+  2,
+);
 
 if (fs.existsSync(`${dir}/db.json`)) {
   console.log('db.json already exists!');

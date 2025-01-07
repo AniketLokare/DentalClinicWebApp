@@ -21,7 +21,7 @@ export const useDeleteConfirmationModal = (props: UseDeleteProps) => {
     setShowDeleteConfirmationModal(false);
   };
 
-  const onShowDeleteConfirmationModal = (id: string, name: string) => {
+  const onShowDeleteConfirmationModal = (id: string, name: string) => {  //use this instread of deleteconfirmationMod=dalValueSm
     setDeleteConfirmationModalValues({ id, name });
     setShowDeleteConfirmationModal(true);
   };
