@@ -54,21 +54,6 @@ const AppointmentsBasicInfo: React.FC<AppointmentsBasicInfoProps> = ({
                         value={appointmentsDetails?.startTime ? formatDate(appointmentsDetails.startTime) : undefined}
                         flexBasis="50%"
                     />
-                    <InfoField
-                        label="Appointment Date"
-                        value={formatDate(appointmentsDetails?.appointmentDate || new Date())}
-                        flexBasis="50%"
-                    />
-                    <InfoField
-                        label="Contact Number"
-                        value={appointmentsDetails?.patientMobile1}
-                        flexBasis="50%"
-                    />
-                    <InfoField
-                        label="Cashier Name"
-                        value={appointmentsDetails?.cashierName}
-                        flexBasis="50%"
-                    />
                 </Box>
             </Stack>
             <Box>
