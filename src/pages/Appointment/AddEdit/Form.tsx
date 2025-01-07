@@ -76,7 +76,7 @@ const AppointmentForm: React.FC = (): JSX.Element => {
         label="Cashier Name"
         control={control}
         placeholder="Enter cashier's name"
-        error={errors.cashierName?.message}
+        error={errors.cashiername?.message}
         trim
       />
       <FormInput
