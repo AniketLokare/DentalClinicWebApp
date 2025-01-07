@@ -23,3 +23,9 @@ export const getEditUserRoute = (id: string) => `${USERS}/${id}/edit`;
 export const MEDICINES = '/medicines';
 export const INVENTORY = '/inventory';
 
+export const APPOINTMENTS = '/appointments';
+export const NEW_APPOINTMENT_PATH = '/appointments/new';
+export const EDIT_APPOINTMENT_PATH = '/appointments/:id/edit';
+export const VIEW_APPOINTMENT_PATH = '/appointments/:id';
+export const getEditAppointmentRoute = (id: string) => `${APPOINTMENTS}/${id}/edit`;
+export const getViewAppointmentPath = (id: string) => `${APPOINTMENTS}/${id}`;

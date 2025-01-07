@@ -16,6 +16,11 @@ import {
   USERS,
   NEW_USER_PATH,
   EDIT_USER_PATH,
+  APPOINTMENTS,
+  EDIT_APPOINTMENT_PATH,
+  NEW_APPOINTMENT_PATH,
+  VIEW_APPOINTMENT_PATH
+
 } from './constants/paths';
 import Login from './pages/Login';
 import ProtectedRoute from './pages/Login/ProtectedRoute';
@@ -23,8 +28,11 @@ import Patients from './pages/Patients';
 import Procedures from './pages/Procedures';
 import Medicines from './pages/Medicines';
 import Inventory from './pages/Inventory';
+import Appointments from './pages/Appointments';
 import AddEditPatient from './pages/Patients/AddEdit';
+import AddEditAppointment from './pages/Appointments/AddEdit';
 import ViewPatient from './pages/Patients/ViewPatient';
+import ViewAppointment from './pages/Appointments/ViewAppointments';
 import ViewProcedure from './pages/Procedures/ViewProcedure';
 import AddEditProcedure from './pages/Procedures/AddEdit';
 import Users from './pages/Users';
@@ -49,6 +57,12 @@ const AppRoutes: React.FC = () => (
       <Route path={USERS} element={<Users />} />
       <Route path={NEW_USER_PATH} element={<AddEditUser />} />
       <Route path={EDIT_USER_PATH} element={<AddEditUser />} />
+      
+      <Route path={APPOINTMENTS} element={<Appointments />} />
+      <Route path={NEW_APPOINTMENT_PATH} element={<AddEditAppointment />} />
+      <Route path={EDIT_APPOINTMENT_PATH} element={<AddEditAppointment />} />
+      <Route path={VIEW_APPOINTMENT_PATH} element={<ViewAppointment />} />
+
 
       <Route path={MEDICINES} element={<Medicines />} />
       <Route path={INVENTORY} element={<Inventory />} />
