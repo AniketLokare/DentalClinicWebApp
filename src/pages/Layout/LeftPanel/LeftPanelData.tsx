@@ -9,6 +9,7 @@ import {
   MEDICINES,
   PATIENTS,
   PROCEDURES,
+  APPOINTMENTS,
   USERS,
 } from 'src/constants/paths';
 
@@ -37,6 +38,11 @@ export const globalOptions = [
     title: 'Inventory',
     icon: <MdOutlineInventory size="24px" />,
     route: INVENTORY,
+  },
+  {
+    title: 'Appointments',
+    icon: <FiClipboard size="24px" />,
+    route: APPOINTMENTS,
   },
   {
     title: 'Users',

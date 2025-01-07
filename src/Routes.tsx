@@ -10,25 +10,36 @@ import {
   NEW_PATIENT_PATH,
   PATIENTS,
   PROCEDURES,
+  APPOINTMENTS,
+  EDIT_APPOINTMENT_PATH,
+  VIEW_APPOINTMENT_PATH,
   EDIT_PROCEDURE_PATH,
   VIEW_PATIENT_PATH,
   VIEW_PROCEDURE_PATH,
   USERS,
   NEW_USER_PATH,
   EDIT_USER_PATH,
+  VIEW_MEDICINE_PATH,
+  NEW_MEDICINE_PATH,
+  EDIT_MEDICINE_PATH,
 } from './constants/paths';
 import Login from './pages/Login';
 import ProtectedRoute from './pages/Login/ProtectedRoute';
 import Patients from './pages/Patients';
 import Procedures from './pages/Procedures';
+import Appointments from './pages/Appointments';
 import Medicines from './pages/Medicines';
 import Inventory from './pages/Inventory';
 import AddEditPatient from './pages/Patients/AddEdit';
 import ViewPatient from './pages/Patients/ViewPatient';
 import ViewProcedure from './pages/Procedures/ViewProcedure';
 import AddEditProcedure from './pages/Procedures/AddEdit';
+import AddEditAppointment from './pages/Appointments/AddEdit';
 import Users from './pages/Users';
 import AddEditUser from './pages/Users/AddEdit';
+import AddEditMedicine from './pages/Medicines/AddEdit';
+import ViewMedicine from './pages/Medicines/ViewMedicine';
+import ViewAppointment from './pages/Appointments/ViewAppointment';
 
 const AppRoutes: React.FC = () => (
   <Routes>
@@ -46,11 +57,19 @@ const AppRoutes: React.FC = () => (
       <Route path={EDIT_PROCEDURE_PATH} element={<AddEditProcedure />} />
       <Route path={VIEW_PROCEDURE_PATH} element={<ViewProcedure />} />
 
+      <Route path={APPOINTMENTS} element={<Appointments />} />
+      <Route path={EDIT_APPOINTMENT_PATH} element={<AddEditAppointment />} />
+      <Route path={VIEW_APPOINTMENT_PATH} element={<ViewAppointment />} />
+
       <Route path={USERS} element={<Users />} />
       <Route path={NEW_USER_PATH} element={<AddEditUser />} />
       <Route path={EDIT_USER_PATH} element={<AddEditUser />} />
 
       <Route path={MEDICINES} element={<Medicines />} />
+      <Route path={EDIT_MEDICINE_PATH} element={<AddEditMedicine />} />
+      <Route path={NEW_MEDICINE_PATH} element={<AddEditMedicine />} />
+      <Route path={VIEW_MEDICINE_PATH} element={<ViewMedicine />} /> 
+
       <Route path={INVENTORY} element={<Inventory />} />
     </Route>
   </Routes>

@@ -12,131 +12,130 @@ import {
   ConfirmationModal,
   LoadingBackdrop,
 } from 'src/components';
-import { listMedicinesBreadcrumbLinks, medicinesTableColumns } from './constants';
-import { useNavigate } from 'react-router-dom';
-import {
-  getEditMedicineRoute,
-  getEditProcedureRoute,
-  getViewMedicinePath,
-  MEDICINES,
-  NEW_MEDICINE_PATH,
-} from 'src/constants/paths';
-import { useDeleteMedicine, useGetMedicinesList, useDeleteConfirmationModalm } from 'src/hooks/useMedicines';
+import { listAppointmentsBreadcrumbLinks, AppointmentsTableColumns } from './constants';
+import { useDeleteAppointment, useGetAppointmentsList } from 'src/hooks/useAppointments';
 import { usePagination } from 'src/hooks/usePagination';
-import { useDelete } from 'src/hooks/useDelete'
-import {useMedicines } from 'src/hooks/useMedicines';
 import { useDebounce } from '@uidotdev/usehooks';
+import { useNavigate } from 'react-router-dom';
+import { formatDate } from 'src/util/common';
 import useSnackbarAlert from 'src/hooks/useSnackbarAlert';
+import { getEditAppointmentRoute, getViewAppointmentPath } from 'src/constants/paths';
 import useDeleteConfirmationModal from 'src/hooks/useDelete';
 
-const Medicines: React.FC = (): React.ReactElement => {
+const Appointments: React.FC = (): JSX.Element => {
   const navigate = useNavigate();
   const [filters, setFilters] = useState<FiltersState>();
   const debouncedSearchQuery = useDebounce(filters?.searchQuery, 500);
 
-  const { snackbarAlertState, setSnackbarAlertState, onDismiss } =
+  const { snackbarAlertState, setSnackbarAlertState,  onDismiss } =
     useSnackbarAlert();
 
   const { pageNumber, changePageNumber } = usePagination();
-  const { response, isFetching, isError, refetch } = useGetMedicinesList({
+  const { response, isFetching, isError, refetch } = useGetAppointmentsList({
     apiConfig: {
       params: {
-        _page: pageNumber,
-        firstName: debouncedSearchQuery,
+        _page: pageNumber,// TODO: Change this to full text search
+        patientName: debouncedSearchQuery,
       },
     },
   });
 
-  const { mutate: deleteMedicine, isPending: isDeleteInProgress } =
-    useDeleteMedicine({
+  const { mutate: deleteAppointment, isPending: isDeleteInProgress } =
+    useDeleteAppointment({
       onSuccess: () => {
         setSnackbarAlertState({
           severity: 'success',
-          title: 'Medicine Deleted',
-          message: `Medicine "${deleteConfirmationModalValuesm?.name}" deleted successfully.`,
+          title: 'Appointment Deleted.',
+          message: `Appointment "${deleteConfirmationModalValues?.name}" is deleted successfully.`,
         });
+
         refetch();
       },
       onError: (err: Error) => {
         setSnackbarAlertState({
           severity: 'error',
-          title: 'Error',
+          title: 'ERROR.',
           message: err.message,
         });
       },
     });
-
   const {
-    deleteConfirmationModalValuesm,
+    deleteConfirmationModalValues,
     onDeleteConfirm,
-    showDeleteConfirmationModalm,
-    onShowDeleteConfirmationModalm,
+    showDeleteConfirmationModal,
+    onShowDeleteConfirmationModal,
     onClose,
-  } = useDeleteConfirmationModalm ({ onDelete: deleteMedicine });
+  } = useDeleteConfirmationModal({ onDelete: deleteAppointment });
 
   const noData = !response?.data?.length;
 
-  const medicinesTableColumnsWithActions = useMemo(
+  const AppointmentsTableColumnsWithActions = useMemo(
     () => [
-      ...medicinesTableColumns,
+      ...AppointmentsTableColumns,
+      {
+        header: 'Appointment Date',
+        accessorKey: 'appointmentDate',
+        cell: ({ getValue }) => (
+          <Box className="text-slate-gray">{formatDate(getValue())}</Box>
+        ),
+      },
       {
         id: 'actions',
         cell: ({ row }) => {
-          const medicineValues = row.original;
+          const appointmentValues = row.original;
           return (
             <Actions
               onEditClick={() => {
-                navigate(getEditMedicineRoute(medicineValues.id));
+                navigate(getEditAppointmentRoute(appointmentValues.id));
               }}
               onDeleteClick={() => {
-                onShowDeleteConfirmationModalm(
-                  medicineValues.id, medicineValues.username
+                onShowDeleteConfirmationModal(
+                  appointmentValues.id,
+                  appointmentValues.appointmentDetails,
                 );
               }}
               onViewDetails={() => {
-                navigate(getViewMedicinePath(medicineValues.id));
+                navigate(getViewAppointmentPath(appointmentValues.id));
               }}
             />
           );
         },
       },
     ],
-    [navigate],
+    [],
   );
 
   return (
     <>
-      <LoadingBackdrop loading={!!isDeleteInProgress} />
       <Snackbar
         open={!!snackbarAlertState.message}
         severity={snackbarAlertState.severity}
         message={snackbarAlertState.message}
         onClose={onDismiss}
       />
+      <LoadingBackdrop loading={isDeleteInProgress} />
       <Stack spacing={2}>
         <SubPanel
-          pageTitle="MEDICINES"
-          breadcrumbLinks={listMedicinesBreadcrumbLinks}
-          rightSideButtonText="New Medicine"
-          rightSideButtonClickEvent={() => navigate(NEW_MEDICINE_PATH)}
+          pageTitle="APPOINTMENTS"
+          breadcrumbLinks={listAppointmentsBreadcrumbLinks}
         />
         <TableContainer
           onFiltersChange={(filters) => {
             setFilters(filters);
           }}
-          placeholder="Search By Medicine Name"
+          placeholder="Search By First Name"
         >
           {({ showFilters }) => (
             <Box>
               <PageLoader
                 isLoading={isFetching}
                 isEmpty={(noData && !isError) || (noData && showFilters)}
-                emptyMessage="No medicines found"
+                emptyMessage="No patients found"
                 Components={{ Loading: 'table' }}
               >
                 <Table
-                  columns={medicinesTableColumnsWithActions}
-                  data={response?.data}
+                  columns={AppointmentsTableColumnsWithActions}
+                  data={response?.data || []}
                   totalRecords={response?.items}
                   onPageChange={changePageNumber}
                   pageNumber={pageNumber}
@@ -149,10 +148,11 @@ const Medicines: React.FC = (): React.ReactElement => {
       <ConfirmationModal
         onClose={onClose}
         onSubmit={onDeleteConfirm}
-        open={showDeleteConfirmationModalm}
+        open={showDeleteConfirmationModal}
       />
     </>
   );
+  
 };
 
-export default Medicines;
+export default Appointments;
