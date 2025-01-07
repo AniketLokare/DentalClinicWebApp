@@ -85,6 +85,9 @@ const Appointments: React.FC = (): JSX.Element => {
                     const appointmentsValues = row.original;
                     return (
                         <Actions
+                            onAddClick={() => {
+                                navigate(getEditAppointmentsRoute(appointmentsValues.id));
+                            }}
                             onEditClick={() => {
                                 navigate(getEditAppointmentsRoute(appointmentsValues.id));
                             }}

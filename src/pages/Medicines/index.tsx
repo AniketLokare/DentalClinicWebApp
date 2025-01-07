@@ -85,6 +85,9 @@ const Medicine: React.FC = (): JSX.Element => {
           const medicineValues = row.original;
           return (
             <Actions
+              onAddClick={() => {
+                navigate(getEditMedicineRoute(medicineValues.id));
+              }}
               onEditClick={() => {
                 navigate(getEditMedicineRoute(medicineValues.id));
               }}
