@@ -23,46 +23,58 @@ import useDeleteConfirmationModal from 'src/hooks/useDelete';
 import useSnackbarAlert from 'src/hooks/useSnackbarAlert';
 
 const ViewAppointment: React.FC = (): JSX.Element => {
-  const { id = '' } = useParams();
+  const { id = '' } = useParams<{ id: string }>();
   const navigate = useNavigate();
-  const { isFetching, data } = useGetAppointmentDetail({
-    id,
-  });
-  const { snackbarAlertState, onDismiss, setSnackbarAlertState } =
-    useSnackbarAlert();
+  const { isFetching, data } = useGetAppointmentDetail({ id });
+  const { snackbarAlertState, onDismiss, setSnackbarAlertState } = useSnackbarAlert();
 
   const onEditAppointment = () => {
     navigate(getEditAppointmentRoute(id));
   };
 
-  const { mutate: deleteAppointment, isPending: isDeleteInProgress } =
-    useDeleteAppointment({
-      onSuccess: () => {
-        navigate(APPOINTMENTS, {
-          state: {
-            alert: {
-              severity: 'success',
-              title: 'Appointment Deleted.',
-              message: `Appointment "${deleteConfirmationModalValues?.name}" is deleted successfully.`,
-            },
+  const { mutate: deleteAppointment, isPending: isDeleteInProgress } = useDeleteAppointment({
+    onSuccess: () => {
+      navigate(APPOINTMENTS, {
+        state: {
+          alert: {
+            severity: 'success',
+            title: 'Appointment Deleted.',
+            message: `Appointment "${data?.firstName ?? ''} ${data?.lastName ?? ''}" is deleted successfully.`,
           },
-        });
-      },
-      onError: (err: Error) => {
-        setSnackbarAlertState({
-          severity: 'error',
-          title: 'ERROR.',
-          message: err.message,
-        });
-      },
-    });
+        },
+      });
+    },
+    onError: (err: Error) => {
+      setSnackbarAlertState({
+        severity: 'error',
+        title: 'ERROR.',
+        message: err.message,
+      });
+    },
+  });
+
   const {
-    deleteConfirmationModalValues,
     onDeleteConfirm,
     showDeleteConfirmationModal,
     onShowDeleteConfirmationModal,
     onClose,
   } = useDeleteConfirmationModal({ onDelete: deleteAppointment });
+
+  // Transform the `data` object
+  const appointmentDetails = data
+    ? {
+        appointmentId: parseInt(data.id), // Convert id to number
+        firstName: data.firstName,
+        middleName: data.middleName || '', // Handle optional field
+        lastName: data.lastName,
+        treatment: data.treatment,
+        startTime: data.startTime.toISOString(), // Convert Date to string
+        appointmentDate: data.appointmentDate.toISOString(),
+        patientmobile1: parseInt(data.patientMobile1), // Convert to number
+        cashiername: data.cashierName,
+        timestamp: data.timestamp.toISOString(),
+      }
+    : undefined;
 
   return (
     <ErrorBoundary fallbackComponent={FormError}>
@@ -98,7 +110,7 @@ const ViewAppointment: React.FC = (): JSX.Element => {
               <Typography
                 sx={{ fontWeight: '600', fontSize: '26px', lineHeight: '31px' }}
               >
-                {data?.title}
+                {data?.firstName} {data?.lastName}
               </Typography>
             </Box>
             <Box
@@ -119,8 +131,8 @@ const ViewAppointment: React.FC = (): JSX.Element => {
                 variant="contained"
                 onClick={() =>
                   onShowDeleteConfirmationModal(
-                    data?.id || '',
-                    data?.title || '',
+                    data?.id ?? '',
+                    `${data?.firstName ?? ''} ${data?.lastName ?? ''}`
                   )
                 }
                 startIcon={<Icon icon="trash" size="15" />}
@@ -130,7 +142,7 @@ const ViewAppointment: React.FC = (): JSX.Element => {
               </Button>
             </Box>
           </Box>
-          <AppointmentBasicInfo appointmentDetails={data} />
+          {appointmentDetails && <AppointmentBasicInfo appointmentDetails={appointmentDetails} />}
           <Box>
             <Button
               variant="outlined"

@@ -1,4 +1,4 @@
-interface Appointment {
+export interface Appointment {
     id: string;
     firstName: string;
     middleName?: string;
@@ -11,5 +11,5 @@ interface Appointment {
     timestamp: Date;
   }
   
-  type CreateAppointmentPayload = Omit<Appointment, 'id' | 'timestamp'>;
+   type CreateAppointmentPayload = Omit<Appointment, 'id' | 'timestamp'>;
   
