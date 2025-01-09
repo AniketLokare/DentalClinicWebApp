@@ -77,7 +77,7 @@ export const procedureDefaultFormValues: CreateProcedurePayload = {
   clinicName: '',
   finalAmount: 0,
   discount: 0,
- // procedureTime: 
+  procedureTime: 0,
   totalAmount: 0,
   
 };
