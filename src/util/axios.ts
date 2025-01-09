@@ -15,7 +15,7 @@ export const initAxiosClient = (baseURL?: string) => {
   return axiosClient;
 };
 
-const axiosClient = initAxiosClient(import.meta.env.VITE_API_BASE_URL);
+const axiosClient = initAxiosClient('http://15.207.44.219:8082');
 
 // Add Authorization dynamically
 axiosClient.interceptors.request.use(async (config) => {
