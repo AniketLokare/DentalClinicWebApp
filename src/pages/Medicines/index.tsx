@@ -50,6 +50,7 @@ const Medicines: React.FC = (): React.ReactElement => {
   //       cell: ({ row }) => {
   //         const userValues = row.original;
 
+<<<<<<< Updated upstream
   //         return (
   //           <Actions
   //             onEditClick={() => {
@@ -68,6 +69,50 @@ const Medicines: React.FC = (): React.ReactElement => {
   //   ],
   //   [],
   // );
+=======
+  const {
+    deleteConfirmationModalValues,
+    onDeleteConfirm,
+    showDeleteConfirmationModal,
+    onShowDeleteConfirmationModal,
+    onClose,
+  } = useDeleteConfirmationModal({ onDelete: deleteMedicine });
+
+  const noData = !response?.data?.length;
+
+  const medicinesTableColumnsWithActions = useMemo(
+    () => [
+      {
+        id: 'Box',
+        cell: () => {
+          return <Icon component={FaTablets} size="20px" />;
+        },
+      },
+      ...medicinesTableColumns,
+      {
+        id: 'actions',
+        cell: ({ row }) => {
+          const medicineValues = row.original;
+
+          return (
+            <Actions
+              onEditClick={() => {
+                navigate(getEditMedicineRoute(medicineValues.medicineId));
+              }}
+              onDeleteClick={() => {
+                onShowDeleteConfirmationModal(
+                  medicineValues.medicineId,
+                  medicineValues.medicineName,
+                );
+              }}
+            />
+          );
+        },
+      },
+    ],
+    [],
+  );
+>>>>>>> Stashed changes
 
   return (
     <>
@@ -97,8 +142,13 @@ const Medicines: React.FC = (): React.ReactElement => {
                 Components={{ Loading: 'table' }}
               >
                 <Table
+<<<<<<< Updated upstream
                   columns={medicinesTableColumns}
                   data={response?.data}
+=======
+                  columns={medicinesTableColumnsWithActions}
+                  data={response?.data || []}
+>>>>>>> Stashed changes
                   totalRecords={response?.items}
                   onPageChange={changePageNumber}
                   pageNumber={pageNumber}
