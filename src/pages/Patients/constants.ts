@@ -53,6 +53,11 @@ export const patientsTableColumns: ColumnDef<Patient, string>[] = [
     header: 'Contact Number',
     accessorKey: 'patientMobile1',
   },
+  {
+    header: 'Registration Date',
+    accessorKey: 'patientRegDate',
+  },
+  
 ];
 
 export const patientDefaultFormValues: CreatePatientPayload = {

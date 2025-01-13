@@ -27,7 +27,7 @@ const PurchaseOrderForm: React.FC = (): JSX.Element => {
       <FormInput
         type="date"
         name="purchaseDate"
-        label=" "
+        label="Purchase Date"
         control={control}
         
         error={errors.purchaseDate?.message}
@@ -40,7 +40,7 @@ const PurchaseOrderForm: React.FC = (): JSX.Element => {
         error={errors.vendorName?.message}
         
       />
-      <FormInput
+      <FormInput sx={{ visibility: 'hidden' }}
         type="number"
         name="totalAmount"
         label="Total Amount"

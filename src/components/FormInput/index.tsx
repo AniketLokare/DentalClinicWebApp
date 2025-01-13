@@ -276,29 +276,33 @@ export const FormInput = ({
                 </Stack>
               )}
               <TextField
-                {...field}
-                onChange={customOnChange}
-                variant="outlined"
-                label={label}
-                placeholder={placeholder}
-                InputLabelProps={{ sx: { color: FADED_BLACK } }}
-                type={type}
-                disabled={disabled}
-                rows={rows}
-                multiline={multiline}
-                inputProps={{
-                  style: { cursor: disabled ? 'not-allowed' : 'text' },
-                  ...inputProps,
-                }}
-                sx={{
-                  ...styles.textField,
-                  width: '100%',
-                  ...sx,
-                }}
-                error={!!error}
-                helperText={error}
-                {...textFieldProps}
-              />
+  {...field}
+  onChange={customOnChange}
+  variant="outlined"
+  label={label}
+  placeholder={placeholder}
+  InputLabelProps={{
+    shrink: type === 'date' ? true : undefined, // Ensure label shrinks for date inputs
+    sx: { color: FADED_BLACK },
+  }}
+  type={type}
+  disabled={disabled}
+  rows={rows}
+  multiline={multiline}
+  inputProps={{
+    style: { cursor: disabled ? 'not-allowed' : 'text' },
+    ...inputProps,
+  }}
+  sx={{
+    ...styles.textField,
+    width: '100%',
+    ...sx,
+  }}
+  error={!!error}
+  helperText={error}
+  {...textFieldProps}
+/>
+
             </Stack>
           );
         }}

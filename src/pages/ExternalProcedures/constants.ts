@@ -45,6 +45,15 @@ export const viewProcedureReportBreadCrumbLinks = [
 
 export const ExternalProceduresTableColumns: ColumnDef<ExternalProcedure, string>[] = [
   {
+    header: 'ID',
+    accessorKey: 'doctorId',
+  },
+  
+  {
+    header: 'Procedure Date',
+    accessorKey: 'procedureDate',
+  },
+  {
     header: 'Doctor Name',
     accessorKey: 'doctorName',
   },
@@ -52,13 +61,27 @@ export const ExternalProceduresTableColumns: ColumnDef<ExternalProcedure, string
     header: 'Procedure Type',
     accessorKey: 'procedureType',
   },
+  
   {
-    header: 'Cashier Name',
-    accessorKey: 'cashierName',
+    header: 'Fees',
+    accessorKey: 'feesCharged',
   },
+
   {
-    header: 'Procedure Date',
-    accessorKey: 'procedureDate',
+    header: 'Discount',
+    accessorKey: 'discount',
+  },
+
+  {
+    header: 'Final Amount',
+    accessorKey: 'finalAmount',
+  },
+
+  
+
+  {
+    header: 'Cashier',
+    accessorKey: 'cashierName',
   },
 ];
 
@@ -96,6 +119,8 @@ export const ExternalProceduresReportTableColumns: ColumnDef<ExternalProcedure, 
     header: 'Final Amount',
     accessorKey: 'finalAmount',
   },
+
+  
 
   {
     header: 'Cashier',

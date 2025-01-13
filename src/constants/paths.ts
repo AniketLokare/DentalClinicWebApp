@@ -14,9 +14,9 @@ export const getViewAppointmentPath = (id: string) => `${APPOINTMENTS}/${id}`;
 
 export const PATIENTS = '/patients';
 export const NEW_PATIENT_PATH = '/patients/new';
-export const EDIT_PATIENT_PATH = '/patients/:id/edit';
+export const EDIT_PATIENT_PATH = '/patient/:id/edit';
 export const VIEW_PATIENT_PATH = '/patients/:id';
-export const getEditPatientRoute = (id: string) => `${PATIENTS}/${id}/edit`;
+export const getEditPatientRoute = (id: string) => `/patient/${id}/edit`;
 export const getViewPatientPath = (id: string) => `${PATIENTS}/${id}`;
 
 export const PROCEDURES = '/procedures';

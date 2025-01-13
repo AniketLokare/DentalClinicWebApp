@@ -14,6 +14,8 @@ import {
 } from 'src/components';
 import { listPatientsBreadcrumbLinks, patientsTableColumns } from './constants';
 import { useNavigate } from 'react-router-dom';
+import { NEW_PROCEDURE_PATH } from 'src/constants/paths';
+
 import {
   getEditPatientRoute,
   getNewProcedureRoute, 
@@ -91,13 +93,7 @@ const Patients: React.FC = (): JSX.Element => {
         },
       },
       ...patientsTableColumns,
-      {
-        header: 'Registration Date',
-        accessorKey: 'patientRegDate',
-        cell: ({ getValue }) => (
-          <Box className="text-slate-gray">{formatDate(getValue())}</Box>
-        ),
-      },
+      
       {
         id: 'actions',
         cell: ({ row }) => {
@@ -106,7 +102,8 @@ const Patients: React.FC = (): JSX.Element => {
           return (
             <Actions
               onAddClick={ ( ) => {
-                navigate(getNewProcedureRoute(patientValues.patientId.toString()));
+                navigate(NEW_PROCEDURE_PATH, { state: patientValues.patientId  })
+                
               }}
               onEditClick={() => {
                 navigate(getEditPatientRoute(patientValues.patientId.toString()));

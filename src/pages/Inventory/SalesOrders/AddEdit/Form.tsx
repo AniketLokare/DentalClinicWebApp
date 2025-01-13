@@ -62,7 +62,7 @@ const SalesOrderForm: React.FC = (): JSX.Element => {
       <FormInput
         type="date"
         name="billDate"
-        label=" "
+        label="Bill Date"
         control={control}
         error={errors.billDate?.message}
       />
@@ -70,10 +70,11 @@ const SalesOrderForm: React.FC = (): JSX.Element => {
         name="patientId"
         label="Patient ID"
         control={control}
+        disabled
         placeholder="Patient ID"
         error={errors.patientId?.message}
       />
-      <FormInput
+      <FormInput sx={{ visibility: 'hidden' }}
         type="number"
         name="totalAmount"
         label="Total Amount"

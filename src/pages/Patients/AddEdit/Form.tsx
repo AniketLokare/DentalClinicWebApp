@@ -4,18 +4,20 @@ import { FormInput } from 'src/components';
 import { format } from 'date-fns';
 import { patientGenderProps } from '../constants';
 import { getAuthInfo } from 'src/util/auth';
-import { Controller, useFormContext } from 'react-hook-form';
+import { Controller, useFormContext,useForm } from 'react-hook-form';
 
 const PatientForm: React.FC = (): JSX.Element => {
   const {
     control,
     formState: { errors },
     watch,
+    
     setValue, // Used to programmatically set form field values
   } = useFormContext<CreatePatientPayload>();
   
   const { username } = getAuthInfo(); // Extract username from auth info
   const patientGender = watch('patientGender');
+  
 
   // Set cashierName using useEffect
   useEffect(() => {
@@ -85,16 +87,17 @@ const PatientForm: React.FC = (): JSX.Element => {
           />
         </Grid>
         <Grid item xs={12} sm={6}>
-          <FormInput
-            type="date"
-            name="patientRegDate"
-            inputProps={{ min: format(new Date(), 'yyyy-MM-dd') }}
-            control={control}
-            label="Registration Date"
-            error={errors.patientRegDate?.message}
-            sx={{ marginTop: '27px' }}
-          />
-        </Grid>
+  <FormInput
+    type="date"
+    name="patientRegDate"
+    control={control}
+    label="Registration Date"
+    error={errors.patientRegDate?.message}
+    sx={{ marginTop: '27px' }}
+  />
+</Grid>
+
+
         <Grid item xs={12} sm={6}>
           <FormInput
             name="patientMobile1"
@@ -122,7 +125,7 @@ const PatientForm: React.FC = (): JSX.Element => {
             control={control}
             placeholder="Enter patient's medical history"
             error={errors.patientMedicalHistory?.message}
-            trim
+            
             multiline
             rows={6}
           />

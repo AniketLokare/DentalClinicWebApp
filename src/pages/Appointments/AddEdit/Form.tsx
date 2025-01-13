@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Stack from '@mui/material/Stack';
 import { FormInput } from 'src/components';
-import { useFormContext } from 'react-hook-form';
+import { getAuthInfo } from 'src/util/auth';
+import { Controller, useFormContext,useForm } from 'react-hook-form';
+
 import { format } from 'date-fns';
 import { Grid } from '@mui/material';
 
@@ -9,7 +11,20 @@ const AppointmentForm: React.FC = (): JSX.Element => {
   const {
     control,
     formState: { errors },
+    watch,
+    
+    setValue, 
   } = useFormContext<CreateAppointmentPayload>();
+
+
+  
+     const { username } = getAuthInfo(); 
+    // Set cashierName using useEffect
+    useEffect(() => {
+      if (username && typeof username === 'string') {
+        setValue('cashiername', username.trim()); // Ensure no quotes or spaces
+      }
+    }, [username, setValue]);
 
   return (
     <Stack spacing={4.5}>
@@ -72,7 +87,7 @@ const AppointmentForm: React.FC = (): JSX.Element => {
           <FormInput
             type="date"
             name="appointmentDate"
-            inputProps={{ min: format(new Date(), 'yyyy-MM-dd') }}
+            
             control={control}
             label="Appointment Date"
             error={errors.appointmentDate?.message}
@@ -104,14 +119,19 @@ const AppointmentForm: React.FC = (): JSX.Element => {
            
           />
         </Grid>
-        <Grid item xs={12} md={6}>
-          <FormInput
+        <Grid item xs={12} sm={6} sx={{ visibility: 'hidden' }}>
+          <Controller
             name="cashiername"
-            label="Cashier Name"
-            control={control}
-            placeholder="Enter cashier's name"
-            error={errors.cashiername?.message}
-            
+            defaultValue="" // Leave default value empty as it will be set in useEffect
+            render={({ field }) => (
+              <FormInput
+                {...field}
+                control={control}
+                label="Cashier Name"
+                placeholder="Enter cashier's name"
+                error={errors.cashiername?.message}
+              />
+            )}
           />
         </Grid>
       </Grid>

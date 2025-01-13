@@ -42,14 +42,14 @@ const ExternalProcedureForm: React.FC = (): JSX.Element => {
             label="External Doctor Name"
             control={control}
             error={errors.doctorName?.message}
-            trim
+            
           />
         </Grid>
         <Grid item xs={12} sm={6}>
           <FormInput
             type="date"
             name="procedureDate"
-            inputProps={{ min: format(new Date(), 'yyyy-MM-dd') }}
+            
             control={control}
             label="Registration Date"
             error={errors.procedureDate?.message}
@@ -104,7 +104,7 @@ const ExternalProcedureForm: React.FC = (): JSX.Element => {
             disabled
           />
         </Grid>
-        <Grid item xs={12} sm={6} >
+        <Grid item xs={12} sm={6} sx={{ visibility: 'hidden' }} >
           <Controller
             name="cashierName"
             defaultValue=""
