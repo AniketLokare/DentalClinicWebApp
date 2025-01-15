@@ -92,7 +92,6 @@ export const globalOptions = [
     tooltip: 'Patients', 
   },
   {
-<<<<<<< HEAD
     title: 'INVENTORY',
     icon: <FcFilingCabinet size="24px" />,
     options: [
@@ -117,16 +116,6 @@ export const globalOptions = [
       
     ],
     tooltip: 'Inventory', 
-=======
-    title: 'Appointment',
-    icon: <FiClipboard size="24px" />,
-    route: APPOINTMENTS,
-  },
-  {
-    title: 'Medicines',
-    icon: <AiOutlineMedicineBox size="24px" />,
-    route: MEDICINES,
->>>>>>> 413790b57ad5a776c1e262aac756565df36740a9
   },
   {
     title: 'EXT PROCEDURES',

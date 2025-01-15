@@ -18,7 +18,7 @@ import {
   NEW_USER_PATH,
   EDIT_USER_PATH,
   NEW_MEDICINE_PATH,
-<<<<<<< HEAD
+
   EDIT_MEDICINE_PATH,
   SUPPLIERS,
   NEW_SUPPLIER_PATH,
@@ -40,7 +40,7 @@ import {
   SALES_TRANSACTIONS,
   NEW_SALES_TRANSACTIONS_PATH,
   EDIT_SALES_TRANSACTIONS_PATH,
-  APPOINTMENTS,
+
   NEW_PROCEDURE_PATH,
   NEW_APPOINTMENT_PATH,
   APPOINTMENT_BYDATE_PATH,
@@ -53,12 +53,8 @@ import {
 
   CLINIC_PROCEDURE_REPORT,
   EXTERNAL_PROCEDURE_REPORT,
-=======
-  VIEW_MEDICINE_PATH,
-  EDIT_MEDICINE_PATH,
-  EDIT_APPOINTMENT_PATH,
-  VIEW_APPOINTMENT_PATH,
->>>>>>> 413790b57ad5a776c1e262aac756565df36740a9
+
+ 
 } from './constants/paths';
 import Login from './pages/Login';
 import ProtectedRoute from './pages/Login/ProtectedRoute';
@@ -73,7 +69,7 @@ import AddEditProcedure from './pages/Procedures/AddEdit';
 import Users from './pages/Users';
 import AddEditUser from './pages/Users/AddEdit';
 import AddEditMedicine from './pages/Medicines/AddEdit';
-<<<<<<< HEAD
+
 import Suppliers from './pages/Inventory/Suppliers';
 import AddEditSupplier from './pages/Inventory/Suppliers/AddEdit';
 import PurchaseOrders from './pages/Inventory/PurchaseOrders';
@@ -100,13 +96,11 @@ import ClinicProceduresReport from './pages/Reports/ClinicProcedures';
 import ExternalProceduresReport from './pages/Reports/ExternalProcedures';
 
 
-=======
+
 import ViewMedicine from './pages/Medicines/ViewMedicine';
 import Appointment from './pages/Appointment';
 import viewAppointment from './pages/Appointment/ViewAppointment';
-import AddEditAppointment from './pages/Appointment/AddEdit';
-import ViewAppointment from './pages/Appointment/ViewAppointment';
->>>>>>> 413790b57ad5a776c1e262aac756565df36740a9
+
 
 const AppRoutes: React.FC = () => (
   <Routes>
@@ -132,7 +126,6 @@ const AppRoutes: React.FC = () => (
       <Route path={EDIT_PROCEDURE_PATH} element={<AddEditProcedure />} />
       <Route path={VIEW_PROCEDURE_PATH} element={<ViewProcedure />} />
 
-<<<<<<< HEAD
       <Route path={INVENTORY} element={<Inventory />} />
 
       <Route path={MEDICINES} element={<Medicines />} />
@@ -162,27 +155,13 @@ const AppRoutes: React.FC = () => (
       <Route path={NEW_EXTERNAL_PROCEDURE_PATH} element={<AddEditExternalProcedure />} />
       <Route path={EDIT_EXTERNAL_PROCEDURE_PATH} element={<AddEditExternalProcedure />} />
       <Route path={VIEW_EXTERNAL_PROCEDURE_PATH} element={<ViewExternalProcedure />} />
-=======
-      <Route path={APPOINTMENTS} element={<Appointment/>} />
-      <Route path={EDIT_APPOINTMENT_PATH} element={<AddEditAppointment />} />
-      <Route path={VIEW_APPOINTMENT_PATH} element={<ViewAppointment/>} />
->>>>>>> 413790b57ad5a776c1e262aac756565df36740a9
 
       <Route path={USERS} element={<Users />} />
       <Route path={NEW_USER_PATH} element={<AddEditUser />} />
       <Route path={EDIT_USER_PATH} element={<AddEditUser />} />
 
-<<<<<<< HEAD
       <Route path={CLINIC_PROCEDURE_REPORT} element={<ClinicProceduresReport />} />
       <Route path={EXTERNAL_PROCEDURE_REPORT} element={<ExternalProceduresReport />} />
-=======
-      <Route path={MEDICINES} element={<Medicines />} />
-      <Route path={NEW_MEDICINE_PATH} element={<AddEditMedicine />} />
-      <Route path={EDIT_MEDICINE_PATH} element={<AddEditMedicine />} />
-      <Route path={VIEW_MEDICINE_PATH} element={<ViewMedicine />} />
-
-      <Route path={INVENTORY} element={<Inventory />} />
->>>>>>> 413790b57ad5a776c1e262aac756565df36740a9
     </Route>
   </Routes>
 );
