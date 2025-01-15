@@ -112,52 +112,52 @@ export function Table<TData, TValue = unknown>({
     () => [
       ...(enableRowSelection
         ? [
-            colHelper.display({
-              id: 'selection',
-              header: ({ table }) =>
-                enableAllRowSelection && selectionType === 'checkbox' ? (
-                  <Checkbox
-                    sx={{
-                      '&.Mui-checked': {
-                        color: SKY_BLUE,
-                      },
-                      '&.MuiCheckbox-indeterminate': {
-                        color: SKY_BLUE,
-                      },
-                      padding: '8px',
-                    }}
-                    checked={table.getIsAllRowsSelected()}
-                    indeterminate={table.getIsSomeRowsSelected()}
-                    onChange={table.getToggleAllRowsSelectedHandler()}
-                    data-testid="select-all-checkbox"
-                  />
-                ) : null,
-              cell: ({ row }) =>
-                selectionType === 'checkbox' ? (
-                  <Checkbox
-                    sx={{
-                      '&.Mui-checked': {
-                        color: SKY_BLUE,
-                      },
-                      '&.MuiCheckbox-indeterminate': {
-                        color: SKY_BLUE,
-                      },
-                      padding: '8px',
-                    }}
-                    checked={row.getIsSelected()}
-                    disabled={!row.getCanSelect()}
-                    indeterminate={row.getIsSomeSelected()}
-                    onChange={row.getToggleSelectedHandler()}
-                  />
-                ) : (
-                  <Radio
-                    checked={row.getIsSelected()}
-                    disabled={!row.getCanSelect()}
-                    onChange={row.getToggleSelectedHandler()}
-                  />
-                ),
-            }),
-          ]
+          colHelper.display({
+            id: 'selection',
+            header: ({ table }) =>
+              enableAllRowSelection && selectionType === 'checkbox' ? (
+                <Checkbox
+                  sx={{
+                    '&.Mui-checked': {
+                      color: SKY_BLUE,
+                    },
+                    '&.MuiCheckbox-indeterminate': {
+                      color: SKY_BLUE,
+                    },
+                    padding: '8px',
+                  }}
+                  checked={table.getIsAllRowsSelected()}
+                  indeterminate={table.getIsSomeRowsSelected()}
+                  onChange={table.getToggleAllRowsSelectedHandler()}
+                  data-testid="select-all-checkbox"
+                />
+              ) : null,
+            cell: ({ row }) =>
+              selectionType === 'checkbox' ? (
+                <Checkbox
+                  sx={{
+                    '&.Mui-checked': {
+                      color: SKY_BLUE,
+                    },
+                    '&.MuiCheckbox-indeterminate': {
+                      color: SKY_BLUE,
+                    },
+                    padding: '8px',
+                  }}
+                  checked={row.getIsSelected()}
+                  disabled={!row.getCanSelect()}
+                  indeterminate={row.getIsSomeSelected()}
+                  onChange={row.getToggleSelectedHandler()}
+                />
+              ) : (
+                <Radio
+                  checked={row.getIsSelected()}
+                  disabled={!row.getCanSelect()}
+                  onChange={row.getToggleSelectedHandler()}
+                />
+              ),
+          }),
+        ]
         : []),
       ...tableProps.columns,
     ],
@@ -208,7 +208,8 @@ export function Table<TData, TValue = unknown>({
     <>
       <TableContainer
         sx={{
-          overflow: 'hidden',
+          overflowX: 'auto', // Enable horizontal scrolling
+          overflowY: 'visible', // Ensure no vertical scrolling
           border: 'none',
           borderRadius: '7px',
           boxShadow: 'none',
@@ -271,8 +272,8 @@ export function Table<TData, TValue = unknown>({
                     }}
                   >
                     {(cell.column.columnDef as ExtendedColumnDef<TData, TValue>).mask
-                    ? '********'
-                    : flexRender(cell.column.columnDef.cell, cell.getContext())}
+                      ? '********'
+                      : flexRender(cell.column.columnDef.cell, cell.getContext())}
                   </TableCell>
                 ))}
               </TableRow>
