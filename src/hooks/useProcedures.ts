@@ -114,16 +114,16 @@ export const useDeleteProcedure = (opts?: MutationConfig<null, string>) => {
 export const useGetFilteredProcedures = <Override = Procedure[]>(opts: UseQueryOption<Procedure[], Override> & {
   fromDate: string;
   toDate: string;
-  session: string;
+  firstName: string;
 }) => {
-  const { key, useQueryConfig, apiConfig, fromDate, toDate, session } = opts;
-  const queryKey = (key || ['filtered-procedures', fromDate, toDate, session]) as QueryKey;
+  const { key, useQueryConfig, apiConfig, fromDate, toDate, firstName } = opts;
+  const queryKey = (key || ['filtered-procedures', fromDate, toDate, firstName]) as QueryKey;
 
   const { data, ...rest } = useQuery<Procedure[]>({
       queryKey,
       queryFn: ({ signal }) =>
-          getFilteredProcedures(fromDate, toDate, session, { ...apiConfig, signal }),
-      enabled: !!fromDate && !!toDate && !!session,  // Ensures query is only enabled if all filters are set
+          getFilteredProcedures(fromDate, toDate, firstName, { ...apiConfig, signal }),
+      enabled: !!fromDate && !!toDate && !!firstName,  // Ensures query is only enabled if all filters are set
       ...useQueryConfig,
   });
 
