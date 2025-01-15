@@ -150,7 +150,12 @@ const AddEditPatient: React.FC = (): JSX.Element => {
               <Box sx={{ marginTop: '60px' }}>
                 <Button
                   variant="outlined"
-                  sx={{ width: '170px', borderWidth: '2px' }}
+                   sx={{
+                    width: '170px',
+                    borderWidth: '2px',
+                    marginLeft: '20px',
+                    marginBottom: '20px',
+                  }}
                   onClick={() => navigate(-1)}
                 >
                   Cancel
@@ -159,7 +164,11 @@ const AddEditPatient: React.FC = (): JSX.Element => {
                   <Button
                     type="submit"
                     variant="contained"
-                    sx={{ width: 'fit-content', marginLeft: '20px' }}
+                    sx={{
+                    width: '170px',
+                    marginLeft: '20px',
+                    marginBottom: '20px',
+                  }}
                   >
                     Create Patient
                   </Button>

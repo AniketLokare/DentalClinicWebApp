@@ -4,6 +4,7 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
+    "start" : "set PORT=5173 react-scripts start",
     "postinstall": "husky",
     "dev": "vite",
     "build": "tsc -b && vite build",
