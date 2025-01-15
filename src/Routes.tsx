@@ -10,6 +10,7 @@ import {
   NEW_PATIENT_PATH,
   PATIENTS,
   PROCEDURES,
+  APPOINTMENTS,
   EDIT_PROCEDURE_PATH,
   VIEW_PATIENT_PATH,
   VIEW_PROCEDURE_PATH,
@@ -17,6 +18,7 @@ import {
   NEW_USER_PATH,
   EDIT_USER_PATH,
   NEW_MEDICINE_PATH,
+
   EDIT_MEDICINE_PATH,
   SUPPLIERS,
   NEW_SUPPLIER_PATH,
@@ -38,7 +40,7 @@ import {
   SALES_TRANSACTIONS,
   NEW_SALES_TRANSACTIONS_PATH,
   EDIT_SALES_TRANSACTIONS_PATH,
-  APPOINTMENTS,
+
   NEW_PROCEDURE_PATH,
   NEW_APPOINTMENT_PATH,
   APPOINTMENT_BYDATE_PATH,
@@ -51,6 +53,8 @@ import {
 
   CLINIC_PROCEDURE_REPORT,
   EXTERNAL_PROCEDURE_REPORT,
+
+ 
 } from './constants/paths';
 import Login from './pages/Login';
 import ProtectedRoute from './pages/Login/ProtectedRoute';
@@ -65,6 +69,7 @@ import AddEditProcedure from './pages/Procedures/AddEdit';
 import Users from './pages/Users';
 import AddEditUser from './pages/Users/AddEdit';
 import AddEditMedicine from './pages/Medicines/AddEdit';
+
 import Suppliers from './pages/Inventory/Suppliers';
 import AddEditSupplier from './pages/Inventory/Suppliers/AddEdit';
 import PurchaseOrders from './pages/Inventory/PurchaseOrders';
@@ -90,6 +95,11 @@ import Unauthorized from './pages/Unauthorized';
 import ClinicProceduresReport from './pages/Reports/ClinicProcedures';
 import ExternalProceduresReport from './pages/Reports/ExternalProcedures';
 
+
+
+import ViewMedicine from './pages/Medicines/ViewMedicine';
+import Appointment from './pages/Appointment';
+import viewAppointment from './pages/Appointment/ViewAppointment';
 
 
 const AppRoutes: React.FC = () => (

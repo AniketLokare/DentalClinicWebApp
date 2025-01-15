@@ -3,7 +3,7 @@ import { MEDICINES } from "src/constants/paths";
 import { object as yupObject, ObjectSchema, number, string } from "yup";
 
 export const listMedicinesBreadcrumbLinks = [
-  {
+  { 
     label: 'Medicines',
     href: MEDICINES,
   },

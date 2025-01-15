@@ -27,10 +27,14 @@ export const getNewProcedureRoute = (id: string) => `${NEW_PROCEDURE_PATH}/${id}
 export const getEditProcedureRoute = (id: string) => `${PROCEDURES}/${id}/edit`;
 export const getViewProcedurePath = (id: string) => `${PROCEDURES}/${id}`;
 
+
+
 export const USERS = '/users';
 export const NEW_USER_PATH = '/users/new';
 export const EDIT_USER_PATH = '/users/:id/edit';
 export const getEditUserRoute = (id: string) => `${USERS}/${id}/edit`;
+
+
 
 export const INVENTORY = '/inventory';
 
