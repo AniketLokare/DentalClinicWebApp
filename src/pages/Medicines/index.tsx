@@ -48,7 +48,8 @@ const Medicines: React.FC = (): React.ReactElement => {
     apiConfig: {
       params: {
         _page: pageNumber,
-        firstName: debouncedSearchQuery, // Adjust this key to match your API parameter
+        firstName: debouncedSearchQuery,  // Adjust this key to match your API parameter
+        ...filters,
       },
     },
   });
@@ -139,7 +140,7 @@ const Medicines: React.FC = (): React.ReactElement => {
         >
           {({ showFilters }) => (
             <Box>
-              <PageLoader
+              <PageLoader 
                 isLoading={isFetching}
                 isEmpty={(noData && !isError) || (noData && showFilters)}
                 emptyMessage="No medicines found"
