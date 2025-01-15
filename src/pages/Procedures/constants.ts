@@ -132,11 +132,15 @@ export const procedureDefaultFormValues: CreateProcedurePayload = {
   cashPayment: 0,
   clinicName: '',
   discount: 0,
+<<<<<<< HEAD
   finalAmount: 0,
   procedureDate: '',
   onlinePayment: 0,
   procedureDetail: '',
   procedureType: '',
+=======
+  procedureTime: 0,
+>>>>>>> 413790b57ad5a776c1e262aac756565df36740a9
   totalAmount: 0,
   cashierName: ''
 };

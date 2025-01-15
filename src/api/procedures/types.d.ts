@@ -15,4 +15,8 @@ interface Procedure {
   cashierName: string;
 }
 
+<<<<<<< HEAD
 type CreateProcedurePayload = Omit<procedure, 'procedureId' | 'patientId' | 'timestamp'>;
+=======
+type CreateProcedurePayload = Omit<procedure, 'proceduretId' | 'procedureTime' | 'id'>;
+>>>>>>> 413790b57ad5a776c1e262aac756565df36740a9

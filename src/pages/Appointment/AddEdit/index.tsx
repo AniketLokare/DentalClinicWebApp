@@ -13,85 +13,54 @@ import {
 import Box from '@mui/material/Box';
 import { useNavigate, useParams } from 'react-router-dom';
 import { FiSave } from 'react-icons/fi';
-<<<<<<< HEAD
-import { MEDICINES } from 'src/constants/paths';
+import AppointmentForm from './Form';
+import {
+  getAddEditBreadCrumbLinks,
+  appointmentDefaultFormValues,
+  appointmentFormValidationSchema,
+} from '../constants';
+import {
+  useCreateAppointment,
+  useGetAppointmentDetail,
+  usePatchAppointment
+} from 'src/hooks/useAppointment';
+import { APPOINTMENTS} from 'src/constants/paths';
 import useSnackbarAlert from 'src/hooks/useSnackbarAlert';
-import { getAddEditBreadCrumbLinks, medicineDefaultFormValues, medicineFormValidationSchema } from '../constants';
-import { useCreateMedicine, useGetMedicineDetail, usePatchMedicine } from 'src/hooks/useMedicines';
-import MedicineForm from './Form';
 
-const AddEditMedicine: React.FC = (): JSX.Element => {
+const AddEditAppointment: React.FC = (): JSX.Element => {
   const navigate = useNavigate();
   const { id = '' } = useParams();
-=======
-import MedicineForm from './Form';
-import {
-  getAddEditMedicinesBreadcrumbLinks,
-  listMedicinesBreadcrumbLinks,
-  viewMedicineBreadCrumbLinks,
-  MedicineDefaultFormValues,
-  medicinesTableColumns,
-  medicineFormValidationSchema,
-} from '../constants';
-import { MEDICINES } from 'src/constants/paths';
-import useSnackbarAlert from 'src/hooks/useSnackbarAlert';
-import {
-  useCreateMedicine,
-  useGetMedicineDetail,
-  usePatchMedicine,
-} from 'src/hooks/useMedicines';
-
-const AddEditMedicine: React.FC = (): JSX.Element => {
-  const navigate = useNavigate();
-  const { id } = useParams<{ id: string }>();
->>>>>>> 413790b57ad5a776c1e262aac756565df36740a9
   const isEdit = !!id;
 
   const { snackbarAlertState, setSnackbarAlertState, onDismiss } =
     useSnackbarAlert();
 
-  const methods = useForm<CreateMedicinePayload>({
-<<<<<<< HEAD
-    defaultValues: medicineDefaultFormValues,
-=======
-    defaultValues: MedicineDefaultFormValues,
->>>>>>> 413790b57ad5a776c1e262aac756565df36740a9
-    resolver: yupResolver<CreateMedicinePayload>(medicineFormValidationSchema),
+  const methods = useForm<CreateAppointmentPayload>({
+    defaultValues: appointmentDefaultFormValues,
+    resolver: yupResolver<CreateAppointmentPayload>(appointmentFormValidationSchema),
     mode: 'onBlur',
   });
 
-<<<<<<< HEAD
-  const { isFetching, data } = useGetMedicineDetail({
+  const { isFetching, data } = useGetAppointmentDetail({
     id,
   });
-=======
-  const { isFetching, data } = useGetMedicineDetail({ id });
->>>>>>> 413790b57ad5a776c1e262aac756565df36740a9
 
   useEffect(() => {
     if (!isFetching && data) {
       reset(data);
     }
-<<<<<<< HEAD
   }, [data, isFetching]);
-=======
-  }, [data, isFetching, methods]);
->>>>>>> 413790b57ad5a776c1e262aac756565df36740a9
 
-  const { mutate: patchMedicine, isPending: isPatchLoading } = usePatchMedicine(
+  const { mutate: patchAppointment, isPending: isPatchLoading } = usePatchAppointment(
     id,
     {
       onSuccess: () => {
-        navigate(MEDICINES, {
+        navigate(APPOINTMENTS, {
           state: {
             alert: {
               severity: 'success',
-              title: 'Medicine Updated.',
-<<<<<<< HEAD
-              message: `Medicine updated successfully.`,
-=======
-              message: 'Medicine updated successfully.',
->>>>>>> 413790b57ad5a776c1e262aac756565df36740a9
+              title: 'Appointment Updated.',
+              message: `Appointment updated successfully.`,
             },
           },
         });
@@ -106,19 +75,15 @@ const AddEditMedicine: React.FC = (): JSX.Element => {
     },
   );
 
-  const { mutate: createMedicine, isPending: isCreatingMedicine } =
-    useCreateMedicine({
+  const { mutate: createAppointment, isPending: isCreatingAppointment } =
+    useCreateAppointment({
       onSuccess: () => {
-        navigate(MEDICINES, {
+        navigate(APPOINTMENTS, {
           state: {
             alert: {
               severity: 'success',
-              title: 'Medicine Created.',
-<<<<<<< HEAD
-              message: `Medicine created successfully.`,
-=======
-              message: 'Medicine created successfully.',
->>>>>>> 413790b57ad5a776c1e262aac756565df36740a9
+              title: 'Appointment Created.',
+              message: `Appointment created successfully.`,
             },
           },
         });
@@ -138,15 +103,15 @@ const AddEditMedicine: React.FC = (): JSX.Element => {
     reset,
   } = methods;
 
-  const onSubmit = (data: CreateMedicinePayload) => {
+  const onSubmit = (data: CreateAppointmentPayload) => {
     if (isEdit) {
-      patchMedicine(data);
+      patchAppointment(data);
     } else {
-      createMedicine(data);
+      createAppointment(data);
     }
   };
 
-  const isMutating = isCreatingMedicine || isPatchLoading;
+  const isMutating = isCreatingAppointment || isPatchLoading;
 
   return (
     <ErrorBoundary fallbackComponent={FormError}>
@@ -161,12 +126,8 @@ const AddEditMedicine: React.FC = (): JSX.Element => {
       <FormProvider {...methods}>
         <Box component="form" onSubmit={handleSubmit(onSubmit)}>
           <SubPanel
-            pageTitle={isEdit ? 'Edit Medicine' : 'New Medicine'}
-<<<<<<< HEAD
+            pageTitle={isEdit ? 'Edit Appointment' : 'New Appointment'}
             breadcrumbLinks={getAddEditBreadCrumbLinks(isEdit)}
-=======
-            breadcrumbLinks={getAddEditMedicinesBreadcrumbLinks(isEdit)}
->>>>>>> 413790b57ad5a776c1e262aac756565df36740a9
             secondaryButtonText={isEdit ? 'Save Changes' : undefined}
             secondaryButtonIcon={<FiSave />}
             disableSecondaryButton={!isDirty}
@@ -174,12 +135,8 @@ const AddEditMedicine: React.FC = (): JSX.Element => {
           />
 
           <Box sx={{ marginTop: '60px', maxWidth: '630px' }}>
-<<<<<<< HEAD
-            <PageLoader Components={{ Loading: 'form' }}>
-=======
             <PageLoader isLoading={isFetching} Components={{ Loading: 'form' }}>
->>>>>>> 413790b57ad5a776c1e262aac756565df36740a9
-              <MedicineForm />
+              <AppointmentForm />
 
               <Box sx={{ marginTop: '60px' }}>
                 <Button
@@ -195,7 +152,7 @@ const AddEditMedicine: React.FC = (): JSX.Element => {
                     variant="contained"
                     sx={{ width: 'fit-content', marginLeft: '20px' }}
                   >
-                    Create Medicine
+                    Create Appointment
                   </Button>
                 )}
               </Box>
@@ -207,4 +164,4 @@ const AddEditMedicine: React.FC = (): JSX.Element => {
   );
 };
 
-export default AddEditMedicine;
+export default AddEditAppointment;
