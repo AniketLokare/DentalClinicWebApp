@@ -6,8 +6,8 @@ interface Patient {
   patientAge: number;
   patientGender: string;
   patientRegDate: string;
-  patientMobile1: number;
-  patientMobile2?: number;
+  patientMobile1: string;
+  patientMobile2?: string;
   patientMedicalHistory?: string;
   cashierName: string;
   patientReports?: string;

@@ -56,7 +56,7 @@ const AppointmentBasicInfo: React.FC<AppointmentBasicInfoProps> = ({
           />
           <InfoField
             label="Patient Mobile"
-            value={`${appointmentDetails?.patientmobile1}`}
+            value={String(appointmentDetails?.patientmobile1)}
             flexBasis="50%"
           />
         </Box>
