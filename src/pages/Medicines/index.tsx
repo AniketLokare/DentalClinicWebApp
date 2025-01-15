@@ -26,6 +26,7 @@ import { useNavigate } from 'react-router-dom';
 import { Icon } from '@mui/material';
 import { FaTablets } from 'react-icons/fa';
 
+
 const Medicines: React.FC = (): React.ReactElement => {
   const navigate = useNavigate();
   const [filters, setFilters] = useState<FiltersState>();
@@ -40,6 +41,7 @@ const Medicines: React.FC = (): React.ReactElement => {
       params: {
         _page: pageNumber,
         medicineName: debouncedSearchQuery,
+        ...filters,
       },
     },
   });
