@@ -282,7 +282,7 @@ export const FormInput = ({
   label={label}
   placeholder={placeholder}
   InputLabelProps={{
-    shrink: type === 'date' ? true : undefined, // Ensure label shrinks for date inputs
+    shrink: type === 'date' || type === 'time' ? true : undefined, // Ensure label shrinks for date inputs
     sx: { color: FADED_BLACK },
   }}
   type={type}

@@ -11,7 +11,7 @@ import axiosClient from 'src/util/axios';
  * - Support searching
  * - patientId and timestamp should be auto-generated
  * - Support PATCH request for updating patient
- * - File upload for patientReports
+ * - File upload for patientReports 
  * - API validations for CreatePatientPayload
  * - Send newly created patient object in create/edit response
  */

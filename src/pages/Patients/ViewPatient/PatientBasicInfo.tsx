@@ -128,7 +128,7 @@ const PatientBasicInfo: React.FC<PatientBasicInfoProps> = ({
                 />
                 <InfoField
                   label="Alternate Contact Number"
-                  value={String(patientDetails?.patientMobile2?.toString())}
+                  value={String(patientDetails?.patientMobile2)}
                   flexBasis="50%"
                 />
               </Box>

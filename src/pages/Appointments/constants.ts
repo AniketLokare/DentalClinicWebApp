@@ -73,7 +73,7 @@ export const appointmentDefaultFormValues: CreateAppointmentPayload = {
   
   appointmentDate: '',
   startTime: '',
-  patientmobile1: 0,
+  patientmobile1: '',
   cashiername: '',
 };
 
@@ -106,14 +106,12 @@ export const appointmentDefaultFormValidateSchema: ObjectSchema<CreateAppointmen
 
     startTime: string()
       .optional(),
-    patientmobile1: number()
-      .required('Patient Mobile Number is required')
-      .positive()
-      .integer()
-      .test('len', 'Patient Mobile Number must be exactly 10 digits', val => val?.toString().length === 10),
+      
+    patientmobile1: string()
+      .optional(),
+      
 
     cashiername: string()
       .optional()
-      .max(50, 'Cashier name cannot exceed 50 characters')
-      .matches(/^[A-Za-z\s]*$/, 'Cashier name can only contain alphabets and spaces'),
+      .max(50, 'Cashier name cannot exceed 50 characters'),
   });

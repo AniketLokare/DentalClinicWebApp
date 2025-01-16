@@ -58,36 +58,56 @@ const ProcedureCountCard: React.FC = () => {
   }, [response, isLoading, isError]);
 
   return (
-    <Card sx={{ borderRadius: 3 }}>
-      <CardContent>
-        <Stack direction="row" alignItems="center" spacing={2}>
-          <Avatar sx={{ bgcolor: SUCCESS_GREEN, height: 56, width: 56 }}>
-            <MedicalServicesOutlinedIcon fontSize="large" />
-          </Avatar>
-          <Box>
-            <Typography variant="subtitle2" color="text.secondary">
-              Total Procedures
-            </Typography>
-            <Typography variant="h6" fontWeight="bold">
-              {total}
-            </Typography>
-          </Box>
-        </Stack>
-        <Stack sx={{ alignItems: 'center' }} direction="row" spacing={2} mt={2}>
-          {isTrendingUp ? (
-            <TrendingUpIcon color="success" />
-          ) : (
-            <TrendingDownIcon color="error" />
-          )}
-          <Typography color={isTrendingUp ? 'success.main' : 'error'} variant="body2">
-            {percentage}
-          </Typography>
-          <Typography color="text.secondary" variant="caption">
-            Since last month
-          </Typography>
-        </Stack>
-      </CardContent>
-    </Card>
+    <Card
+  sx={{
+    borderRadius: 3,
+    padding: { xs: 1, sm: 2 },
+  }}
+>
+  <CardContent>
+    <Stack direction="row" alignItems="center" spacing={2}>
+      <Avatar
+        sx={{
+          bgcolor: SUCCESS_GREEN,
+          height: { xs: 48, sm: 56 },
+          width: { xs: 48, sm: 56 },
+        }}
+      >
+        <MedicalServicesOutlinedIcon fontSize="large" />
+      </Avatar>
+      <Box>
+        <Typography variant="subtitle2" color="text.secondary">
+          Total Procedures
+        </Typography>
+        <Typography
+          variant="h6"
+          fontWeight="bold"
+          sx={{ fontSize: { xs: '1rem', sm: '1.25rem' } }}
+        >
+          {total}
+        </Typography>
+      </Box>
+    </Stack>
+    <Stack sx={{ alignItems: 'center' }} direction="row" spacing={2} mt={2}>
+      {isTrendingUp ? (
+        <TrendingUpIcon color="success" />
+      ) : (
+        <TrendingDownIcon color="error" />
+      )}
+      <Typography
+        color={isTrendingUp ? 'success.main' : 'error'}
+        variant="body2"
+        sx={{ fontSize: { xs: '0.8rem', sm: '1rem' } }}
+      >
+        {percentage}
+      </Typography>
+      <Typography color="text.secondary" variant="caption">
+        Since last month
+      </Typography>
+    </Stack>
+  </CardContent>
+</Card>
+
   );
 };
 

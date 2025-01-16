@@ -7,7 +7,7 @@ interface Appointments {
   treatment: string,
   appointmentDate?: string,
   startTime?: string,
-  patientmobile1: number,
+  patientmobile1?: string,
   cashiername?: string,
   timestamp?: Date
 }

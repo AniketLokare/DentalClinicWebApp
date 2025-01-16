@@ -14,13 +14,13 @@ import {
 } from 'src/components';
 import { listPatientsBreadcrumbLinks, patientsTableColumns } from './constants';
 import { useNavigate } from 'react-router-dom';
-import { NEW_PROCEDURE_PATH } from 'src/constants/paths';
-
 import {
   getEditPatientRoute,
   getNewProcedureRoute, 
   getViewPatientPath,
   NEW_PATIENT_PATH,
+  EDIT_PATIENT_PATH,
+  NEW_PROCEDURE_PATH,
 } from 'src/constants/paths';
 import { useDeletePatient, useGetPatientList } from 'src/hooks/usePatients';
 import { usePagination } from 'src/hooks/usePagination';
@@ -93,7 +93,13 @@ const Patients: React.FC = (): JSX.Element => {
         },
       },
       ...patientsTableColumns,
-      
+      {
+        header: 'Registration Date',
+        accessorKey: 'patientRegDate',
+        cell: ({ getValue }) => (
+          <Box className="text-slate-gray">{formatDate(getValue())}</Box>
+        ),
+      },
       {
         id: 'actions',
         cell: ({ row }) => {
@@ -102,12 +108,12 @@ const Patients: React.FC = (): JSX.Element => {
           return (
             <Actions
               onAddClick={ ( ) => {
-                navigate(NEW_PROCEDURE_PATH, { state: patientValues.patientId  })
-                
+                navigate(NEW_PROCEDURE_PATH, { state: patientValues.patientId.toString()  });
               }}
               onEditClick={() => {
                 navigate(getEditPatientRoute(patientValues.patientId.toString()));
               }}
+              
               onDeleteClick={() => {
                 onShowDeleteConfirmationModal(
                   patientValues.patientId.toString(),

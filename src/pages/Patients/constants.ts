@@ -53,11 +53,6 @@ export const patientsTableColumns: ColumnDef<Patient, string>[] = [
     header: 'Contact Number',
     accessorKey: 'patientMobile1',
   },
-  {
-    header: 'Registration Date',
-    accessorKey: 'patientRegDate',
-  },
-  
 ];
 
 export const patientDefaultFormValues: CreatePatientPayload = {
@@ -67,8 +62,8 @@ export const patientDefaultFormValues: CreatePatientPayload = {
   patientAge: 0,
   patientGender: 'male',
   patientRegDate: '',
-  patientMobile1: 0,
-  patientMobile2: 0,
+  patientMobile1: '',
+  patientMobile2: '',
   patientMedicalHistory: '',
   cashierName: '',
   patientReports: '',
@@ -125,13 +120,10 @@ export const patientFormValidationSchema: ObjectSchema<CreatePatientPayload> =
     
     patientGender: requiredField,
 
-    patientMobile1: number()
-      .required('Patient Mobile Number is required')
-      .positive()
-      .integer()
-      .test('len', 'Patient Mobile Number must be exactly 10 digits', val => val?.toString().length === 10),
-
-    patientMobile2: number()
+    patientMobile1: string()
+      .required('Patient Mobile Number is required'),
+      
+    patientMobile2: string()
       .optional(),
     
     cashierName: string()

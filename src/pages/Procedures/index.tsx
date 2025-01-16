@@ -134,7 +134,7 @@ const Procedures: React.FC = (): JSX.Element => {
                   onPageChange={changePageNumber}
                   pageNumber={pageNumber}
                 />
-              </PageLoader>
+              </PageLoader> 
             </Box>
           )}
         </TableContainer>
