@@ -13,6 +13,7 @@ interface Procedure {
   totalAmount: number;
   timestamp: Date;
   cashierName: string;
+  patientName : string
 }
 
 type CreateProcedurePayload = Omit<procedure, 'procedureId' | 'patientId' | 'timestamp'>;
