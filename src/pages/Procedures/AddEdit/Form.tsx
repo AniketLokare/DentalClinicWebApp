@@ -17,13 +17,6 @@ const ProcedureForm: React.FC = (): JSX.Element => {
   return (
     <Stack spacing={4.5}>
       <FormInput
-        name="patientName"
-        label="Patient Name"
-        control={control}
-        error={errors.patientName?.message}
-        trim
-      />
-      <FormInput
         type="date"
         name="procedureDate"
         inputProps={{ min: format(new Date(), 'dd-mm-yyyy') }}
