@@ -1,6 +1,7 @@
 interface Procedure {
   patientId: number;
   procedureId: number;
+  patientName?: string;
   procedureCashierName: string;
   cashPayment: number;
   clinicName: string;

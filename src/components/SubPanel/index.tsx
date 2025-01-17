@@ -43,6 +43,8 @@ export const SubPanel: React.FC<HeaderPanelProps> = ({
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'space-between',
+        flexWrap: 'wrap', 
+        gap: 2,
       }}
     >
       <Box
@@ -51,6 +53,8 @@ export const SubPanel: React.FC<HeaderPanelProps> = ({
           flexDirection: 'column',
           justifyContent: 'center',
           alignItems: 'flex-start',
+          flex: 1,
+          minWidth: 0,
         }}
       >
         <PageTitle>{pageTitle}</PageTitle>

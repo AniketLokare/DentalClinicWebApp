@@ -62,7 +62,7 @@ const ExternalProcedureForm: React.FC = (): JSX.Element => {
             control={control}
             placeholder="Enter patient's procedure type"
             error={errors.procedureType?.message}
-            trim
+            
           />
         </Grid>
         <Grid item xs={12} sm={6}>

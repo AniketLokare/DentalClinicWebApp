@@ -142,21 +142,30 @@ const AddEditAppointment: React.FC = (): JSX.Element => {
               <AppointmentForm />
 
               <Box sx={{ marginTop: '60px' }}>
-                <Button
+              <Button
                   variant="outlined"
-                  sx={{ width: '170px', borderWidth: '2px' }}
+                  sx={{
+                    width: '170px',
+                    borderWidth: '2px',
+                    marginLeft: '20px',
+                    marginBottom: '20px',
+                  }}
                   onClick={() => navigate(-1)}
                 >
                   Cancel
                 </Button>
                 {!isEdit && (
                   <Button
-                    type="submit"
-                    variant="contained"
-                    sx={{ width: 'fit-content', marginLeft: '20px' }}
-                  >
-                    Create Appointment
-                  </Button>
+                  type="submit"
+                  variant="contained"
+                  sx={{
+                    width: '170px',
+                    marginLeft: '20px',
+                    marginBottom: '20px',
+                  }}
+                >
+                  SAVE
+                </Button>
                 )}
               </Box>
             </PageLoader>

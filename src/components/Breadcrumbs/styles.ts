@@ -6,6 +6,12 @@ export const breadcrumbsWrapper: SxProps = {
   fontSize: '16px',
   lineHeight: '24px',
   fontWeight: 400,
+  maxWidth: '100%',
+  overflow: 'hidden',
+  whiteSpace: 'nowrap',
+  textOverflow: 'ellipsis',
+  flex: 1, 
+  minWidth: 0,
 };
 
 export const breadcrumbsLinkItem: SxProps = {

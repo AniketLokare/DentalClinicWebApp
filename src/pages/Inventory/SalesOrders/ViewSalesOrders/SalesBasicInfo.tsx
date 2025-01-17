@@ -50,7 +50,7 @@ interface SalesBasicInfoProps {
       },
     });
   
-    const { mutate: deletePurchaseTransaction, isPending: isDeleteInProgress } =
+    const { mutate: deleteSalesTransaction, isPending: isDeleteInProgress } =
       useDeleteSalesTransaction({
         onSuccess: () => {
           setSnackbarAlertState({

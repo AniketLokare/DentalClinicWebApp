@@ -48,8 +48,8 @@ const ViewSalesOrders: React.FC = (): JSX.Element => {
           state: {
             alert: {
               severity: 'success',
-              title: 'Medicine  Deleted.',
-              message: `Medicine Transaction "${deleteConfirmationModalValues?.name}" was successfully deleted.`,
+              title: 'Bill  Deleted.',
+              message: `Bill Of "${deleteConfirmationModalValues?.name}" was successfully deleted.`,
             },
           },
         });

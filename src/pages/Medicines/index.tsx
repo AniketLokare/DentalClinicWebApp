@@ -39,7 +39,7 @@ const Medicines: React.FC = (): React.ReactElement => {
     apiConfig: {
       params: {
         _page: pageNumber,
-        medName: debouncedSearchQuery,
+        medicineName: debouncedSearchQuery,
       },
     },
   });

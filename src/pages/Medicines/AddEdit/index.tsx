@@ -132,20 +132,29 @@ const AddEditMedicine: React.FC = (): JSX.Element => {
 
               <Box sx={{ marginTop: '60px' }}>
                 <Button
-                  variant="outlined"
-                  sx={{ width: '170px', borderWidth: '2px' }}
-                  onClick={() => navigate(-1)}
-                >
-                  Cancel
-                </Button>
-                {!isEdit && (
-                  <Button
-                    type="submit"
-                    variant="contained"
-                    sx={{ width: 'fit-content', marginLeft: '20px' }}
-                  >
-                    Create Medicine
-                  </Button>
+                                  variant="outlined"
+                                  sx={{
+                                    width: '170px',
+                                    borderWidth: '2px',
+                                    marginLeft: '20px',
+                                    marginBottom: '20px',
+                                  }}
+                                  onClick={() => navigate(-1)}
+                                >
+                                  Cancel
+                                </Button>
+                                {!isEdit && (
+                                  <Button
+                                  type="submit"
+                                  variant="contained"
+                                  sx={{
+                                    width: '170px',
+                                    marginLeft: '20px',
+                                    marginBottom: '20px',
+                                  }}
+                                >
+                                  SAVE
+                                </Button>
                 )}
               </Box>
             </PageLoader>

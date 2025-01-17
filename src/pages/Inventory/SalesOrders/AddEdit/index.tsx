@@ -10,7 +10,7 @@ import {
   Snackbar,
   SubPanel,
   LoadingBackdrop,
-} from 'src/components'; 
+} from 'src/components';
 import Box from '@mui/material/Box';
 import { useNavigate, useParams } from 'react-router-dom';
 import { FiSave } from 'react-icons/fi';
@@ -25,7 +25,7 @@ import {
   useGetSaleOrderDetail,
   usePatchSaleOrder,
 } from 'src/hooks/useSalesOrder';
-import { SALES_ORDERS,getViewSalePath } from 'src/constants/paths';
+import { SALES_ORDERS, getViewSalePath } from 'src/constants/paths';
 import useSnackbarAlert from 'src/hooks/useSnackbarAlert';
 import SalesOrderForm from './Form';
 
@@ -37,7 +37,7 @@ const AddEditSales: React.FC = (): JSX.Element => {
   interface CreateSaleOrderResponse {
     billId: string; // Adjust the type as per your API response
   }
-  
+
 
   const { snackbarAlertState, setSnackbarAlertState, onDismiss } =
     useSnackbarAlert();
@@ -86,11 +86,11 @@ const AddEditSales: React.FC = (): JSX.Element => {
       },
     },
   );
-  
+
 
   const { mutate: createSaleOrder, isPending: isCreatingOrder } = useCreateSaleOrder({
     onSuccess: (createdData: SaleOrder) => {  // Explicitly type createdData
-      const { billId } = createdData || {}; 
+      const { billId } = createdData || {};
       if (billId) {
         navigate(getViewSalePath(billId.toString()), {
           state: {
@@ -117,8 +117,8 @@ const AddEditSales: React.FC = (): JSX.Element => {
       });
     },
   });
-  
-  
+
+
 
 
   const {
@@ -174,7 +174,12 @@ const AddEditSales: React.FC = (): JSX.Element => {
               <Box sx={{ marginTop: '60px' }}>
                 <Button
                   variant="outlined"
-                  sx={{ width: '170px', borderWidth: '2px' }}
+                  sx={{
+                    width: '170px',
+                    borderWidth: '2px',
+                    marginLeft: '20px',
+                    marginBottom: '20px',
+                  }}
                   onClick={() => navigate(-1)}
                 >
                   Cancel
@@ -183,9 +188,13 @@ const AddEditSales: React.FC = (): JSX.Element => {
                   <Button
                     type="submit"
                     variant="contained"
-                    sx={{ width: 'fit-content', marginLeft: '20px' }}
+                    sx={{
+                      width: '170px',
+                      marginLeft: '20px',
+                      marginBottom: '20px',
+                    }}
                   >
-                    Create Medical Bill
+                    SAVE
                   </Button>
                 )}
               </Box>

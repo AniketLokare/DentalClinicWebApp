@@ -22,7 +22,7 @@ import {
 import {
   useCreatePatient,
   useGetPatientDetail,
-  usePatchPatient, 
+  usePatchPatient,
 } from 'src/hooks/usePatients';
 import { PATIENTS } from 'src/constants/paths';
 import useSnackbarAlert from 'src/hooks/useSnackbarAlert';
@@ -45,7 +45,7 @@ const AddEditPatient: React.FC = (): JSX.Element => {
   const { isFetching, data } = useGetPatientDetail({
     id,
   });
-  
+
   useEffect(() => {
     if (data) {
       data.patientRegDate = formatRegDate(data.patientRegDate);
@@ -113,7 +113,7 @@ const AddEditPatient: React.FC = (): JSX.Element => {
 
   const onSubmit = (data: CreatePatientPayload) => {
     data.patientRegDate = formatRegDate(data.patientRegDate);
-    if (isEdit) {   
+    if (isEdit) {
       patchPatient(data);
     } else {
       createPatient(data);
@@ -150,7 +150,12 @@ const AddEditPatient: React.FC = (): JSX.Element => {
               <Box sx={{ marginTop: '60px' }}>
                 <Button
                   variant="outlined"
-                  sx={{ width: '170px', borderWidth: '2px' }}
+                  sx={{
+                    width: '170px',
+                    borderWidth: '2px',
+                    marginLeft: '20px',
+                    marginBottom: '20px',
+                  }}
                   onClick={() => navigate(-1)}
                 >
                   Cancel
@@ -159,12 +164,16 @@ const AddEditPatient: React.FC = (): JSX.Element => {
                   <Button
                     type="submit"
                     variant="contained"
-                    sx={{ width: 'fit-content', marginLeft: '20px' }}
+                    sx={{
+                      width: '170px',
+                      marginLeft: '20px',
+                      marginBottom: '20px',
+                    }}
                   >
-                    Create Patient
+                    SAVE
                   </Button>
                 )}
-                
+
               </Box>
             </PageLoader>
           </Box>

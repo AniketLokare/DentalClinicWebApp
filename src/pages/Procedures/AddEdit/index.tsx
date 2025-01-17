@@ -33,8 +33,8 @@ const AddEditProcedure: React.FC = (): JSX.Element => {
   const { id = '' } = useParams();
   const isEdit = !!id;
   const location = useLocation();
-  const patientId  = location.state;
-  
+  const patientId = location.state;
+
   const { snackbarAlertState, setSnackbarAlertState, onDismiss } =
     useSnackbarAlert();
 
@@ -44,7 +44,7 @@ const AddEditProcedure: React.FC = (): JSX.Element => {
     mode: 'onBlur',
   });
 
-  const { isFetching, response } = useGetProcedureDetail({ 
+  const { isFetching, response } = useGetProcedureDetail({
     id,
   });
 
@@ -80,7 +80,7 @@ const AddEditProcedure: React.FC = (): JSX.Element => {
   );
 
   const { mutate: createProcedure, isPending: isCreatingProcedure } =
-    useCreateProcedure(patientId, {  
+    useCreateProcedure(patientId, {
       onSuccess: () => {
         navigate(getViewPatientPath(patientId), {
           state: {
@@ -139,14 +139,19 @@ const AddEditProcedure: React.FC = (): JSX.Element => {
             secondaryButtonType="submit"
           />
 
-          <Box sx={{ marginTop: '60px'}}>
+          <Box sx={{ marginTop: '60px' }}>
             <PageLoader isLoading={isFetching} Components={{ Loading: 'form' }}>
               <ProcedureForm />
 
               <Box sx={{ marginTop: '60px' }}>
                 <Button
                   variant="outlined"
-                  sx={{ width: '170px', borderWidth: '2px' }}
+                  sx={{
+                    width: '170px',
+                    borderWidth: '2px',
+                    marginLeft: '20px',
+                    marginBottom: '20px',
+                  }}
                   onClick={() => navigate(-1)}
                 >
                   Cancel
@@ -155,9 +160,13 @@ const AddEditProcedure: React.FC = (): JSX.Element => {
                   <Button
                     type="submit"
                     variant="contained"
-                    sx={{ width: 'fit-content', marginLeft: '20px' }}
+                    sx={{
+                      width: '170px',
+                      marginLeft: '20px',
+                      marginBottom: '20px',
+                    }}
                   >
-                    Create Procedure
+                    SAVE
                   </Button>
                 )}
               </Box>

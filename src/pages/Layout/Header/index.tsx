@@ -29,12 +29,7 @@ const Header: React.FC = () => {
           Logout();
         },
       },
-      {
-        label: 'Profile Management',
-        action: () => {
-          console.log('test');
-        },
-      },
+
     ],
     [],
   );

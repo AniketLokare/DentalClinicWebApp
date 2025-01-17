@@ -10,7 +10,7 @@ import {
   Snackbar,
   SubPanel,
   LoadingBackdrop,
-} from 'src/components'; 
+} from 'src/components';
 import Box from '@mui/material/Box';
 import { useNavigate, useParams } from 'react-router-dom';
 import { FiSave } from 'react-icons/fi';
@@ -25,7 +25,7 @@ import {
   useGetPurchaseOrderDetail,
   usePatchPurchaseOrder,
 } from 'src/hooks/usePurchaseOrder';
-import { PURCHASE_ORDERS,getViewPurchasePath } from 'src/constants/paths';
+import { PURCHASE_ORDERS, getViewPurchasePath } from 'src/constants/paths';
 import useSnackbarAlert from 'src/hooks/useSnackbarAlert';
 
 const AddEditPurchase: React.FC = (): JSX.Element => {
@@ -69,7 +69,7 @@ const AddEditPurchase: React.FC = (): JSX.Element => {
               message: `Purchase order updated successfully.`,
             },
           },
-        }); 
+        });
       },
       onError: (err: Error) => {
         setSnackbarAlertState({
@@ -111,8 +111,8 @@ const AddEditPurchase: React.FC = (): JSX.Element => {
       });
     },
   });
-  
-  
+
+
 
 
   const {
@@ -168,7 +168,12 @@ const AddEditPurchase: React.FC = (): JSX.Element => {
               <Box sx={{ marginTop: '60px' }}>
                 <Button
                   variant="outlined"
-                  sx={{ width: '170px', borderWidth: '2px' }}
+                  sx={{
+                    width: '170px',
+                    borderWidth: '2px',
+                    marginLeft: '20px',
+                    marginBottom: '20px',
+                  }}
                   onClick={() => navigate(-1)}
                 >
                   Cancel
@@ -177,9 +182,13 @@ const AddEditPurchase: React.FC = (): JSX.Element => {
                   <Button
                     type="submit"
                     variant="contained"
-                    sx={{ width: 'fit-content', marginLeft: '20px' }}
+                    sx={{
+                      width: '170px',
+                      marginLeft: '20px',
+                      marginBottom: '20px',
+                    }}
                   >
-                    Save
+                    SAVE
                   </Button>
                 )}
               </Box>
