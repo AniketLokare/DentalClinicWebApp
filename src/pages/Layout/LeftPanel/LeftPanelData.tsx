@@ -102,13 +102,13 @@ export const globalOptions = [
         tooltip: 'Medicines', 
       },
       {
-        title: 'Purchase Orders',
+        title: 'Invoices',
         icon: <FaCartPlus size="18px" />,
         route: PURCHASE_ORDERS,
         tooltip: 'Purchase Orders', 
       },
       {
-        title: 'Sales Orders',
+        title: 'Billings',
         icon: <MdBarChart size="18px" />,
         route: SALES_ORDERS,
         tooltip: 'Sales Orders', 

@@ -7,14 +7,14 @@ import { parse, isValid, format } from 'date-fns';
 
 export const listSalesOrdersBreadcrumbLinks = [
     {
-      label: 'Bill Orders',
+      label: 'Billings',
       href: SALES_ORDERS,
     },
   ];
   
   export const getAddEditBreadCrumbLinks = (isEdit = false) => [
     {
-      label: 'Bill Orders',
+      label: 'Billing',
       href: SALES_ORDERS,
     },
     {
@@ -25,7 +25,7 @@ export const listSalesOrdersBreadcrumbLinks = [
   
   export const viewSalesOrdersBreadCrumbLinks = [
     {
-      label: 'Bill Orders',
+      label: 'Billing',
       href: SALES_ORDERS,
     },
     {

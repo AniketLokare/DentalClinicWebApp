@@ -65,8 +65,8 @@ const AddEditPurchase: React.FC = (): JSX.Element => {
           state: {
             alert: {
               severity: 'success',
-              title: 'Purchase Order Updated',
-              message: `Purchase order updated successfully.`,
+              title: 'Invoice Updated',
+              message: `Invoice updated successfully.`,
             },
           },
         }); 
@@ -83,15 +83,15 @@ const AddEditPurchase: React.FC = (): JSX.Element => {
 
   const { mutate: createPurchaseOrder, isPending: isCreatingOrder } = useCreatePurchaseOrder({
     onSuccess: (createdData: PurchaseOrder) => {
-      console.log('Created Purchase Order Data:', createdData);
+      console.log('Created Invoice Data:', createdData);
       const { invoiceId } = createdData || {};
       if (invoiceId) {
         navigate(getViewPurchasePath(invoiceId.toString()), {
           state: {
             alert: {
               severity: 'success',
-              title: 'Purchase Order Created',
-              message: `Purchase order created successfully.`,
+              title: 'Invoice Created',
+              message: `Invoice created successfully.`,
             },
           },
         });
@@ -153,7 +153,7 @@ const AddEditPurchase: React.FC = (): JSX.Element => {
       <FormProvider {...methods}>
         <Box component="form" onSubmit={handleSubmit(onSubmit)}>
           <SubPanel
-            pageTitle={isEdit ? 'Edit Purchase Order' : 'New Purchase Order'}
+            pageTitle={isEdit ? 'Edit Invoice' : 'New Invoice'}
             breadcrumbLinks={getAddEditBreadCrumbLinks(isEdit)}
             secondaryButtonText={isEdit ? 'Save Changes' : undefined}
             secondaryButtonIcon={<FiSave />}
