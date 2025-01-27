@@ -81,7 +81,7 @@ const AddEditSalesTransactions: React.FC = (): JSX.Element => {
   const { mutate: createSalesTransaction, isPending: isCreatingOrder } =
     useCreateSalesTransaction({
       onSuccess: (createdData: SalesTransaction) => {
-        console.log('Created Bill Order Data:', createdData);
+        console.log('Created Billing Data:', createdData);
         const { billNumber } = createdData || {};
         if (billNumber) {
           navigate(getViewSalePath(billNumber.toString()), {

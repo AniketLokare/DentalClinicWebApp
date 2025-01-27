@@ -96,7 +96,7 @@ const AddEditPurchaseTransactions: React.FC = (): JSX.Element => {
           useCreatePurchaseTransaction({
             
             onSuccess: (createdData: purchaseTransaction) => {
-             console.log('Created Purchase Order Data:', createdData);
+             console.log('Created Invoice Data:', createdData);
                    const { invoiceId } = createdData || {};
                    if (invoiceId) {
                      navigate(getViewPurchasePath(invoiceId.toString()), {

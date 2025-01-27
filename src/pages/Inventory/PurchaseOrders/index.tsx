@@ -48,8 +48,8 @@ const PurchaseOrders: React.FC = (): JSX.Element => {
     onSuccess: () => {
       setSnackbarAlertState({
         severity: 'success',
-        title: 'Purchase Order Deleted.',
-        message: `Purchase order "${deleteConfirmationModalValues?.name}" has been deleted successfully.`,
+        title: 'Invoice Deleted.',
+        message: `Invoice "${deleteConfirmationModalValues?.name}" has been deleted successfully.`,
       });
 
       refetch();
@@ -115,9 +115,9 @@ const PurchaseOrders: React.FC = (): JSX.Element => {
       />
       <Stack spacing={2}>
         <SubPanel
-          pageTitle="PURCHASE ORDERS"
+          pageTitle="INVOICES"
           breadcrumbLinks={listPurchaseOrdersBreadcrumbLinks}
-          rightSideButtonText="New Purchase Order"
+          rightSideButtonText="New Invoice"
           rightSideButtonClickEvent={() => {
             navigate(NEW_PURCHASE_PATH);
           }}
@@ -133,7 +133,7 @@ const PurchaseOrders: React.FC = (): JSX.Element => {
               <PageLoader
                 isLoading={isFetching}
                 isEmpty={(noData && !isError) || (noData && showFilters)}
-                emptyMessage="No purchase orders found"
+                emptyMessage="No Invoices found"
                 Components={{ Loading: 'table' }}
               >
                 <Table

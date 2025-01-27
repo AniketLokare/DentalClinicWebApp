@@ -9,14 +9,14 @@ import { parse, isValid, format } from 'date-fns';
 
 export const listPurchaseOrdersBreadcrumbLinks = [
   {
-    label: 'Purchase Orders',
+    label: 'Invoices',
     href: PURCHASE_ORDERS,
   },
 ];
 
 export const getAddEditBreadCrumbLinks = (isEdit = false) => [
   {
-    label: 'Purchase Orders',
+    label: 'Invoice',
     href: PURCHASE_ORDERS,
   },
   {
@@ -27,7 +27,7 @@ export const getAddEditBreadCrumbLinks = (isEdit = false) => [
 
 export const viewPurchaseOrdersBreadCrumbLinks = [
   {
-    label: 'Purchase Orders',
+    label: 'Invoice',
     href: PURCHASE_ORDERS,
   },
   {
