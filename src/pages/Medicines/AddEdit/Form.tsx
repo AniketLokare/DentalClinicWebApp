@@ -35,14 +35,14 @@ const MedicineForm: React.FC = (): JSX.Element => {
         error={errors.medicinePack?.message}
         trim
       />
-      <FormInput
+      {/* <FormInput
         name="quantity"
         label="Medicine Quantity"
         control={control}
         placeholder="Enter medicine quantity"
         error={errors.quantity?.message}
         trim
-      />
+      /> */}
     </Stack>
   );
 };
