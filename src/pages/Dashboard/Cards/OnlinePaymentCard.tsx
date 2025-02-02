@@ -8,78 +8,122 @@ import moment from 'moment';
 import { SUCCESS_GREEN, SKY_BLUE } from 'src/constants/colors';
 import { useGetProceduresList } from 'src/hooks/useProcedures';
 
+import { useGetExternalProcedureList } from 'src/hooks/useExternalProcedures'; // Import the hook
+
 const OnlinePaymentCard: React.FC = () => {
 
-    const [totalIncome, setTotalIncome] = useState<string>('₹0');
-      const [percentage, setPercentage] = useState<string>('0%');
-      const [isTrendingUp, setIsTrendingUp] = useState<boolean>(true);
+  const [totalIncome, setTotalIncome] = useState<string>('₹0');
+  const [percentage, setPercentage] = useState<string>('0%');
+  const [isTrendingUp, setIsTrendingUp] = useState<boolean>(true);
 
-      const now = new Date();
+  const now = new Date();
   const currentMonth = now.getMonth();
   const currentYear = now.getFullYear();
   const lastMonth = currentMonth === 0 ? 11 : currentMonth - 1;
   const lastMonthYear = currentMonth === 0 ? currentYear - 1 : currentYear;
 
   const { response, isLoading, isError } = useGetProceduresList({
-      apiConfig: { params: {} },
-      useQueryConfig: { staleTime: 5 * 60 * 1000 },
+    apiConfig: { params: {} },
+    useQueryConfig: { staleTime: 5 * 60 * 1000 },
+  });
+
+  const { response: externalProceduresResponse, isLoading: isLoadingExternal, isError: isErrorExternal } = useGetExternalProcedureList({
+    apiConfig: { params: {} },
+    useQueryConfig: { staleTime: 5 * 60 * 1000 },
+  });
+
+  useEffect(() => {
+    if (!response || isLoading || isError || !externalProceduresResponse || isLoadingExternal || isErrorExternal) return;
+
+    const procedures = response.content || [];
+    const externalProcedures = externalProceduresResponse.content || [];
+    let currentMonthTotal = 0;
+    let lastMonthTotal = 0;
+
+    const allProcedures = [...procedures, ...externalProcedures]; // Combine both data sets
+
+    allProcedures.forEach((procedure: any) => {
+      // Parse the date correctly using moment
+      const procedureDate = moment(procedure.procedureDate, 'DD-MM-YYYY').toDate();
+      const procedureMonth = procedureDate.getMonth();
+      const procedureYear = procedureDate.getFullYear();
+
+      const finalAmount = Number(procedure.onlinePayment) || 0; // Ensure finalAmount is a valid number
+
+      if (procedureYear === currentYear && procedureMonth === currentMonth) {
+        currentMonthTotal += finalAmount;
+      } else if (procedureYear === lastMonthYear && procedureMonth === lastMonth) {
+        lastMonthTotal += finalAmount;
+      }
     });
 
-    useEffect(() => {
-        if (!response || isLoading || isError) return;
-    
-        const procedures = response.content || [];
-        let currentMonthTotal = 0;
-        let lastMonthTotal = 0;
-    
-        procedures.forEach((procedure: any) => {
-          // Parse the date correctly using moment
-          const procedureDate = moment(procedure.procedureDate, 'DD-MM-YYYY').toDate();
-          const procedureMonth = procedureDate.getMonth();
-          const procedureYear = procedureDate.getFullYear();
-    
-          const finalAmount = Number(procedure.onlinePayment) || 0; // Ensure finalAmount is a valid number
-    
-          if (procedureYear === currentYear && procedureMonth === currentMonth) {
-            currentMonthTotal += finalAmount;
-          } else if (procedureYear === lastMonthYear && procedureMonth === lastMonth) {
-            lastMonthTotal += finalAmount;
-          }
-        });
-    
-        setTotalIncome(`₹${currentMonthTotal.toLocaleString()}`);
-    
-        if (lastMonthTotal > 0) {
-          const percentChange = ((currentMonthTotal - lastMonthTotal) / lastMonthTotal) * 100;
-          setPercentage(`${percentChange > 0 ? '+' : ''}${percentChange.toFixed(1)}%`);
-          setIsTrendingUp(percentChange > 0);
-        } else {
-          setPercentage('N/A');
-          setIsTrendingUp(true);
-        }
-      }, [response, isLoading, isError, currentMonth, currentYear, lastMonth, lastMonthYear]);
-    
-      if (isLoading) {
-        return (
-          <Card sx={{ borderRadius: 3, padding: 2 }}>
-            <Typography variant="body2">Loading...</Typography>
-          </Card>
-        );
-      }
-    
-      if (isError) {
-        return (
-          <Card sx={{ borderRadius: 3, padding: 2 }}>
-            <Typography color="error" variant="body2">
-              Failed to load data.
-            </Typography>
-          </Card>
-        );
-      }
-  
+    setTotalIncome(`₹${currentMonthTotal.toLocaleString()}`);
 
+    if (lastMonthTotal > 0) {
+      const percentChange = ((currentMonthTotal - lastMonthTotal) / lastMonthTotal) * 100;
+      setPercentage(`${percentChange > 0 ? '+' : ''}${percentChange.toFixed(1)}%`);
+      setIsTrendingUp(percentChange > 0);
+    } else {
+      setPercentage('N/A');
+      setIsTrendingUp(true);
+    }
+  }, [response, isLoading, isError, externalProceduresResponse, isLoadingExternal, isErrorExternal, currentMonth, currentYear, lastMonth, lastMonthYear]);
+
+  // useEffect(() => {
+  //     if (!response || isLoading || isError) return;
+
+  //     const procedures = response.content || [];
+  //     let currentMonthTotal = 0;
+  //     let lastMonthTotal = 0;
+
+  //     procedures.forEach((procedure: any) => {
+  //       // Parse the date correctly using moment
+  //       const procedureDate = moment(procedure.procedureDate, 'DD-MM-YYYY').toDate();
+  //       const procedureMonth = procedureDate.getMonth();
+  //       const procedureYear = procedureDate.getFullYear();
+
+  //       const finalAmount = Number(procedure.onlinePayment) || 0; // Ensure finalAmount is a valid number
+
+  //       if (procedureYear === currentYear && procedureMonth === currentMonth) {
+  //         currentMonthTotal += finalAmount;
+  //       } else if (procedureYear === lastMonthYear && procedureMonth === lastMonth) {
+  //         lastMonthTotal += finalAmount;
+  //       }
+  //     });
+
+  //     setTotalIncome(`₹${currentMonthTotal.toLocaleString()}`);
+
+  //     if (lastMonthTotal > 0) {
+  //       const percentChange = ((currentMonthTotal - lastMonthTotal) / lastMonthTotal) * 100;
+  //       setPercentage(`${percentChange > 0 ? '+' : ''}${percentChange.toFixed(1)}%`);
+  //       setIsTrendingUp(percentChange > 0);
+  //     } else {
+  //       setPercentage('N/A');
+  //       setIsTrendingUp(true);
+  //     }
+  //   }, [response, isLoading, isError, currentMonth, currentYear, lastMonth, lastMonthYear]);
+
+  if (isLoading) {
     return (
-      <Card
+      <Card sx={{ borderRadius: 3, padding: 2 }}>
+        <Typography variant="body2">Loading...</Typography>
+      </Card>
+    );
+  }
+
+  if (isError) {
+    return (
+      <Card sx={{ borderRadius: 3, padding: 2 }}>
+        <Typography color="error" variant="body2">
+          Failed to load data.
+        </Typography>
+      </Card>
+    );
+  }
+
+
+  return (
+    <Card
       sx={{
         borderRadius: 3,
         padding: { xs: 1, sm: 2 },
@@ -128,8 +172,8 @@ const OnlinePaymentCard: React.FC = () => {
         </Stack>
       </CardContent>
     </Card>
-    
-    );
+
+  );
 };
 
 export default OnlinePaymentCard;
