@@ -42,6 +42,7 @@ const MedicineForm: React.FC = (): JSX.Element => {
         placeholder="Enter medicine quantity"
         error={errors.quantity?.message}
         trim
+        sx={{ display: "none" }}
       />
     </Stack>
   );

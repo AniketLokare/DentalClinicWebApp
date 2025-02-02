@@ -15,6 +15,10 @@ import LoginForm from './Form';
 import { DASHBOARD_PATH } from 'src/constants/paths';
 import { useNavigate } from 'react-router-dom';
 
+import { PATIENTS } from 'src/constants/paths';
+import { getAuthInfo } from 'src/util/auth'; // Assuming you have a function to get auth info
+
+
 const Login: React.FC = (): JSX.Element => {
   const navigate = useNavigate();
   const { snackbarAlertState, setSnackbarAlertState, onDismiss } = useSnackbarAlert();
@@ -30,13 +34,24 @@ const Login: React.FC = (): JSX.Element => {
   const { mutate: loginUser } =
     useLoginUser({
       onSuccess: () => {
-        navigate(DASHBOARD_PATH, {
-          state: {
-            alert: {
-              severity: 'success',
+        const { role } = getAuthInfo(); // Get the user's role from auth info
+        if (role === 'ADMIN' || role === 'MEDICO') {
+          navigate(DASHBOARD_PATH, {
+            state: {
+              alert: {
+                severity: 'success',
+              },
             },
-          },
-        });
+          });
+        } else if (role === 'RECEP') {
+          navigate(PATIENTS, {
+            state: {
+              alert: {
+                severity: 'success',
+              },
+            },
+          });
+        }
       },
       onError: (err: Error) => {
         setSnackbarAlertState({
@@ -81,7 +96,7 @@ const Login: React.FC = (): JSX.Element => {
                   width: '100%',
                 }}
               >
-                <Typography variant="h4" sx={{ marginBottom: '24px' ,justifyContent: 'center',}}>
+                <Typography variant="h4" sx={{ marginBottom: '24px', justifyContent: 'center', }}>
                   Login
                 </Typography> {/* Used MUI Typography directly */}
                 <LoginForm />
