@@ -76,9 +76,9 @@ useEffect(() => {
         <Grid item xs={12} sm={6}>
           <FormInput
             name="clinicName"
-            label="Enter External Clinic Name"
+            label="Enter Referral Doctor's name"
             control={control}
-            placeholder="Enter external clinic name"
+            placeholder="Enter Referral Doctor's name"
             error={errors.clinicName?.message}
             
           />

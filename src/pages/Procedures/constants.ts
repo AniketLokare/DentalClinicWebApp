@@ -58,7 +58,7 @@ export const ProceduresTableColumns: ColumnDef<Procedure, string>[] = [
     accessorKey: 'procedureType',
   },
   {
-    header: 'Clinic Name',
+    header: 'Referral Doctor Name',
     accessorKey: 'clinicName',
   },
 
