@@ -39,7 +39,7 @@ const ExternalProcedureForm: React.FC = (): JSX.Element => {
         <Grid item xs={12} sm={6}>
           <FormInput
             name="doctorName"
-            label="External Doctor Name"
+            label="Referral Doctor's name"
             control={control}
             error={errors.doctorName?.message}
             trim

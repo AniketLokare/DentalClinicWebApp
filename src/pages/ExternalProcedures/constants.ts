@@ -45,7 +45,7 @@ export const viewProcedureReportBreadCrumbLinks = [
 
 export const ExternalProceduresTableColumns: ColumnDef<ExternalProcedure, string>[] = [
   {
-    header: 'Doctor Name',
+    header: 'Referral Doctor Name',
     accessorKey: 'doctorName',
   },
   {
