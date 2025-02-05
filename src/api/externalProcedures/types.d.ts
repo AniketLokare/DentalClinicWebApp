@@ -8,6 +8,7 @@ interface ExternalProcedure {
   discount?: number,
   finalAmount: number,
   cashierName?: string,
+  paymentMethod: string,
   timestamp?: Date
 }
 

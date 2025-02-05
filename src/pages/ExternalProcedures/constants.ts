@@ -1,5 +1,6 @@
 import { ColumnDef } from '@tanstack/react-table';
 import { EXTERNAL_PROCEDURE } from 'src/constants/paths';
+import { requiredField } from 'src/constants/validationSchema';
 import { object as yupObject, number, string, ObjectSchema } from 'yup';
 
 export const listExternalProceduresBreadcrumbLinks = [
@@ -98,6 +99,11 @@ export const ExternalProceduresReportTableColumns: ColumnDef<ExternalProcedure, 
   },
 
   {
+    header: 'Payment Method',
+    accessorKey: 'paymentMethod',
+  },
+
+  {
     header: 'Cashier',
     accessorKey: 'cashierName',
   },
@@ -113,7 +119,23 @@ export const externalProcedureDefaultFormValues: CreateExternalProcedurePayload 
   procedureDate: '',
   procedureDetail: '',
   procedureType: '',
-  cashierName: ''
+  cashierName: '',
+  paymentMethod: 'online'
+};
+
+export const paymentMethodProps = {
+  options: [
+    {
+      label: 'cash',
+      value: 'cash',
+    },
+    {
+      label: 'online',
+      value: 'online',
+    },
+  ],
+  'aria-labelledby': 'payment-method',
+  defaultValue: 'online',
 };
 
 export const externalProcedureFormValidationSchema: ObjectSchema<CreateExternalProcedurePayload> =
@@ -152,6 +174,8 @@ export const externalProcedureFormValidationSchema: ObjectSchema<CreateExternalP
       .typeError('Required')
       .required('Required')
       .integer(),
+
+    paymentMethod: requiredField,
     
     doctorName: string()
     .required("Doctor name is required")

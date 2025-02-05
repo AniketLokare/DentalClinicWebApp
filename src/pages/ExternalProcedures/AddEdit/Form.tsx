@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { Grid, Stack } from '@mui/material';
 import { FormInput } from 'src/components';
 import { Controller, useFormContext } from 'react-hook-form';
+import { paymentMethodProps } from '../constants';
 import { format } from 'date-fns/format';
 import { getAuthInfo } from 'src/util/auth';
 
@@ -19,6 +20,7 @@ const ExternalProcedureForm: React.FC = (): JSX.Element => {
 
 
   const { username } = getAuthInfo(); // Extract username from auth info
+  const paymentMethod = watch('paymentMethod');
 
 
   // Set cashierName using useEffect
@@ -104,6 +106,25 @@ const ExternalProcedureForm: React.FC = (): JSX.Element => {
             disabled
           />
         </Grid>
+        
+        <Grid item xs={12} sm={6}>
+          <FormInput
+            type="radio"
+            radioButtonProps={{
+            ...paymentMethodProps,
+            value: paymentMethod,
+            }}
+            name="paymentMethod"
+            control={control}
+            label="paymentMethod"
+            sx={{
+                      maxWidth: '556px',
+                      marginTop: '7px',
+                      paddingRight: '21px',
+                    }}
+                  />
+        </Grid>
+
         <Grid item xs={12} sm={6} >
           <Controller
             name="cashierName"

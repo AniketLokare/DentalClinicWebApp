@@ -68,6 +68,11 @@ const ExternalProcedureBasicInfo: React.FC<ExternalProcedureBasicInfoProps> = ({
             label="Total Amount (₹)"
             value={`${externalProcedureDetails?.finalAmount}`}
             flexBasis="50%"
+          />
+          <InfoField
+            label="Payment Method"
+            value={`${externalProcedureDetails?.paymentMethod}`}
+            flexBasis="50%"
           />  
         </Box>
       </Stack>
