@@ -4,7 +4,6 @@ import ProcedureCountCard from './Cards/ProcedureCountCard';
 import TotalIncomeCard from './Cards/TotalIncomeCard';
 import OnlinePaymentCard from './Cards/OnlinePaymentCard';
 import CashPaymentCard from './Cards/CashPaymentCard';
-import DiscountCard from './Cards/DiscountCard';
 import PageViewsBarChart from './Charts/PageViewsBarChart';
 import IncomeReportChart from './Charts/IncomeReportChart';
 import ExternalHospitalReport from './Charts/ExternalHospitalReport';
@@ -37,10 +36,6 @@ const Dashboard: React.FC = (): JSX.Element => {
           <CashPaymentCard />
         </Grid>
 
-        {/* Discount Card */}
-        <Grid item xs={12} sm={6} md={2.4}>
-          <DiscountCard />
-        </Grid>
       </Grid>
 
 
