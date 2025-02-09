@@ -5,7 +5,6 @@ import { Controller, useFormContext } from 'react-hook-form';
 import { format } from 'date-fns/format';
 import { getAuthInfo } from 'src/util/auth';
 
-
 const ExternalProcedureForm: React.FC = (): JSX.Element => {
   const {
     control,
@@ -15,11 +14,8 @@ const ExternalProcedureForm: React.FC = (): JSX.Element => {
   } = useFormContext<CreateExternalProcedurePayload>();
 
   const feesCharged = watch('feesCharged') || 0;
-  const discount = watch('discount') || 0;
-
 
   const { username } = getAuthInfo(); // Extract username from auth info
-
 
   // Set cashierName using useEffect
   useEffect(() => {
@@ -29,9 +25,8 @@ const ExternalProcedureForm: React.FC = (): JSX.Element => {
   }, [username, setValue]);
 
   useEffect(() => {
-    const finalAmount = feesCharged - (discount);
-    setValue('finalAmount', finalAmount);
-  }, [feesCharged, discount, setValue]);
+    setValue('finalAmount', feesCharged);
+  }, [feesCharged, setValue]);
 
   return (
     <Stack spacing={4}>
@@ -88,15 +83,6 @@ const ExternalProcedureForm: React.FC = (): JSX.Element => {
         <Grid item xs={12} sm={6}>
           <FormInput
             type="number"
-            name="discount"
-            control={control}
-            label="Discount "
-            error={errors.discount?.message}
-          />
-        </Grid>
-        <Grid item xs={12} sm={6}>
-          <FormInput
-            type="number"
             name="finalAmount"
             control={control}
             label="Final Amount (₹)"
@@ -118,9 +104,7 @@ const ExternalProcedureForm: React.FC = (): JSX.Element => {
               />
             )}
           />
-
         </Grid>
-
       </Grid>
     </Stack>
   );
