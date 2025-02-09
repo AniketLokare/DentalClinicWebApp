@@ -1,18 +1,18 @@
 import { ColumnDef } from '@tanstack/react-table';
-import { EXTERNAL_PROCEDURE } from 'src/constants/paths';
+import { PROCEDURES } from 'src/constants/paths';
 import { object as yupObject, number, string, ObjectSchema } from 'yup';
 
-export const listExternalProceduresBreadcrumbLinks = [
+export const listProceduresBreadcrumbLinks = [
   {
-    label: 'External Procedures',
-    href: EXTERNAL_PROCEDURE,
+    label: 'Procedures',
+    href: PROCEDURES,
   },
 ];
 
 export const getAddEditBreadCrumbLinks = (isEdit = false) => [
   {
-    label: 'External Procedures',
-    href: EXTERNAL_PROCEDURE,
+    label: 'Procedures',
+    href: PROCEDURES,
   },
   {
     label: isEdit ? 'Edit Procedure' : 'New Procedure',
@@ -20,14 +20,13 @@ export const getAddEditBreadCrumbLinks = (isEdit = false) => [
   },
 ];
 
-
 export const viewProceduresBreadCrumbLinks = [
   {
-    label: 'External Procedures',
-    href: EXTERNAL_PROCEDURE,
+    label: 'Procedures',
+    href: PROCEDURES,
   },
   {
-    label: 'External Procedure Details',
+    label: 'Procedure Details',
     href: '#',
   },
 ];
@@ -35,127 +34,123 @@ export const viewProceduresBreadCrumbLinks = [
 export const viewProcedureReportBreadCrumbLinks = [
   {
     label: 'Reports',
-    href: EXTERNAL_PROCEDURE,
+    href: PROCEDURES,
   },
   {
-    label: 'External Procedures',
+    label: 'Clinic Procedures',
     href: '#',
   },
 ];
 
-export const ExternalProceduresTableColumns: ColumnDef<ExternalProcedure, string>[] = [
+export const ProceduresTableColumns: ColumnDef<Procedure, string>[] = [
   {
-    header: 'Doctor Name',
-    accessorKey: 'doctorName',
+    header: 'Procedure Id',
+    accessorKey: 'procedureId',
   },
   {
-    header: 'Procedure Type',
+    header: 'Procedure Date',
+    accessorKey: 'procedureDate',
+  },
+  {
+    header: 'Procedure Name',
     accessorKey: 'procedureType',
+  },
+  {
+    header: 'Clinic Name',
+    accessorKey: 'clinicName',
+  },
+  {
+    header: 'Final Amount',
+    accessorKey: 'finalAmount',
+  },
+];
+
+export const ProceduresReportTableColumns: ColumnDef<Procedure, string>[] = [
+  {
+    header: 'Procedure Id',
+    accessorKey: 'procedureId',
+  },
+  {
+    header: 'Patient Id',
+    accessorKey: 'patientId',
+  },
+  {
+    header: 'Date',
+    accessorKey: 'procedureDate',
+  },
+  {
+    header: 'Procedure Name',
+    accessorKey: 'procedureType',
+  },
+  {
+    header: 'Online Payment',
+    accessorKey: 'onlinePayment',
+  },
+  {
+    header: 'Cash Payment',
+    accessorKey: 'cashPayment',
+  },
+  {
+    header: 'Total',
+    accessorKey: 'finalAmount',
   },
   {
     header: 'Cashier Name',
     accessorKey: 'cashierName',
   },
-  {
-    header: 'Procedure Date',
-    accessorKey: 'procedureDate',
-  },
 ];
 
+export const procedurePaymentProps = {
+  options: [
+    {
+      label: 'Online',
+      value: 'online',
+    },
+    {
+      label: 'Cash',
+      value: 'cash',
+    },
+  ],
+  'aria-labelledby': 'procedure-payment',
+  defaultValue: 'Cash',
+};
 
-export const ExternalProceduresReportTableColumns: ColumnDef<ExternalProcedure, string>[] = [
-  {
-    header: 'ID',
-    accessorKey: 'doctorId',
-  },
-  
-  {
-    header: 'Procedure Date',
-    accessorKey: 'procedureDate',
-  },
-  {
-    header: 'Doctor Name',
-    accessorKey: 'doctorName',
-  },
-  {
-    header: 'Procedure Type',
-    accessorKey: 'procedureType',
-  },
-  
-  {
-    header: 'Fees',
-    accessorKey: 'feesCharged',
-  },
-
-  {
-    header: 'Discount',
-    accessorKey: 'discount',
-  },
-
-  {
-    header: 'Final Amount',
-    accessorKey: 'finalAmount',
-  },
-
-  {
-    header: 'Cashier',
-    accessorKey: 'cashierName',
-  },
-
-  
-];
-
-export const externalProcedureDefaultFormValues: CreateExternalProcedurePayload = {
-  doctorName: '',
-  feesCharged: 0,
-  discount: 0,
+export const procedureDefaultFormValues: CreateProcedurePayload = {
+  cashPayment: 0,
+  clinicName: '',
   finalAmount: 0,
   procedureDate: '',
+  onlinePayment: 0,
   procedureDetail: '',
   procedureType: '',
+  totalAmount: 0,
   cashierName: ''
 };
 
-export const externalProcedureFormValidationSchema: ObjectSchema<CreateExternalProcedurePayload> =
+export const procedureFormValidationSchema: ObjectSchema<CreateProcedurePayload> =
   yupObject({
-    procedureDate: string()
-    .default('')
-    .optional(),
-    
+    procedureDate: string().required('Procedure Date is Required'),
     procedureType: string()
-    .required('Procedure Type is required')
-    .min(2, 'Procedure Type must be at least 2 characters')
-    .max(100, 'Procedure Type cannot exceed 100 characters'),
-
-    procedureDetail: string()
-    .required('Procedure Details is required')
-    .min(2, 'Procedure Details must be at least 2 characters')
-    .max(100, 'Procedure Details cannot exceed 100 characters'),
-
+      .required('Procedure Type is required')
+      .min(2, 'Procedure Type must be at least 2 characters')
+      .max(100, 'Procedure Type cannot exceed 100 characters'),
+    procedureDetails: string()
+      .optional()
+      .min(2, 'Procedure Details must be at least 2 characters')
+      .max(300, 'Procedure Details cannot exceed 100 characters'),
     cashierName: string()
-    .optional()
-    .required("Cashier name is required")
-    .max(50, 'Cashier name cannot exceed 50 characters')
-    ,
-
+      .required("Cashier name is required")
+      .max(50, 'Cashier name cannot exceed 50 characters'),
+    clinicName: string()
+      .optional()
+      .max(50, 'Clinic Name cannot exceed 50 characters')
+      .matches(/^[A-Za-z\s]*$/, 'Clinic Name can only contain alphabets and spaces'),
+    cashPayment: number().optional().min(0, 'Amount must be greater than or equal to zero').integer(),
+    onlinePayment: number().optional().min(0, 'Amount must be greater than or equal to zero').integer(),
     finalAmount: number()
       .typeError('Required')
       .required('Required')
       .integer(),
-
-    discount: number()
-      .optional()
-      .min(0, 'Invalid amount')
-      .integer(),
-      
-    feesCharged: number()
-      .typeError('Required')
-      .required('Required')
-      .integer(),
-    
-    doctorName: string()
-    .required("Doctor name is required")
-    .max(50, 'Doctor name cannot exceed 50 characters')
-    .matches(/^[A-Za-z\s]*$/, 'Doctor name can only contain alphabets and spaces'),
+    totalAmount: number().typeError('Required').required('Required')
+      .min(0, 'Amount must be greater than or equal to zero').integer(),
   });
-
