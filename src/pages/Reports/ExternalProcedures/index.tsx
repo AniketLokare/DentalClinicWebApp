@@ -195,7 +195,7 @@ const ExternalProcedures: React.FC = (): JSX.Element => {
                 <RiDiscountPercentLine size="30px" />
                 <InfoField
                     sx={{ marginLeft: '10px' }}
-                    label="Discount"
+                    label="Referral Payment"
                     value={`₹${discountTotal.toFixed(2)}`}
                 />
             </Box>
