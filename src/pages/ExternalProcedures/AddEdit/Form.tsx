@@ -90,7 +90,7 @@ const ExternalProcedureForm: React.FC = (): JSX.Element => {
             type="number"
             name="discount"
             control={control}
-            label="Discount "
+            label="Referral Payment "
             error={errors.discount?.message}
           />
         </Grid>

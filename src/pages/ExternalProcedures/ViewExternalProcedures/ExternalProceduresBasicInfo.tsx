@@ -60,7 +60,7 @@ const ExternalProcedureBasicInfo: React.FC<ExternalProcedureBasicInfoProps> = ({
             flexBasis="50%"
           />
           <InfoField
-            label="Discount (%)"
+            label="Referral Payment (%)"
             value={`${externalProcedureDetails?.discount} %`}
             flexBasis="50%"
           />
