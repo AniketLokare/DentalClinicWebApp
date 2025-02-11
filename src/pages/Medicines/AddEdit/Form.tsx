@@ -28,11 +28,11 @@ const MedicineForm: React.FC = (): JSX.Element => {
         
       />
       <FormInput
-        name="medicinePack"
-        label="Medicine Pack"
+        name="medicineStrip"
+        label="Medicine Strip"
         control={control}  
-        placeholder="Enter medicine pack"
-        error={errors.medicinePack?.message}
+        placeholder="Enter Medicine Strip"
+        error={errors.medicineStrip?.message}
         trim
       />
       <FormInput

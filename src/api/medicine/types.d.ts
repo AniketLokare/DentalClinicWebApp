@@ -2,7 +2,7 @@ interface Medicine {
   medicineId: string;
   medicineName: string;
   medicineType: string;
-  medicinePack: number;
+  medicineStrip: number;
   quantity: number;
 }
 
