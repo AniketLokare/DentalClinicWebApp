@@ -2,7 +2,6 @@ import React, { useEffect } from 'react';
 import { Grid, Stack } from '@mui/material';
 import { FormInput } from 'src/components';
 import { Controller, useFormContext } from 'react-hook-form';
-import { paymentMethodProps } from '../constants';
 import { format } from 'date-fns/format';
 import { getAuthInfo } from 'src/util/auth';
 
@@ -15,20 +14,26 @@ const ExternalProcedureForm: React.FC = (): JSX.Element => {
     formState: { errors },
   } = useFormContext<CreateExternalProcedurePayload>();
 
-  const feesCharged = watch('feesCharged') || 0;
-  const discount = watch('discount') || 0;
-
-
   const { username } = getAuthInfo(); // Extract username from auth info
-  const paymentMethod = watch('paymentMethod');
 
-
-  // Set cashierName using useEffect
-  useEffect(() => {
+   // Set cashierName using useEffect
+   useEffect(() => {
     if (username && typeof username === 'string') {
       setValue('cashierName', username.trim()); // Ensure no quotes or spaces
     }
   }, [username, setValue]);
+
+  const finalAmount = watch('finalAmount');
+  const feesCharged = watch('feesCharged') || 0;
+  const discount = watch('discount') || 0;
+
+  const cashPayment = parseFloat(watch('cashPayment')) || 0; // Convert to number or default to 0
+  const onlinePayment = parseFloat(watch('onlinePayment')) || 0; // Convert to number or default to 0
+
+  useEffect(() => {
+    const finalAmount = cashPayment + onlinePayment;
+  setValue('finalAmount', isNaN(finalAmount) ? 0 : finalAmount); // Set totalAmount, default to 0 if NaN
+  }, [cashPayment, onlinePayment, setValue]); // Update when cashPayment or onlinePayment changes
 
   useEffect(() => {
     const finalAmount = feesCharged - (discount);
@@ -96,6 +101,26 @@ const ExternalProcedureForm: React.FC = (): JSX.Element => {
             error={errors.discount?.message}
           />
         </Grid>
+
+         <Grid item xs={12} sm={6}>
+            <FormInput
+              name="onlinePayment"
+              label="Enter Online Payment"
+              control={control}
+              placeholder="Enter online payment"
+              error={errors.onlinePayment?.message}        
+              />
+         </Grid>
+        
+         <Grid item xs={12} sm={6}>
+              <FormInput
+                name="cashPayment"
+                label="Enter Cash Payment"
+                control={control}
+                placeholder="Enter external clinic name"
+                error={errors.cashPayment?.message}                    
+                />
+          </Grid>
         <Grid item xs={12} sm={6}>
           <FormInput
             type="number"
@@ -105,24 +130,6 @@ const ExternalProcedureForm: React.FC = (): JSX.Element => {
             error={errors.finalAmount?.message}
             disabled
           />
-        </Grid>
-        
-        <Grid item xs={12} sm={6}>
-          <FormInput
-            type="radio"
-            radioButtonProps={{
-            ...paymentMethodProps,
-            value: paymentMethod,
-            }}
-            name="paymentMethod"
-            control={control}
-            label="paymentMethod"
-            sx={{
-                      maxWidth: '556px',
-                      marginTop: '7px',
-                      paddingRight: '21px',
-                    }}
-                  />
         </Grid>
 
         <Grid item xs={12} sm={6} >

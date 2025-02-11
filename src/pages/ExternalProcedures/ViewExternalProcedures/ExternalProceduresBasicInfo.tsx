@@ -54,6 +54,18 @@ const ExternalProcedureBasicInfo: React.FC<ExternalProcedureBasicInfoProps> = ({
             value={formatDate(externalProcedureDetails?.timestamp || new Date())}
             flexBasis="50%"
           />
+
+          <InfoField
+                      label="Online Payment (₹)"
+                      value={`${externalProcedureDetails?.onlinePayment}`}
+                      flexBasis="50%"
+                    />
+          
+          <InfoField
+                      label="Cash Payment (₹)"
+                      value={`${externalProcedureDetails?.cashPayment}`}
+                      flexBasis="50%"
+                    />
           <InfoField
             label="Fees Charged (₹)"
             value={`${externalProcedureDetails?.feesCharged}`}
@@ -69,11 +81,7 @@ const ExternalProcedureBasicInfo: React.FC<ExternalProcedureBasicInfoProps> = ({
             value={`${externalProcedureDetails?.finalAmount}`}
             flexBasis="50%"
           />
-          <InfoField
-            label="Payment Method"
-            value={`${externalProcedureDetails?.paymentMethod}`}
-            flexBasis="50%"
-          />  
+
         </Box>
       </Stack>
     </Stack>

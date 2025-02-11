@@ -8,8 +8,9 @@ interface ExternalProcedure {
   discount?: number,
   finalAmount: number,
   cashierName?: string,
-  paymentMethod: string,
   timestamp?: Date
+  cashPayment: number,
+  onlinePayment: number,
 }
 
 type CreateExternalProcedurePayload = Omit<ExternalProcedure, 'doctorId' | 'timestamp'>;

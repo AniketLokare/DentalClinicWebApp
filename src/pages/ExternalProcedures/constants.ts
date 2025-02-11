@@ -1,6 +1,5 @@
 import { ColumnDef } from '@tanstack/react-table';
 import { EXTERNAL_PROCEDURE } from 'src/constants/paths';
-import { requiredField } from 'src/constants/validationSchema';
 import { object as yupObject, number, string, ObjectSchema } from 'yup';
 
 export const listExternalProceduresBreadcrumbLinks = [
@@ -97,10 +96,13 @@ export const ExternalProceduresReportTableColumns: ColumnDef<ExternalProcedure, 
     header: 'Final Amount',
     accessorKey: 'finalAmount',
   },
-
   {
-    header: 'Payment Method',
-    accessorKey: 'paymentMethod',
+    header: 'Online Payment',
+    accessorKey: 'onlinePayment',
+  },
+  {
+    header: 'Cash Payment',
+    accessorKey: 'cashPayment',
   },
 
   {
@@ -111,6 +113,21 @@ export const ExternalProceduresReportTableColumns: ColumnDef<ExternalProcedure, 
   
 ];
 
+export const externalProcedurePaymentProps = {
+  options: [
+    {
+      label: 'Online',
+      value: 'online',
+    },
+    {
+      label: 'Cash',
+      value: 'cash',
+    },
+  ],
+  'aria-labelledby': 'procedure-payment',
+  defaultValue: 'Cash',
+};
+
 export const externalProcedureDefaultFormValues: CreateExternalProcedurePayload = {
   doctorName: '',
   feesCharged: 0,
@@ -119,23 +136,9 @@ export const externalProcedureDefaultFormValues: CreateExternalProcedurePayload 
   procedureDate: '',
   procedureDetail: '',
   procedureType: '',
+  cashPayment: 0,
+  onlinePayment: 0,
   cashierName: '',
-  paymentMethod: 'online'
-};
-
-export const paymentMethodProps = {
-  options: [
-    {
-      label: 'cash',
-      value: 'cash',
-    },
-    {
-      label: 'online',
-      value: 'online',
-    },
-  ],
-  'aria-labelledby': 'payment-method',
-  defaultValue: 'online',
 };
 
 export const externalProcedureFormValidationSchema: ObjectSchema<CreateExternalProcedurePayload> =
@@ -175,7 +178,9 @@ export const externalProcedureFormValidationSchema: ObjectSchema<CreateExternalP
       .required('Required')
       .integer(),
 
-    paymentMethod: requiredField,
+    cashPayment: number().optional().min(0, 'Amount must be greater than or equal to zero').integer(),
+    
+    onlinePayment: number().optional().min(0, 'Amount must be greater than or equal to zero').integer(),
     
     doctorName: string()
     .required("Doctor name is required")
