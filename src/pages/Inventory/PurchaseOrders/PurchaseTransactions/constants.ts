@@ -49,7 +49,7 @@ export const PurchaseTransactionTableColumns: ColumnDef<purchaseTransaction, str
     accessorKey: 'medicineBatch',
   },
   {
-    header: 'Pack',
+    header: 'Strip',
     accessorKey: 'medicinePack',
   },
   {
@@ -102,7 +102,7 @@ export const purchaseTransactionFormValidationSchema: ObjectSchema<CreatePuchase
     medicinePack: number()
       .typeError('Required')
       .required('Required')
-      .positive('Invalid value')
+      .positive('Enter number of items per strip (add 1 if there is bottle)')
       .integer(),
     quantity: number()
       .typeError('Required')

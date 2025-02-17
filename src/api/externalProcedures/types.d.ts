@@ -5,10 +5,12 @@ interface ExternalProcedure {
   procedureType: string,
   procedureDetail: string,
   feesCharged: number,
-  discount?: number,
+  discount: number,
   finalAmount: number,
   cashierName?: string,
-  timestamp?: Date
+  timestamp?: Date,
+  cashPayment: number,
+  onlinePayment: number,
 }
 
 type CreateExternalProcedurePayload = Omit<ExternalProcedure, 'doctorId' | 'timestamp'>;

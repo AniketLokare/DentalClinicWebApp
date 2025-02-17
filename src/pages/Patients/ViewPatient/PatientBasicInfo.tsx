@@ -224,7 +224,7 @@ const PatientBasicInfo: React.FC<PatientBasicInfoProps> = ({
             sx={{ padding: '20px' }}
             onClick={() => navigate(NEW_PROCEDURE_PATH, { state: id  })}
           >
-            New Procedure
+            NEW PROCEDURE
           </Button>
         </Box>
         <Box sx={{ marginTop: '13px' }}>

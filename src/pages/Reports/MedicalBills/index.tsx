@@ -24,14 +24,14 @@ import { MdBookOnline } from 'react-icons/md';
 import { TbReportSearch } from 'react-icons/tb';
 import { FaMobileAlt } from "react-icons/fa";
 import { RiDiscountPercentLine } from "react-icons/ri";
-import { viewProcedureReportBreadCrumbLinks, ExternalProceduresReportTableColumns } from '../../ExternalProcedures/constants';
+import { viewSalesOrdersReportBreadCrumbLinks, salesOrdersReportTableColumns } from '../../Inventory/SalesOrders/constants';
 import { WHITE_SMOKE } from 'src/constants/colors';
-import { useGetFilteredExternalProcedures } from 'src/hooks/useExternalProcedures';
+import { useGetFilteredBills } from 'src/hooks/useSalesOrder';
 import { usePagination } from 'src/hooks/usePagination';
 import useSnackbarAlert from 'src/hooks/useSnackbarAlert';
 import { format } from 'date-fns';
 
-const ExternalProcedures: React.FC = (): JSX.Element => {
+const MedicalBills: React.FC = (): JSX.Element => {
     const { snackbarAlertState, setSnackbarAlertState, onDismiss } = useSnackbarAlert();
     const { pageNumber, changePageNumber } = usePagination();
 
@@ -51,7 +51,7 @@ const ExternalProcedures: React.FC = (): JSX.Element => {
         return date ? format(new Date(date), 'dd-MM-yyyy') : '';
     };
 
-    const { response, isFetching, isError, refetch } = useGetFilteredExternalProcedures({
+    const { response, isFetching, isError, refetch } = useGetFilteredBills({
         fromDate: formatDate(watch('fromDate')),
         toDate: formatDate(watch('toDate')),
        
@@ -66,20 +66,18 @@ const ExternalProcedures: React.FC = (): JSX.Element => {
 
     
 
-    const {  finalAmountTotal,onlineTotal,cashTotal } = useMemo(() => {
+    const {  finalAmountTotal} = useMemo(() => {
         if (!response || response.length === 0) {
-            return {  finalAmountTotal: 0, onlineTotal: 0,cashTotal: 0 };
+            return {  finalAmountTotal: 0};
         }
         return response.reduce(
-            (totals, procedure) => {
+            (totals, saleorder) => {
                 
-                totals.onlineTotal += procedure.onlinePayment || 0;
-                totals.cashTotal += procedure.cashPayment || 0;
-                totals.finalAmountTotal += procedure.finalAmount || 0;
+                totals.finalAmountTotal += saleorder.totalAmount || 0;
                 
                 return totals;
             },
-            { onlineTotal: 0, finalAmountTotal: 0,cashTotal: 0 }
+            {finalAmountTotal: 0}
         );
     }, [response]);
 
@@ -97,7 +95,7 @@ const ExternalProcedures: React.FC = (): JSX.Element => {
                     <Stack spacing={2}>
                         <SubPanel
                             pageTitle="INCOME BY CLINIC PROCEDURES"
-                            breadcrumbLinks={viewProcedureReportBreadCrumbLinks}
+                            breadcrumbLinks={viewSalesOrdersReportBreadCrumbLinks}
                         />
 
                         <Stack spacing={2}>
@@ -183,23 +181,7 @@ const ExternalProcedures: React.FC = (): JSX.Element => {
                 alignItems: 'flex-start',
             }}
         >
-            <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                <HiOutlineCash size="30px" />
-                <InfoField
-                    sx={{ marginLeft: '10px' }}
-                    label="Online Payment"
-                    value={`₹${onlineTotal.toFixed(2)}`}
-                />
-            </Box>
-
-            <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                <RiDiscountPercentLine size="30px" />
-                <InfoField
-                    sx={{ marginLeft: '10px' }}
-                    label="Cash Payment"
-                    value={`₹${cashTotal.toFixed(2)}`}
-                />
-            </Box>
+            
             <Box sx={{ display: 'flex', alignItems: 'center' }}>
                 <TbReportSearch size="30px" />
                 <InfoField
@@ -219,11 +201,11 @@ const ExternalProcedures: React.FC = (): JSX.Element => {
                             <PageLoader
                                 isLoading={isFetching}
                                 isEmpty={(noData && !isError) || noData}
-                                emptyMessage="No procedures found"
+                                emptyMessage="No bills found"
                                 Components={{ Loading: 'table' }}
                             >
                                 <Table
-                                    columns={ExternalProceduresReportTableColumns}
+                                    columns={salesOrdersReportTableColumns}
                                     data={response || []}
                                     totalRecords={response?.length}
                                     onPageChange={changePageNumber}
@@ -238,4 +220,4 @@ const ExternalProcedures: React.FC = (): JSX.Element => {
     );
 };
 
-export default ExternalProcedures;
+export default MedicalBills;

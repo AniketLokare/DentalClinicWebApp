@@ -34,6 +34,18 @@ export const listSalesOrdersBreadcrumbLinks = [
     },
   ];
 
+  export const viewSalesOrdersReportBreadCrumbLinks = [
+    {
+      label: 'Reports',
+      href: SALES_ORDERS,
+    },
+    {
+      label: 'Bills',
+      href: '#',
+    },
+  ];
+  
+
 
   export const salesOrdersTableColumns: ColumnDef<SaleOrder, string>[] = [
     {
@@ -59,6 +71,34 @@ export const listSalesOrdersBreadcrumbLinks = [
         header: 'Patient Id',
         accessorKey: 'patientId',
       },
+
+];
+
+
+export const salesOrdersReportTableColumns: ColumnDef<SaleOrder, string>[] = [
+  {
+      header: 'Bill ID',
+      accessorKey: 'billId',
+    },
+    
+    {
+      header: 'Bill Date',
+      accessorKey: 'billDate',   
+    },
+
+    {
+      header: 'Patient Name',
+      accessorKey: 'patientName',
+    },
+    {
+      header: 'Total Amount',
+      accessorKey: 'totalAmount',
+    },
+
+    {
+      header: 'Patient Id',
+      accessorKey: 'patientId',
+    },
 
 ];
 

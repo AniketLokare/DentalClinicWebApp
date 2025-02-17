@@ -21,6 +21,10 @@ import { ERROR_RED } from 'src/constants/colors';
 import useSnackbarAlert from 'src/hooks/useSnackbarAlert';
 import { getEditProcedureRoute, PROCEDURES } from 'src/constants/paths';
 import useDeleteConfirmationModal from 'src/hooks/useDelete';
+import jsPDF from "jspdf"; // ✅ Import jsPDF
+import autoTable from "jspdf-autotable";
+
+(jsPDF as any).prototype.autoTable = autoTable;
 
 const ViewProcedure: React.FC = (): JSX.Element => {
   const { id = '' } = useParams();
@@ -30,10 +34,115 @@ const ViewProcedure: React.FC = (): JSX.Element => {
   });
   const { snackbarAlertState, onDismiss, setSnackbarAlertState } =
     useSnackbarAlert();
-    
+
   const onEditProcedure = () => {
     navigate(getEditProcedureRoute(id));
   };
+
+
+  const numberToWords = (num: number): string => {
+    const a = [
+      "", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine",
+      "Ten", "Eleven", "Twelve", "Thirteen", "Fourteen", "Fifteen", "Sixteen", "Seventeen", "Eighteen", "Nineteen"
+    ];
+    const b = ["", "", "Twenty", "Thirty", "Forty", "Fifty", "Sixty", "Seventy", "Eighty", "Ninety"];
+  
+    const convertBelowThousand = (n: number): string => {
+      if (n === 0) return "";
+      else if (n < 20) return a[n] + " ";
+      else if (n < 100) return b[Math.floor(n / 10)] + " " + a[n % 10] + " ";
+      else return a[Math.floor(n / 100)] + " Hundred " + convertBelowThousand(n % 100);
+    };
+  
+    if (num === 0) return "Zero";
+    let word = "";
+    if (num >= 1000) word += convertBelowThousand(Math.floor(num / 1000)) + "Thousand ";
+    word += convertBelowThousand(num % 1000);
+    
+    return word.trim();
+  };
+  
+  const downloadPDF = () => {
+    const doc = new jsPDF();
+  
+    doc.setFillColor(33, 150, 243);
+    doc.rect(0, 0, 210, 15, "F"); // Header
+    doc.setTextColor(255, 255, 255);
+    doc.setFontSize(18);
+    doc.setFont("helvetica", "bold");
+    doc.text("Regrowth", 14, 10);
+    doc.text("Invoice", 180, 10, { align: "right" });
+  
+    doc.setTextColor(0, 0, 0);
+    let startY = 25;
+  
+    // Patient & Clinic Details
+    doc.autoTable({
+      startY,
+      body: [[{ content: `Date: ${response?.procedureDate}\nInvoice number: ${response?.procedureId}`, styles: { halign: "right" } }]],
+      theme: "plain",
+    });
+  
+    // Billed to & From Section
+    doc.autoTable({
+      startY: 35,
+      body: [
+        [
+          {
+            content: `Billed to:\nName: ${response?.patientName}\nPatientId: ${response?.patientId}`,
+            styles: { halign: "left", fontSize: 12 },
+          },
+          {
+            content: "From:\nDr.Ajay Mohite\nRegrowth Hair Transplant\n& Oral Surgery Clinic\nSadar Bazar, Satara\nSatara-415001",
+            styles: { halign: "right", fontSize: 12 },
+          },
+        ],
+      ],
+      theme: "plain",
+    });
+  
+    // Invoice Table
+    doc.autoTable({
+      startY: 90,
+      head: [["Procedure Type", "Procedure Detail", "Amount (Rs)"]],
+      body: [[response?.procedureType, response?.procedureDetail || "N/A", response?.finalAmount]],
+      theme: "grid",
+    });
+  
+    // Convert total amount to words
+    const totalAmount = response?.totalAmount || 0;
+    const amountInWords = numberToWords(totalAmount);
+  
+    // Total Amount Section
+    doc.autoTable({
+      startY: 120,
+      body: [
+        [{ content: `Total Amount: Rs. ${totalAmount}`, styles: { halign: "right", fontSize: 12,fontStyle: "italic" } }],
+        [{ content: `Amount in Words: ${amountInWords} Rupees Only`, styles: { halign: "right", fontSize: 12, fontStyle: "italic" } }],
+      ],
+      theme: "plain",
+    });
+  
+    // Footer
+    doc.setFillColor(33, 150, 243);
+    doc.rect(0, 280, 210, 20, "F");
+    doc.setTextColor(255, 255, 255);
+    doc.setFontSize(18);
+    doc.setFont("helvetica", "bold");
+    doc.text("Regrowth", 14, 287);
+    doc.setFontSize(10);
+    doc.text("Regrowth Hair Transplant & Oral Surgery Clinic", 14, 293);
+    doc.setFontSize(9);
+    doc.text(
+      "For any concerns or queries please contact us on\n02162-299606 / 8605002563 / drajaymohite555@gmail.com",
+      196,
+      285,
+      { align: "right" } as any
+    );
+  
+    doc.save(`Invoice_${response?.patientId}.pdf`);
+  };
+  
 
   const { mutate: deleteProcedure, isPending: isDeleteInProgress } =
     useDeleteProcedure({
@@ -63,7 +172,7 @@ const ViewProcedure: React.FC = (): JSX.Element => {
     onShowDeleteConfirmationModal,
     onClose,
   } = useDeleteConfirmationModal({ onDelete: deleteProcedure });
-  
+
   return (
     <ErrorBoundary fallbackComponent={FormError}>
       <Snackbar
@@ -76,6 +185,8 @@ const ViewProcedure: React.FC = (): JSX.Element => {
       <SubPanel
         pageTitle="PROCEDURE DETAILS"
         breadcrumbLinks={viewProceduresBreadCrumbLinks}
+        rightSideButtonText="Print Bill"
+        rightSideButtonClickEvent={(downloadPDF)}
       />
       <PageLoader isLoading={isFetching} Components={{ Loading: 'form' }}>
         <Stack spacing={3} sx={{ marginTop: '60px' }}>
@@ -97,7 +208,7 @@ const ViewProcedure: React.FC = (): JSX.Element => {
               <Typography
                 sx={{ fontWeight: '600', fontSize: '26px', lineHeight: '31px' }}
               >
-                {response?.patientId}
+                Patient Id: {response?.patientId}
               </Typography>
             </Box>
             <Box

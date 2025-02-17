@@ -52,20 +52,13 @@ export const ProceduresTableColumns: ColumnDef<Procedure, string>[] = [
   {
     header: 'Procedure Date',
     accessorKey: 'procedureDate',
-
-
-  },
-
-  {
-    header: 'Patient Name',
-    accessorKey: 'patientName',
   },
   {
     header: 'Procedure Name',
     accessorKey: 'procedureType',
   },
   {
-    header: 'Clinic Name',
+    header: 'Referral Doctor Name',
     accessorKey: 'clinicName',
   },
 
@@ -88,18 +81,9 @@ export const ProceduresReportTableColumns: ColumnDef<Procedure, string>[] = [
     header: 'Patient Id',
     accessorKey: 'patientId',
   },
-
-  
-  
-
   {
     header: 'Date',
     accessorKey: 'procedureDate',
-  },
-
-  {
-    header: 'Patient Name',
-    accessorKey: 'patientName',
   },
   {
     header: 'Procedure Name',
@@ -114,7 +98,7 @@ export const ProceduresReportTableColumns: ColumnDef<Procedure, string>[] = [
     accessorKey: 'cashPayment',
   },
   {
-    header: 'Discount',
+    header: 'Referral Amount',
     accessorKey: 'discount',
   },
  

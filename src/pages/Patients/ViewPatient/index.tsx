@@ -16,7 +16,7 @@ import ConfirmationModal from 'src/components/ConfirmationModal';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useDeletePatient, useGetPatientDetail } from 'src/hooks/usePatients';
 import { viewPatientBreadCrumbLinks } from '../constants';
-import { getEditPatientRoute, PATIENTS } from 'src/constants/paths';
+import { getEditPatientRoute, PATIENTS,NEW_PROCEDURE_PATH } from 'src/constants/paths';
 import PatientBasicInfo from './PatientBasicInfo';
 import { ERROR_RED, WHITE_SMOKE } from 'src/constants/colors';
 import useDeleteConfirmationModal from 'src/hooks/useDelete';
@@ -82,6 +82,10 @@ const ViewPatient: React.FC = (): JSX.Element => {
       <SubPanel
         pageTitle="PATIENT DETAILS"
         breadcrumbLinks={viewPatientBreadCrumbLinks}
+        rightSideButtonText="New Procedure"
+                          rightSideButtonClickEvent={() => {
+                            navigate(NEW_PROCEDURE_PATH, { state: id  });
+                          }}
       />
       <PageLoader isLoading={isFetching} Components={{ Loading: 'form' }}>
         <Stack spacing={3} sx={{ marginTop: '60px' }}>

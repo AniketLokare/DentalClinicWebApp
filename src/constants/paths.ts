@@ -67,10 +67,13 @@ export const SALES_TRANSACTIONS = '/sales-transaction';
 export const EDIT_SALES_TRANSACTIONS_PATH = '/sales-transaction/:id/edit';
 export const VIEW_SALES_TRANSACTIONS_PATH = '/sales-transaction/:id';
 export const NEW_SALES_TRANSACTIONS_PATH = '/sales-transaction/new';
+export const PRINT_BILL = '/sales-transaction/print-bill';
+
 export const getNewSalesTransactionRoute = (id: string) => `${NEW_SALES_TRANSACTIONS_PATH}/${id}`;
 
 export const getEditSalesTransactionRoute = (id: string) => `${SALES_TRANSACTIONS}/${id}/edit`;
 export const getViewSalesTransactionPath = (id: string) => `${SALES_TRANSACTIONS}/${id}`;
+
 
 
 export const SUPPLIERS = '/suppliers';
@@ -91,3 +94,5 @@ export const getViewExternalProcedurePath = (id: string) => `${EXTERNAL_PROCEDUR
 export const REPORTS = '/reports';
 export const CLINIC_PROCEDURE_REPORT = '/income-by-procedures';
 export const EXTERNAL_PROCEDURE_REPORT = '/income-by-externalprocedures';
+export const MEDICAL_BILL_REPORT = '/income-by-medicalbills';
+

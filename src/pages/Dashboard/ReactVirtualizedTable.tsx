@@ -39,11 +39,13 @@ interface ColumnData {
 
 const columns: ColumnData[] = [
   { width: 100, label: 'Procedure ID', dataKey: 'procedureId', numeric: true },
-  { width: 200, label: 'Procedure Date', dataKey: 'procedureDate' },
-  { width: 150, label: 'Procedure Type', dataKey: 'procedureType' },
-  { width: 150, label: 'Fees', dataKey: 'totalAmount' },
-  { width: 150, label: 'Discount', dataKey: 'discount' },
-  { width: 150, label: 'Final Amount', dataKey: 'finalAmount', numeric: true },
+  { width: 150, label: 'Procedure Date', dataKey: 'procedureDate' },
+  { width: 200, label: 'Procedure Type', dataKey: 'procedureType' },
+  { width: 250, label: 'Procedure Detail', dataKey: 'procedureDetail' },
+  { width: 100, label: 'Online', dataKey: 'onlinePayment' },
+  { width: 100, label: 'Cash', dataKey: 'cashPayment' },
+  
+  { width: 100, label: 'Final Amount', dataKey: 'finalAmount', numeric: true },
   { width: 150, label: 'CashierName', dataKey: 'cashierName' },
   
 ];

@@ -45,11 +45,6 @@ export const viewProcedureReportBreadCrumbLinks = [
 
 export const ExternalProceduresTableColumns: ColumnDef<ExternalProcedure, string>[] = [
   {
-    header: 'ID',
-    accessorKey: 'doctorId',
-  },
-  
-  {
     header: 'Procedure Date',
     accessorKey: 'procedureDate',
   },
@@ -61,28 +56,27 @@ export const ExternalProceduresTableColumns: ColumnDef<ExternalProcedure, string
     header: 'Procedure Type',
     accessorKey: 'procedureType',
   },
+
+  {
+    header: 'Online Payment',
+    accessorKey: 'onlinePayment',
+  },
+  {
+    header: 'Cash Payment',
+    accessorKey: 'cashPayment',
+  },
+
   
-  {
-    header: 'Fees',
-    accessorKey: 'feesCharged',
-  },
 
   {
-    header: 'Discount',
-    accessorKey: 'discount',
-  },
-
-  {
-    header: 'Final Amount',
+    header: 'Total Amount',
     accessorKey: 'finalAmount',
   },
-
-  
-
   {
-    header: 'Cashier',
+    header: 'Cashier Name',
     accessorKey: 'cashierName',
   },
+ 
 ];
 
 
@@ -105,23 +99,22 @@ export const ExternalProceduresReportTableColumns: ColumnDef<ExternalProcedure, 
     accessorKey: 'procedureType',
   },
   
+  
   {
-    header: 'Fees',
-    accessorKey: 'feesCharged',
+    header: 'Online Payment',
+    accessorKey: 'onlinePayment',
   },
-
   {
-    header: 'Discount',
-    accessorKey: 'discount',
-  },
-
-  {
-    header: 'Final Amount',
-    accessorKey: 'finalAmount',
+    header: 'Cash Payment',
+    accessorKey: 'cashPayment',
   },
 
   
 
+  {
+    header: 'Total Amount',
+    accessorKey: 'finalAmount',
+  },
   {
     header: 'Cashier',
     accessorKey: 'cashierName',
@@ -129,6 +122,21 @@ export const ExternalProceduresReportTableColumns: ColumnDef<ExternalProcedure, 
 
   
 ];
+
+export const externalProcedurePaymentProps = {
+  options: [
+    {
+      label: 'Online',
+      value: 'online',
+    },
+    {
+      label: 'Cash',
+      value: 'cash',
+    },
+  ],
+  'aria-labelledby': 'procedure-payment',
+  defaultValue: 'Cash',
+};
 
 export const externalProcedureDefaultFormValues: CreateExternalProcedurePayload = {
   doctorName: '',
@@ -138,49 +146,53 @@ export const externalProcedureDefaultFormValues: CreateExternalProcedurePayload 
   procedureDate: '',
   procedureDetail: '',
   procedureType: '',
-  cashierName: ''
+  cashPayment: 0,
+  onlinePayment: 0,
+  cashierName: '',
 };
 
 export const externalProcedureFormValidationSchema: ObjectSchema<CreateExternalProcedurePayload> =
   yupObject({
     procedureDate: string()
-    .default('')
-    .optional(),
+    .required('Procedure Date is Required'),
     
-    procedureType: string()
-    .required('Procedure Type is required')
-    .min(2, 'Procedure Type must be at least 2 characters')
-    .max(100, 'Procedure Type cannot exceed 100 characters'),
+    procedureType: string().required('Procedure Type is required'),
 
-    procedureDetail: string()
-    .required('Procedure Details is required')
-    .min(2, 'Procedure Details must be at least 2 characters')
-    .max(100, 'Procedure Details cannot exceed 100 characters'),
+    procedureDetail: string().optional().default(''),
 
-    cashierName: string()
-    .optional()
-    .required("Cashier name is required")
-    .max(50, 'Cashier name cannot exceed 50 characters')
-    ,
+    cashierName: string().optional().max(50, 'Cashier name cannot exceed 50 characters'),
 
     finalAmount: number()
       .typeError('Required')
-      .required('Required')
-      .integer(),
+      .integer()
+      .required(),
 
     discount: number()
       .optional()
       .min(0, 'Invalid amount')
-      .integer(),
-      
+      .integer()
+      .default(0), // ✅ FIXED: Default to 0
+
     feesCharged: number()
       .typeError('Required')
-      .required('Required')
-      .integer(),
-    
+      .integer()
+      .default(0) // ✅ FIXED: Default to 0
+
+      .required(),
+
+    cashPayment: number()
+      .typeError('Required')
+      .integer()
+      .required(),
+
+    onlinePayment: number()
+      .typeError('Required')
+      .integer()
+      .required(),
+
     doctorName: string()
-    .required("Doctor name is required")
-    .max(50, 'Doctor name cannot exceed 50 characters')
-    .matches(/^[A-Za-z\s]*$/, 'Doctor name can only contain alphabets and spaces'),
+      .required("Doctor name is required")
+      .max(50, 'Doctor name cannot exceed 50 characters')
+      .matches(/^[A-Za-z\s]*$/, 'Doctor name can only contain alphabets and spaces'),
   });
 

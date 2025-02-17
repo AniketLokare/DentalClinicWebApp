@@ -115,9 +115,9 @@ const PurchaseTransactionForm: React.FC = (): JSX.Element => {
           <FormInput
             type="number"
             name="medicinePack"
-            label="Medicine Pack"
+            label="Medicine Strip"
             control={control}
-            placeholder="Enter number of packs"
+            placeholder="Enter number of items per strip (add 1 if there is bottle)"
             error={errors.medicinePack?.message}
           />
         </Grid>

@@ -4,6 +4,7 @@ import { FcBriefcase, FcBullish, FcCalendar, FcConferenceCall, FcFilingCabinet, 
 import { MdBarChart, MdNoteAdd, MdPersonAddAlt1, MdViewComfy, MdViewList,MdHail,MdHotel   } from 'react-icons/md';
 import { GiMedicinePills } from "react-icons/gi";
 import { FaUsersViewfinder } from "react-icons/fa6"
+import { FaFileMedicalAlt } from "react-icons/fa";
 
 import {
   APPOINTMENTS,
@@ -23,6 +24,7 @@ import {
   USERS,
   CLINIC_PROCEDURE_REPORT,
   EXTERNAL_PROCEDURE_REPORT,
+  MEDICAL_BILL_REPORT,
 } from 'src/constants/paths';
 import { RiCalendarView, RiHeartAdd2Fill,RiCalendarCheckLine  } from 'react-icons/ri';
 import { HiUserAdd } from 'react-icons/hi';
@@ -153,6 +155,13 @@ export const globalOptions = [
         title: 'External Procedures',
         icon: <MdHail  size="18px" />,
         route: EXTERNAL_PROCEDURE_REPORT,
+        isSubItem: true,
+        tooltip: 'Vies Users', 
+      },
+      {
+        title: 'Medical Bills',
+        icon: <FaFileMedicalAlt size="18px" />,
+        route: MEDICAL_BILL_REPORT,
         isSubItem: true,
         tooltip: 'Vies Users', 
       },

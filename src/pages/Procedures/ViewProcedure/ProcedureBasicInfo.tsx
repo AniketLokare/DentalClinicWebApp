@@ -40,7 +40,7 @@ const ProcedureBasicInfo: React.FC<ProcedureBasicInfoProps> = ({
             flexBasis="50%"
           />
           <InfoField
-            label="Clinic Name (If any)"
+            label="Referral Doctor (If any)"
             value={procedureDetails?.clinicName}
             flexBasis="50%"
           />
@@ -66,7 +66,7 @@ const ProcedureBasicInfo: React.FC<ProcedureBasicInfoProps> = ({
             flexBasis="50%"
           />
           <InfoField
-            label="Discount"
+            label="Referral Amount"
             value={`${procedureDetails?.discount}`}
             flexBasis="50%"
           />

@@ -7,6 +7,8 @@ import moment from 'moment';
 import { SUCCESS_GREEN } from 'src/constants/colors';
 import { useGetProceduresList } from 'src/hooks/useProcedures';
 
+import { useGetExternalProcedureList } from 'src/hooks/useExternalProcedures'; // Import the hook
+
 const ProcedureCountCard: React.FC = () => {
   const [total, setTotal] = useState<number>(0); // Current month total
   const [percentage, setPercentage] = useState<string>('0%'); // Percentage change
@@ -17,10 +19,16 @@ const ProcedureCountCard: React.FC = () => {
     useQueryConfig: { staleTime: 5 * 60 * 1000 },
   });
 
+  const { response: externalProceduresResponse, isLoading: isLoadingExternal, isError: isErrorExternal } = useGetExternalProcedureList({
+    apiConfig: { params: {} },
+    useQueryConfig: { staleTime: 5 * 60 * 1000 },
+  });
+
   useEffect(() => {
-    if (!response || isLoading || isError) return;
+    if (!response || isLoading || isError || !externalProceduresResponse || isLoadingExternal || isErrorExternal) return;
 
     const procedures = response.content || [];
+    const externalProcedures = externalProceduresResponse.content || [];
     const now = new Date();
     const currentMonth = now.getMonth();
     const currentYear = now.getFullYear();
@@ -31,7 +39,9 @@ const ProcedureCountCard: React.FC = () => {
     let currentMonthCount = 0;
     let lastMonthCount = 0;
 
-    procedures.forEach((procedure: any) => {
+    const allProcedures = [...procedures, ...externalProcedures]; // Combine both data sets
+
+    allProcedures.forEach((procedure: any) => {
       if (!procedure.procedureDate) return; // Skip if procedureDate is missing
 
       const procedureDate = moment(procedure.procedureDate, 'DD-MM-YYYY').toDate();
@@ -55,58 +65,98 @@ const ProcedureCountCard: React.FC = () => {
       setPercentage('N/A');
       setIsTrendingUp(true);
     }
-  }, [response, isLoading, isError]);
+  }, [response, isLoading, isError, externalProceduresResponse, isLoadingExternal, isErrorExternal]);
+
+  // useEffect(() => {
+  //   if (!response || isLoading || isError) return;
+
+  //   const procedures = response.content || [];
+  //   const now = new Date();
+  //   const currentMonth = now.getMonth();
+  //   const currentYear = now.getFullYear();
+
+  //   const lastMonth = currentMonth === 0 ? 11 : currentMonth - 1;
+  //   const lastMonthYear = currentMonth === 0 ? currentYear - 1 : currentYear;
+
+  //   let currentMonthCount = 0;
+  //   let lastMonthCount = 0;
+
+  //   procedures.forEach((procedure: any) => {
+  //     if (!procedure.procedureDate) return; // Skip if procedureDate is missing
+
+  //     const procedureDate = moment(procedure.procedureDate, 'DD-MM-YYYY').toDate();
+  //     const procedureMonth = procedureDate.getMonth();
+  //     const procedureYear = procedureDate.getFullYear();
+
+  //     if (procedureYear === currentYear && procedureMonth === currentMonth) {
+  //       currentMonthCount += 1;
+  //     } else if (procedureYear === lastMonthYear && procedureMonth === lastMonth) {
+  //       lastMonthCount += 1;
+  //     }
+  //   });
+
+  //   setTotal(currentMonthCount);
+
+  //   if (lastMonthCount > 0) {
+  //     const percentChange = ((currentMonthCount - lastMonthCount) / lastMonthCount) * 100;
+  //     setPercentage(`${percentChange > 0 ? '+' : ''}${percentChange.toFixed(1)}%`);
+  //     setIsTrendingUp(percentChange > 0);
+  //   } else {
+  //     setPercentage('N/A');
+  //     setIsTrendingUp(true);
+  //   }
+  // }, [response, isLoading, isError]);
 
   return (
     <Card
-  sx={{
-    borderRadius: 3,
-    padding: { xs: 1, sm: 2 },
-  }}
->
-  <CardContent>
-    <Stack direction="row" alignItems="center" spacing={2}>
-      <Avatar
-        sx={{
-          bgcolor: SUCCESS_GREEN,
-          height: { xs: 48, sm: 56 },
-          width: { xs: 48, sm: 56 },
-        }}
-      >
-        <MedicalServicesOutlinedIcon fontSize="large" />
-      </Avatar>
-      <Box>
-        <Typography variant="subtitle2" color="text.secondary">
-          Total Procedures
-        </Typography>
-        <Typography
-          variant="h6"
-          fontWeight="bold"
-          sx={{ fontSize: { xs: '1rem', sm: '1.25rem' } }}
-        >
-          {total}
-        </Typography>
-      </Box>
-    </Stack>
-    <Stack sx={{ alignItems: 'center' }} direction="row" spacing={2} mt={2}>
-      {isTrendingUp ? (
-        <TrendingUpIcon color="success" />
-      ) : (
-        <TrendingDownIcon color="error" />
-      )}
-      <Typography
-        color={isTrendingUp ? 'success.main' : 'error'}
-        variant="body2"
-        sx={{ fontSize: { xs: '0.8rem', sm: '1rem' } }}
-      >
-        {percentage}
-      </Typography>
-      <Typography color="text.secondary" variant="caption">
-        Since last month
-      </Typography>
-    </Stack>
-  </CardContent>
-</Card>
+      sx={{
+        borderRadius: 3,
+        padding: { xs: 1, sm: 2 },
+      }}
+    >
+      <CardContent>
+        <Stack direction="row" alignItems="center" spacing={2}>
+          <Avatar
+            sx={{
+              bgcolor: SUCCESS_GREEN,
+              height: { xs: 48, sm: 56 },
+              width: { xs: 48, sm: 56 },
+            }}
+          >
+            <MedicalServicesOutlinedIcon fontSize="large" />
+          </Avatar>
+          <Box>
+            <Typography variant="subtitle2" color="text.secondary">
+              Total Procedures
+            </Typography>
+            <Typography
+              variant="h6"
+              fontWeight="bold"
+              sx={{ fontSize: { xs: '1rem', sm: '1.25rem' } }}
+            >
+              {total}
+            </Typography>
+          </Box>
+        </Stack>
+        <Stack sx={{ alignItems: 'center' }} direction="row" spacing={2} mt={2}>
+          {isTrendingUp ? (
+            <TrendingUpIcon color="success" />
+          ) : (
+            <TrendingDownIcon color="error" />
+          )}
+          <Typography
+            color={isTrendingUp ? 'success.main' : 'error'}
+            variant="body2"
+            sx={{ fontSize: { xs: '0.8rem', sm: '1rem' } }}
+          >
+            {percentage}
+          </Typography>
+          <Typography color="text.secondary" variant="caption">
+            Since last month
+          </Typography>
+        </Stack>
+      </CardContent>
+    </Card>
 
   );
 };

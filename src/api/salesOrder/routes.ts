@@ -5,3 +5,7 @@ export const getSaleOrderWithIdRoute = (id: string) => `${SALES_ORDERS}/medicalB
 export const editSaleOrderWithIdRoute = (id: string) => `${SALES_ORDERS}/updateMedicalBill/${id}`;
 export const deleteSaleOrderWithIdRoute = (id: string) => `${SALES_ORDERS}/deleteMedicalBill/${id}`;
 export const getMedicinesListBySaleOrderIdRoute = (id: string) => `${SALES_ORDERS}/${id}`; 
+
+export const GET_FILTERED_BILLS_ROUTE = '/api/medical/bill/reports/by-date-range';
+
+

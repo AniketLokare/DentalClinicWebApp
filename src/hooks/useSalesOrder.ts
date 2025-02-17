@@ -7,6 +7,7 @@ import {
   editSaleOrderWithIdRoute,
   deleteSaleOrderWithIdRoute,
   getMedicinesListBySaleOrderIdRoute,
+  GET_FILTERED_BILLS_ROUTE,
 } from 'src/api/salesOrder/routes';
 import axiosClient from 'src/util/axios';
 
@@ -20,6 +21,19 @@ export const getSalesList = (config?: AxiosRequestConfig) =>
   axiosClient
     .get<PaginatedResponse<SaleOrder>>(SALES_LIST, config)
     .then((res) => res.data);
+
+    export const getFilteredBills = (
+      fromDate: string,
+      toDate: string,
+    
+      config?: AxiosRequestConfig,
+    ) =>
+      axiosClient
+        .get<SaleOrder[]>(GET_FILTERED_BILLS_ROUTE, {
+          ...config,
+          params: { fromDate, toDate },
+        })
+        .then((res) => res.data);
 
 export const getMedicinesListBySaleOrderId = (id: string, config?: AxiosRequestConfig) =>
   axiosClient
@@ -128,3 +142,24 @@ export const useDeleteSaleOrder = (opts?: MutationConfig<null, string>) => {
     ...opts,
   });
 };
+
+
+export const useGetFilteredBills = <Override = SaleOrder[]>(opts: UseQueryOption<SaleOrder[], Override> & {
+  fromDate: string;
+  toDate: string;
+
+}) => {
+  const { key, useQueryConfig, apiConfig, fromDate, toDate } = opts;
+  const queryKey = (key || ['filtered-bills', fromDate, toDate]) as QueryKey;
+
+  const { data, ...rest } = useQuery<SaleOrder[]>({
+    queryKey,
+    queryFn: ({ signal }) =>
+      getFilteredBills(fromDate, toDate, { ...apiConfig, signal }),
+    enabled: !!fromDate && !!toDate,  // Ensures query is only enabled if all filters are set
+    ...useQueryConfig,
+  });
+
+  return { response: data, ...rest };
+};
+

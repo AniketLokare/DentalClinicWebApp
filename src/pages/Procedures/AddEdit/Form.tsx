@@ -25,7 +25,7 @@ const ProcedureForm: React.FC = (): JSX.Element => {
   const totalAmount = watch('totalAmount');
   const discount = watch('discount');
 
-  const cashPayment = parseFloat(watch('cashPayment')) || 0; // Convert to number or default to 0
+const cashPayment = parseFloat(watch('cashPayment')) || 0; // Convert to number or default to 0
 const onlinePayment = parseFloat(watch('onlinePayment')) || 0; // Convert to number or default to 0
 
 useEffect(() => {
@@ -64,7 +64,7 @@ useEffect(() => {
         </Grid>
         <Grid item xs={12} sm={6}>
           <FormInput
-            name="procedureDetails"
+            name="procedureDetail"
             label="Procedure Details"
             control={control}
             placeholder="Enter patient's procedure details"
@@ -76,9 +76,9 @@ useEffect(() => {
         <Grid item xs={12} sm={6}>
           <FormInput
             name="clinicName"
-            label="Enter External Clinic Name"
+            label="Enter Referral Doctor's name"
             control={control}
-            placeholder="Enter external clinic name"
+            placeholder="Enter Referral Doctor's name"
             error={errors.clinicName?.message}
             
           />
@@ -100,7 +100,7 @@ useEffect(() => {
             name="cashPayment"
             label="Enter Cash Payment"
             control={control}
-            placeholder="Enter external clinic name"
+            placeholder="Enter Cash Payment"
             error={errors.cashPayment?.message}
             
           />
@@ -120,7 +120,7 @@ useEffect(() => {
             type="number"
             name="discount"
             control={control}
-            label="Discount"
+            label="Referral amount"
             error={errors.discount?.message}
           />
         </Grid>

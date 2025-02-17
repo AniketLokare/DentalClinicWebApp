@@ -34,6 +34,7 @@ import {
   NEW_SALES_PATH,
   EDIT_SALE_PATH,
   VIEW_SALE_PATH,
+  PRINT_BILL,
 
   SALES_TRANSACTIONS,
   NEW_SALES_TRANSACTIONS_PATH,
@@ -51,6 +52,7 @@ import {
 
   CLINIC_PROCEDURE_REPORT,
   EXTERNAL_PROCEDURE_REPORT,
+  MEDICAL_BILL_REPORT,
 } from './constants/paths';
 import Login from './pages/Login';
 import ProtectedRoute from './pages/Login/ProtectedRoute';
@@ -75,6 +77,7 @@ import SalesOrders from './pages/Inventory/SalesOrders';
 import AddEditSales from './pages/Inventory/SalesOrders/AddEdit';
 import ViewSales from './pages/Inventory/SalesOrders/ViewSalesOrders';
 import AddEditSalesTransactions from './pages/Inventory/SalesOrders/SalesTransactions/AddEdit';
+import PrintBill from './pages/Inventory/SalesOrders/printbill';
 
 
 
@@ -89,6 +92,8 @@ import Unauthorized from './pages/Unauthorized';
 
 import ClinicProceduresReport from './pages/Reports/ClinicProcedures';
 import ExternalProceduresReport from './pages/Reports/ExternalProcedures';
+import MedicalBills from './pages/Reports/MedicalBills';
+
 
 
 
@@ -135,6 +140,7 @@ const AppRoutes: React.FC = () => (
       <Route path={VIEW_SALE_PATH} element={<ViewSales />} />
       <Route path={NEW_SALES_TRANSACTIONS_PATH} element={<AddEditSalesTransactions />} />
       <Route path={EDIT_SALES_TRANSACTIONS_PATH} element={<AddEditSalesTransactions />} />
+      <Route path={PRINT_BILL} element={<PrintBill/>}/>
       
 
       <Route path={SUPPLIERS} element={<Suppliers />} />
@@ -152,6 +158,7 @@ const AppRoutes: React.FC = () => (
 
       <Route path={CLINIC_PROCEDURE_REPORT} element={<ClinicProceduresReport />} />
       <Route path={EXTERNAL_PROCEDURE_REPORT} element={<ExternalProceduresReport />} />
+      <Route path={MEDICAL_BILL_REPORT} element={<MedicalBills />} />
     </Route>
   </Routes>
 );

@@ -14,24 +14,34 @@ const ExternalProcedureForm: React.FC = (): JSX.Element => {
     formState: { errors },
   } = useFormContext<CreateExternalProcedurePayload>();
 
-  const feesCharged = watch('feesCharged') || 0;
-  const discount = watch('discount') || 0;
-
-
   const { username } = getAuthInfo(); // Extract username from auth info
 
-
-  // Set cashierName using useEffect
-  useEffect(() => {
+   // Set cashierName using useEffect
+   useEffect(() => {
     if (username && typeof username === 'string') {
       setValue('cashierName', username.trim()); // Ensure no quotes or spaces
     }
   }, [username, setValue]);
 
+  const totalAmount = watch('finalAmount');
+    const discount = watch('discount');
+  
+    const cashPayment = parseFloat(String(watch('cashPayment'))) || 0;
+    const onlinePayment = parseFloat(String(watch('onlinePayment'))) || 0;
+    
+  
   useEffect(() => {
-    const finalAmount = feesCharged - (discount);
-    setValue('finalAmount', finalAmount);
-  }, [feesCharged, discount, setValue]);
+    const totalAmount = cashPayment + onlinePayment;
+    setValue('finalAmount', isNaN(totalAmount) ? 0 : totalAmount); // Set totalAmount, default to 0 if NaN
+  }, [cashPayment, onlinePayment, setValue]); // Update when cashPayment or onlinePayment changes
+  
+  
+  
+    useEffect(() => {
+      const finalAmount = totalAmount - (discount);
+      setValue('finalAmount', isNaN(finalAmount) ? 0 : finalAmount);
+    }, [totalAmount, discount, setValue]);
+  
 
   return (
     <Stack spacing={4}>
@@ -42,14 +52,14 @@ const ExternalProcedureForm: React.FC = (): JSX.Element => {
             label="External Doctor Name"
             control={control}
             error={errors.doctorName?.message}
-            
+           
           />
         </Grid>
         <Grid item xs={12} sm={6}>
           <FormInput
             type="date"
             name="procedureDate"
-            
+            inputProps={{ min: format(new Date(), 'yyyy-MM-dd') }}
             control={control}
             label="Registration Date"
             error={errors.procedureDate?.message}
@@ -83,6 +93,7 @@ const ExternalProcedureForm: React.FC = (): JSX.Element => {
             control={control}
             label="Fees Charged (₹)"
             error={errors.feesCharged?.message}
+            sx={{ display: "none" }}
           />
         </Grid>
         <Grid item xs={12} sm={6}>
@@ -92,8 +103,29 @@ const ExternalProcedureForm: React.FC = (): JSX.Element => {
             control={control}
             label="Discount "
             error={errors.discount?.message}
+            sx={{ display: "none" }}
           />
         </Grid>
+
+         <Grid item xs={12} sm={6}>
+            <FormInput
+              name="onlinePayment"
+              label="Enter Online Payment"
+              control={control}
+              placeholder="Enter online payment"
+              error={errors.onlinePayment?.message}        
+              />
+         </Grid>
+        
+         <Grid item xs={12} sm={6}>
+              <FormInput
+                name="cashPayment"
+                label="Enter Cash Payment"
+                control={control}
+                placeholder="Enter external clinic name"
+                error={errors.cashPayment?.message}                    
+                />
+          </Grid>
         <Grid item xs={12} sm={6}>
           <FormInput
             type="number"
@@ -104,7 +136,8 @@ const ExternalProcedureForm: React.FC = (): JSX.Element => {
             disabled
           />
         </Grid>
-        <Grid item xs={12} sm={6} sx={{ visibility: 'hidden' }} >
+
+        <Grid item xs={12} sm={6} >
           <Controller
             name="cashierName"
             defaultValue=""
@@ -115,6 +148,7 @@ const ExternalProcedureForm: React.FC = (): JSX.Element => {
                 label="Cashier Name"
                 placeholder="Enter cashier's name"
                 error={errors.cashierName?.message}
+                sx={{ display: "none" }}
               />
             )}
           />

@@ -43,3 +43,10 @@ type SingleUseQueryOption<Response, Override = Response> = Omit<
   UseQueryOption<Response, Override>,
   'key'
 > & { key?: QueryKey; id: string };
+
+declare module "jspdf" {
+  interface jsPDF {
+    autoTable: (options: any) => void;
+  }
+}
+
